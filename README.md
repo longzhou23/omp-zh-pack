@@ -38,6 +38,8 @@ omp
 
 Windows 正在使用的 `omp.exe` 可能被系统锁定；替换失败时保留原程序，请关闭相关终端和进程后重新安装。安装结束会打印可直接粘贴的恢复命令。
 
+上游本地 socket 有路径长度限制；如果把 `TEMP`/`TMP` 设置为很长的嵌套目录，原生检查可能报 `ENAMETOOLONG`。请恢复系统默认临时目录后重试；安装目录仍可包含空格和单引号。
+
 ### 支持的平台
 
 | 系统 | 架构 | 发行文件 |
@@ -127,7 +129,7 @@ bash package.sh
 
 发布前应验证：补丁应用、受影响包类型检查、终端行为测试、实际 PTY 中的 `/settings`、`/models`、`/hotkeys`，以及独立程序的 `--smoke-test`。安装流程还应覆盖校验失败、重复安装、带空格的安装目录和已有程序备份。
 
-[跨平台发布工作流](.github/workflows/release.yml) 在 Linux、macOS Intel/Apple Silicon、Windows x64/ARM64 托管主机上分别构建和运行原生检查，全部成功后合并 SHA-256 并公开完整发行版，再从公开 GitHub URL 实测安装、重复备份和恢复。Windows 验证同时运行 PowerShell 5.1 与 PowerShell 7。推送与 `VERSION` 一致的 `v18.8.5-zh.*` 标签触发发布；手动运行工作流只构建，不发布。
+[跨平台发布工作流](.github/workflows/release.yml) 在 Linux、macOS Intel/Apple Silicon、Windows x64/ARM64 托管主机上分别构建和运行原生检查，全部成功后合并 SHA-256 并公开完整发行版，再从公开 GitHub URL 实测安装、重复备份和恢复。Windows 验证同时运行 PowerShell 5.1 与 PowerShell 7。推送与 `VERSION` 一致的 `v18.8.5-zh.*` 标签触发发布；手动选择 `build` 只构建，选择 `verify` 只验收已公开的 `VERSION`，均不会另行发布。
 
 `v18.8.5-zh.1` 已在 Linux x86_64 上完成锁定源码的隔离构建、发行包校验、公开 GitHub 入口安装和安装后 `--smoke-test`。实测覆盖带空格及单引号的安装目录、符号链接原程序备份、重复安装不覆盖旧备份、运行中程序的原子替换与备份恢复；下载后人为破坏校验和时，安装器拒绝替换并保留原程序。不支持的平台、非法版本标签和目录型目标也已验证拒绝安装。
 

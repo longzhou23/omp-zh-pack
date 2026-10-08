@@ -35,8 +35,11 @@ function Run-Isolated([string] $Argument) {
         [IO.Directory]::CreateDirectory($directory) | Out-Null
         $info.EnvironmentVariables[$name] = $directory
     }
-    $info.EnvironmentVariables['TEMP'] = $root
-    $info.EnvironmentVariables['TMP'] = $root
+    # Keep Windows' normal TEMP: nesting the quoted install fixture here exceeds
+    # AF_UNIX's socket-path limit in upstream's blob-broker smoke scenario.
+    # HOME/config/session state remain isolated; the smoke owns its temp files.
+    $info.EnvironmentVariables['TEMP'] = [IO.Path]::GetTempPath()
+    $info.EnvironmentVariables['TMP'] = [IO.Path]::GetTempPath()
     $process = New-Object Diagnostics.Process
     $process.StartInfo = $info
     try {
