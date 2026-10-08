@@ -33,7 +33,7 @@ trap cleanup EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 checkout=$workspace/upstream
-git clone --depth 1 --branch "$version" --single-branch https://github.com/can1357/oh-my-pi.git "$checkout"
+git clone -c core.autocrlf=false --depth 1 --branch "$version" --single-branch https://github.com/can1357/oh-my-pi.git "$checkout"
 [[ $(git -C "$checkout" rev-parse HEAD) == "$commit" ]] || fail '官方标签提交与 UPSTREAM_COMMIT 不一致。'
 git -C "$checkout" apply --check "$repo/patches/omp-v18.8.5-zh.patch"
 git -C "$checkout" apply "$repo/patches/omp-v18.8.5-zh.patch"

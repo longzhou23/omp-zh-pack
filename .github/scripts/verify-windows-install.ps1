@@ -101,9 +101,8 @@ try {
     } finally { $lock.Dispose() }
     Check-Sidecars 1
 
-    # Evaluate the downloaded-script style without relying on its PSScriptRoot.
-    $scriptText = [IO.File]::ReadAllText($installer)
-    Invoke-Expression $scriptText
+    # Exercise the exact public quick-install pipeline, including HTTP text decoding.
+    Invoke-RestMethod -Uri "https://raw.githubusercontent.com/longzhou23/omp-zh-pack/$sourceRef/install.ps1" | Invoke-Expression
     Check-Sidecars 2
     $backups = @(Get-ChildItem -LiteralPath $installDir -File -Filter 'omp.exe.backup.*')
     Require ($backups.Count -eq 1) 'Repeated installation must retain exactly one unique previous-program backup.'
