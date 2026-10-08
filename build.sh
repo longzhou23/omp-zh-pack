@@ -39,9 +39,18 @@ git -C "$checkout" apply --check "$repo/patches/omp-v18.8.5-zh.patch"
 git -C "$checkout" apply "$repo/patches/omp-v18.8.5-zh.patch"
 (cd -- "$checkout" && bun install --frozen-lockfile --ignore-scripts)
 bun "$repo/scripts/release-tools.ts" native "$checkout" "$cache" "${version#v}"
-# Keep upstream's actual host build and macOS entitlements/signing intact.
-(cd -- "$checkout" && unset BUN_NO_CODESIGN_MACHO_BINARY && CROSS_TARGET="$target" bun --cwd=packages/coding-agent run build)
-binary=$checkout/packages/coding-agent/dist/omp-$target
+# Match upstream's production release compiler (including identifier minification
+# and macOS entitlements) rather than the larger local development build.
+if [[ -n ${BUN_COMPILE_EXECUTABLE_PATH:-} ]]; then
+  # Retain the upstream local entrypoint for user-modified runtime relinking.
+  (cd -- "$checkout" && unset BUN_NO_CODESIGN_MACHO_BINARY && CROSS_TARGET="$target" bun --cwd=packages/coding-agent run build)
+  binary=$checkout/packages/coding-agent/dist/omp-$target
+else
+  native_target=$target
+  [[ $target != windows-* ]] || native_target=win32-${target#windows-}
+  (cd -- "$checkout" && unset BUN_NO_CODESIGN_MACHO_BINARY && bun scripts/ci-release-build-binaries.ts --targets "$native_target")
+  binary=$checkout/packages/coding-agent/binaries/omp-$target
+fi
 if [[ $target == windows-* && -f $binary.exe ]]; then binary=$binary.exe; fi
 [[ -f $binary ]] || fail '上游构建未生成可执行文件。'
 bun "$repo/scripts/release-tools.ts" check "$binary"
