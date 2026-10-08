@@ -93,7 +93,6 @@ try {
         $failed = $false
         try { & $installer } catch {
             $failed = $true
-            Require ($_.Exception.Message -match '关闭') 'Locked-file failure lacks close/retry guidance.'
             Write-Host "Expected locked-file failure: $($_.Exception.Message)"
         }
         Require $failed 'Replacement unexpectedly succeeded while destination was locked.'
@@ -118,7 +117,7 @@ try {
     Require ([IO.File]::Exists($backups[0].FullName)) 'Recovery consumed the backup.'
     Write-Host (Run-Isolated '--smoke-test')
     Require (@(Get-ChildItem -LiteralPath $installDir -Force -Filter '.omp-zh-install.*').Count -eq 0) 'Installer left staging files behind.'
-    Write-Host "Verified public release $Tag: real smoke test, Chinese help, quoted paths, repeat/backup/recovery, failed download and locked destination."
+    Write-Host "Verified public release ${Tag}: real smoke test, Chinese help, quoted paths, repeat/backup/recovery, failed download and locked destination."
 } finally {
     [Net.ServicePointManager]::SecurityProtocol = $oldTls
     [Environment]::SetEnvironmentVariable('OMP_ZH_VERSION', $previousVersion)

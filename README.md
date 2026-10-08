@@ -50,7 +50,7 @@ Windows 正在使用的 `omp.exe` 可能被系统锁定；替换失败时保留�
 
 Apple Silicon 上即使终端通过 Rosetta 运行，也选择原生 ARM64 包。不提供 Linux ARM64 或 Alpine/musl 的预编译包；系统库及安全策略仍需兼容，安装器会先验证候选程序能否运行。macOS 程序使用上游要求的本机 ad-hoc 签名，不是 Apple 开发者公证发行；不会关闭 Gatekeeper 或移除全局安全策略。
 
-默认安装汉化发布版本 `v18.8.5-zh.2`，基于上游 `v18.8.5`。`omp --version` 显示的是上游版本，不是汉化包版本。
+默认安装汉化发布版本 `v18.8.5-zh.3`，基于上游 `v18.8.5`。`omp --version` 显示的是上游版本，不是汉化包版本。
 
 ### 先查看脚本再安装
 
@@ -66,13 +66,13 @@ sh install-omp-zh.sh
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/longzhou23/omp-zh-pack/main/install.sh |
-  OMP_ZH_VERSION=v18.8.5-zh.2 OMP_ZH_INSTALL_DIR="$HOME/.local/bin" sh
+  OMP_ZH_VERSION=v18.8.5-zh.3 OMP_ZH_INSTALL_DIR="$HOME/.local/bin" sh
 ```
 
 Windows 使用相同的环境变量：
 
 ```powershell
-$env:OMP_ZH_VERSION = 'v18.8.5-zh.2'
+$env:OMP_ZH_VERSION = 'v18.8.5-zh.3'
 $env:OMP_ZH_INSTALL_DIR = "$HOME\.local\bin"
 irm https://raw.githubusercontent.com/longzhou23/omp-zh-pack/main/install.ps1 | iex
 ```

@@ -14,7 +14,7 @@
         $handler.AllowAutoRedirect = $false
         $client = New-Object Net.Http.HttpClient($handler)
         $client.Timeout = [TimeSpan]::FromMinutes(5)
-        $client.DefaultRequestHeaders.UserAgent.ParseAdd('omp-zh-installer/18.8.5-zh.2')
+        $client.DefaultRequestHeaders.UserAgent.ParseAdd("omp-zh-installer/$version")
         try {
             $uri = [Uri] $Url
             for ($redirect = 0; $redirect -le 10; $redirect++) {
@@ -130,9 +130,9 @@ namespace OmpZhInstaller {
             'Arm64' { $arch = 'arm64' }
             default { throw "不支持此 Windows 架构：$architecture；仅支持 x64 和 arm64。" }
         }
-        $version = 'v18.8.5-zh.2'
+        $version = 'v18.8.5-zh.3'
         if (Test-Path Env:OMP_ZH_VERSION) { $version = $env:OMP_ZH_VERSION }
-        if ($version -cnotmatch '^v[0-9][A-Za-z0-9._-]*$') { throw 'OMP_ZH_VERSION 必须是安全的发布标签，例如 v18.8.5-zh.2。' }
+        if ($version -cnotmatch '^v[0-9][A-Za-z0-9._-]*$') { throw 'OMP_ZH_VERSION 必须是安全的发布标签，例如 v18.8.5-zh.3。' }
         $installDir = Join-Path $HOME '.local/bin'
         if (Test-Path Env:OMP_ZH_INSTALL_DIR) { $installDir = $env:OMP_ZH_INSTALL_DIR }
         if ([string]::IsNullOrWhiteSpace($installDir)) { throw 'OMP_ZH_INSTALL_DIR 不能为空。' }

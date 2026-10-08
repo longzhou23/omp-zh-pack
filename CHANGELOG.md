@@ -1,5 +1,10 @@
 # 更新记录
 
+## v18.8.5-zh.3
+
+- 修复 Windows 验收脚本的 PowerShell 变量插值解析错误；保持使用真实公开下载入口验证 PowerShell 5.1/7。
+- 重新发行全部五个平台，默认安装入口更新到本版本；程序仍基于相同上游版本与汉化补丁。
+
 ## v18.8.5-zh.2
 
 - 增加 macOS Intel 与 Apple Silicon 预编译包；Unix 安装器兼容 BSD 工具，自动识别 Rosetta 下的真实硬件架构。
