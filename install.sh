@@ -17,7 +17,7 @@ OMP 独立中文包安装器（Linux x86_64 / macOS Intel、Apple Silicon）
       curl -fsSL https://raw.githubusercontent.com/longzhou23/omp-zh-pack/main/install.sh | sh
 
 环境变量：
-  OMP_ZH_VERSION      发布标签，默认 v18.8.5-zh.3
+  OMP_ZH_VERSION      发布标签，默认 v18.8.5-zh.4
   OMP_ZH_INSTALL_DIR  安装目录，默认 $HOME/.local/bin
 
 安装前校验 SHA-256 和中文帮助；已有 omp 会保存为唯一备份。
@@ -28,10 +28,10 @@ HELP
     fail '仅支持可选参数 --help；请运行 sh install.sh --help。'
 fi
 
-version=${OMP_ZH_VERSION-v18.8.5-zh.3}
+version=${OMP_ZH_VERSION-v18.8.5-zh.4}
 case "$version" in
     v[0-9]*) ;;
-    *) fail 'OMP_ZH_VERSION 必须是以 v 和数字开头的发布标签，例如 v18.8.5-zh.1。' ;;
+    *) fail 'OMP_ZH_VERSION 必须是以 v 和数字开头的发布标签，例如 v18.8.5-zh.4。' ;;
 esac
 case "$version" in
     *[!a-zA-Z0-9._-]*) fail 'OMP_ZH_VERSION 仅允许 ASCII 字母、数字、点、下划线和连字符；不允许路径或 URL。' ;;

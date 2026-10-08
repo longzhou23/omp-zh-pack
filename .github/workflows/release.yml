@@ -2,7 +2,9 @@ name: Native release
 on:
   push:
     branches:
-      - platform-support
+      - main
+    paths-ignore:
+      - '**/*.md'
     tags:
       - 'v18.8.5-zh.*'
   workflow_dispatch:
@@ -107,7 +109,7 @@ jobs:
           gh release edit "$RELEASE_TAG" --draft=false
   verify-public-install:
     needs: publish
-    if: ${{ always() && !cancelled() && (needs.publish.result == 'success' || (github.event_name == 'push' && github.ref == 'refs/heads/platform-support') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'verify')) }}
+    if: ${{ always() && !cancelled() && (needs.publish.result == 'success' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.mode == 'verify')) }}
     strategy:
       fail-fast: false
       matrix: *hosts

@@ -132,9 +132,9 @@ namespace OmpZhInstaller {
             'Arm64' { $arch = 'arm64' }
             default { throw ((Get-Text '\u4e0d\u652f\u6301\u6b64 Windows \u67b6\u6784\uff1a{0}\uff1b\u4ec5\u652f\u6301 x64 \u548c arm64\u3002') -f $architecture) }
         }
-        $version = 'v18.8.5-zh.3'
+        $version = 'v18.8.5-zh.4'
         if (Test-Path Env:OMP_ZH_VERSION) { $version = $env:OMP_ZH_VERSION }
-        if ($version -cnotmatch '^v[0-9][A-Za-z0-9._-]*$') { throw (Get-Text 'OMP_ZH_VERSION \u5fc5\u987b\u662f\u5b89\u5168\u7684\u53d1\u5e03\u6807\u7b7e\uff0c\u4f8b\u5982 v18.8.5-zh.3\u3002') }
+        if ($version -cnotmatch '^v[0-9][A-Za-z0-9._-]*$') { throw (Get-Text 'OMP_ZH_VERSION \u5fc5\u987b\u662f\u5b89\u5168\u7684\u53d1\u5e03\u6807\u7b7e\uff0c\u4f8b\u5982 v18.8.5-zh.4\u3002') }
         $installDir = Join-Path $HOME '.local/bin'
         if (Test-Path Env:OMP_ZH_INSTALL_DIR) { $installDir = $env:OMP_ZH_INSTALL_DIR }
         if ([string]::IsNullOrWhiteSpace($installDir)) { throw (Get-Text 'OMP_ZH_INSTALL_DIR \u4e0d\u80fd\u4e3a\u7a7a\u3002') }
