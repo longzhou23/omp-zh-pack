@@ -11,13 +11,13 @@ fail() {
 if [ "$#" -gt 0 ]; then
     if [ "$#" -eq 1 ] && [ "$1" = '--help' ]; then
         cat <<'HELP'
-OMP 独立中文包安装器（Linux x86_64、glibc、AVX2）
+OMP 独立中文包安装器（Linux x86_64 / macOS Intel、Apple Silicon）
 
 用法：sh install.sh [--help]
       curl -fsSL https://raw.githubusercontent.com/longzhou23/omp-zh-pack/main/install.sh | sh
 
 环境变量：
-  OMP_ZH_VERSION      发布标签，默认 v18.8.5-zh.1
+  OMP_ZH_VERSION      发布标签，默认 v18.8.5-zh.2
   OMP_ZH_INSTALL_DIR  安装目录，默认 $HOME/.local/bin
 
 安装前校验 SHA-256 和中文帮助；已有 omp 会保存为唯一备份。
@@ -28,7 +28,7 @@ HELP
     fail '仅支持可选参数 --help；请运行 sh install.sh --help。'
 fi
 
-version=${OMP_ZH_VERSION-v18.8.5-zh.1}
+version=${OMP_ZH_VERSION-v18.8.5-zh.2}
 case "$version" in
     v[0-9]*) ;;
     *) fail 'OMP_ZH_VERSION 必须是以 v 和数字开头的发布标签，例如 v18.8.5-zh.1。' ;;
@@ -37,21 +37,55 @@ case "$version" in
     *[!a-zA-Z0-9._-]*) fail 'OMP_ZH_VERSION 仅允许 ASCII 字母、数字、点、下划线和连字符；不允许路径或 URL。' ;;
 esac
 
-for command in uname curl sha256sum tar mktemp cp chmod mv mkdir rm grep getconf env cat; do
+for command in uname curl tar mktemp cp chmod mv mkdir rm grep env cat tr; do
     command -v "$command" >/dev/null 2>&1 || fail "缺少必要命令 $command；请先通过系统包管理器安装。"
 done
-[ "$(uname -s)" = Linux ] || fail '预编译包仅支持 Linux；其他系统请从源码构建。'
-case "$(uname -m)" in
-    x86_64|amd64) ;;
-    *) fail '预编译包仅支持 x86_64；其他架构请从源码构建。' ;;
+if command -v sha256sum >/dev/null 2>&1; then
+    hash_tool=sha256sum
+elif command -v shasum >/dev/null 2>&1; then
+    hash_tool=shasum
+else
+    fail '缺少 SHA-256 工具；请安装 sha256sum 或 shasum。'
+fi
+case "$(uname -s)" in
+    Linux)
+        platform=linux
+        case "$(uname -m)" in
+            x86_64|amd64) arch=x64 ;;
+            *) fail 'Linux 预编译包仅支持 x86_64；其他架构请从源码构建。' ;;
+        esac
+        command -v getconf >/dev/null 2>&1 || fail '缺少 getconf，无法确认 glibc。'
+        libc=$(getconf GNU_LIBC_VERSION 2>/dev/null) || fail '未检测到 glibc；musl/Alpine 不支持此预编译包，请在 glibc 系统安装或从源码构建。'
+        case "$libc" in
+            'glibc '*) ;;
+            *) fail '此预编译包要求 glibc，不支持 musl；请在 glibc 系统安装或从源码构建。' ;;
+        esac
+        [ -r /proc/cpuinfo ] || fail '无法读取 /proc/cpuinfo，不能确认 AVX2 支持；已取消安装。'
+        grep -Eq '(^|[[:space:]])avx2([[:space:]]|$)' /proc/cpuinfo || fail 'CPU 未提供 AVX2；此预编译包无法安全运行，请从源码构建适合该 CPU 的版本。'
+        mv_flags=-fT
+        ;;
+    Darwin)
+        platform=darwin
+        command -v sysctl >/dev/null 2>&1 || fail '缺少 macOS sysctl，无法确认硬件架构。'
+        case "$(uname -m)" in
+            arm64|aarch64) arch=arm64 ;;
+            x86_64|amd64)
+                # Rosetta 中 uname 会报告 x86_64，硬件能力仍能识别 Apple Silicon。
+                if [ "$(sysctl -n hw.optional.arm64 2>/dev/null || printf '0')" = 1 ]; then
+                    arch=arm64
+                else
+                    arch=x64
+                    cpu_features=$(sysctl -n machdep.cpu.leaf7_features 2>/dev/null) || fail '无法确认 Intel Mac 的 CPU 特性；已取消安装。'
+                    printf '%s\n' "$cpu_features" | grep -Eiq '(^|[[:space:]])avx2([[:space:]]|$)' || fail 'Intel Mac 预编译包需要 AVX2；请从源码构建适合该 CPU 的版本。'
+                fi
+                ;;
+            *) fail 'macOS 预编译包仅支持 Intel x86_64 和 Apple Silicon arm64。' ;;
+        esac
+        mv_flags=-fh
+        ;;
+    *) fail '此脚本支持 Linux 与 macOS；Windows 请使用仓库中的 install.ps1。' ;;
 esac
-libc=$(getconf GNU_LIBC_VERSION 2>/dev/null) || fail '未检测到 glibc；musl/Alpine 不支持此预编译包，请在 glibc 系统安装或从源码构建。'
-case "$libc" in
-    'glibc '*) ;;
-    *) fail '此预编译包要求 glibc，不支持 musl；请在 glibc 系统安装或从源码构建。' ;;
-esac
-[ -r /proc/cpuinfo ] || fail '无法读取 /proc/cpuinfo，不能确认 AVX2 支持；已取消安装。'
-grep -Eq '(^|[[:space:]])avx2([[:space:]]|$)' /proc/cpuinfo || fail 'CPU 未提供 AVX2；此预编译包无法安全运行，请从源码构建适合该 CPU 的版本。'
+asset=omp-zh-$platform-$arch.tar.gz
 
 if [ "${OMP_ZH_INSTALL_DIR+x}" = x ]; then
     install_dir=$OMP_ZH_INSTALL_DIR
@@ -88,7 +122,6 @@ case "$tmp_parent" in
     *) tmp_parent=$PWD/$tmp_parent ;;
 esac
 tmp=$(mktemp -d "$tmp_parent/omp-zh-install.XXXXXXXXXX") || fail '无法创建私有临时目录；请检查 TMPDIR 和磁盘空间。'
-asset=omp-zh-linux-x64.tar.gz
 url=https://github.com/longzhou23/omp-zh-pack/releases/download/$version
 printf '正在下载 OMP 中文包 %s…\n' "$version"
 # curl 默认仅对临时网络/HTTP 错误重试；不使用 --retry-all-errors。
@@ -109,9 +142,15 @@ while IFS=' ' read -r digest filename extra || [ -n "$digest$filename$extra" ]; 
             ;;
     esac
 done < "$tmp/SHA256SUMS"
-[ -n "$checksum" ] || fail 'SHA256SUMS 缺少 omp-zh-linux-x64.tar.gz 的精确文件名条目；已取消安装。'
-printf '%s  %s\n' "$checksum" "$asset" > "$tmp/verified.sha256"
-(cd "$tmp" && sha256sum --check --status verified.sha256) || fail '发行包 SHA-256 校验失败；未修改现有 omp，请重新下载或联系维护者。'
+[ -n "$checksum" ] || fail "SHA256SUMS 缺少 $asset 的精确文件名条目；已取消安装。"
+if [ "$hash_tool" = sha256sum ]; then
+    actual_checksum=$(sha256sum < "$tmp/$asset") || fail '无法计算发行包 SHA-256；未修改现有 omp。'
+else
+    actual_checksum=$(shasum -a 256 < "$tmp/$asset") || fail '无法计算发行包 SHA-256；未修改现有 omp。'
+fi
+actual_checksum=${actual_checksum%% *}
+checksum=$(printf '%s' "$checksum" | tr '[:upper:]' '[:lower:]')
+[ "$actual_checksum" = "$checksum" ] || fail '发行包 SHA-256 校验失败；未修改现有 omp，请重新下载或联系维护者。'
 
 # 不让 tar 创建归档中的任何路径或链接：只将固定名称的内容写入私有目录。
 for member in omp LICENSE BUN-LICENSE.md THIRD_PARTY_NOTICES.md THIRD-PARTY-NOTICES.txt VERSION UPSTREAM_VERSION UPSTREAM_COMMIT; do
@@ -146,8 +185,9 @@ if [ -e "$destination" ] || [ -L "$destination" ]; then
     unfinished_backup=
     printf '原程序已备份至：%s\n' "$backup"
 fi
-# -T 防止目标在检查后变成目录；同目录重命名可安全替换正在运行的程序。
-mv -fT -- "$staged" "$destination" || fail '无法原子替换 omp；现有程序未被覆盖，已创建的备份仍保留。'
+# Linux 的 -T 和 macOS 的 -h 避免跟随目录型目标链接；同目录重命名替换运行中的程序。
+[ ! -d "$destination" ] || fail '安装目标 omp 已变成目录；已取消安装，备份仍保留。'
+mv "$mv_flags" -- "$staged" "$destination" || fail '无法原子替换 omp；现有程序未被覆盖，已创建的备份仍保留。'
 staged=
 notices=$unfinished_notices
 unfinished_notices=
@@ -170,7 +210,7 @@ shell_quote() {
     done
 }
 if [ -n "$backup" ]; then
-    printf '恢复原程序（原子替换，使用此备份）：\n  mv -fT -- '
+    printf '恢复原程序（原子替换，使用此备份）：\n  mv %s -- ' "$mv_flags"
     shell_quote "$backup"
     printf ' '
     shell_quote "$destination"
