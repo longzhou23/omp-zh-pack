@@ -114,7 +114,7 @@ try {
     # Exercise the printed recovery operation while retaining the backup.
     $restore = $exe + '.restore.' + [Guid]::NewGuid().ToString('N')
     [IO.File]::Copy($backups[0].FullName, $restore, $false)
-    try { [IO.File]::Replace($restore, $exe, $null) }
+    try { [IO.File]::Replace($restore, $exe, [NullString]::Value) }
     finally { if ([IO.File]::Exists($restore)) { Remove-Item -LiteralPath $restore -Force } }
     Require ((Get-FileHash -LiteralPath $exe -Algorithm SHA256).Hash -ceq $hash) 'Recovery changed the previous executable content.'
     Require ([IO.File]::Exists($backups[0].FullName)) 'Recovery consumed the backup.'

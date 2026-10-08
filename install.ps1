@@ -225,7 +225,7 @@ namespace OmpZhInstaller {
             Write-Host (Get-Text '\u6062\u590d\u539f\u7a0b\u5e8f\uff08\u5148\u5173\u95ed omp\uff1b\u4fdd\u7559\u5907\u4efd\uff0c\u4e34\u65f6\u6587\u4ef6\u4e0e\u7a0b\u5e8f\u540c\u76ee\u5f55\uff09\uff1a')
             Write-Host ('  $restore = ' + (Quote-PS ($destination + '.restore.')) + ' + [Guid]::NewGuid().ToString(''N'')')
             Write-Host ('  [IO.File]::Copy(' + (Quote-PS $backup) + ', $restore, $false)')
-            Write-Host ('  try { [IO.File]::Replace($restore, ' + (Quote-PS $destination) + ', $null) } finally { if (Test-Path -LiteralPath $restore) { Remove-Item -LiteralPath $restore } }')
+            Write-Host ('  try { [IO.File]::Replace($restore, ' + (Quote-PS $destination) + ', [NullString]::Value) } finally { if (Test-Path -LiteralPath $restore) { Remove-Item -LiteralPath $restore } }')
         }
         Write-Host (Get-Text '\u4ec5\u4e3a\u5f53\u524d PowerShell \u7ec8\u7aef\u542f\u7528 PATH\uff08\u4e0d\u4fee\u6539\u7528\u6237/\u7cfb\u7edf PATH \u6216\u914d\u7f6e\u6587\u4ef6\uff09\uff1a')
         Write-Host ('  $env:PATH = ' + (Quote-PS ($installDir + ';')) + ' + $env:PATH')
