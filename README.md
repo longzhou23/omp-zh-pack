@@ -131,7 +131,7 @@ bash package.sh
 
 [跨平台发布工作流](.github/workflows/release.yml) 在 Linux、macOS Intel/Apple Silicon、Windows x64/ARM64 托管主机上分别构建和运行原生检查，全部成功后合并 SHA-256 并公开完整发行版，再从公开 GitHub URL 实测安装、重复备份和恢复。Windows 验证同时运行 PowerShell 5.1 与 PowerShell 7。推送与 `VERSION` 一致的 `v18.8.5-zh.*` 标签触发发布；手动选择 `build` 只构建，选择 `verify` 只验收已公开的 `VERSION`，均不会另行发布。
 
-五个平台的公开安装、原生 `--smoke-test`、备份与恢复已通过[原生主机验收](https://github.com/longzhou23/omp-zh-pack/actions/runs/37837868906)，Windows x64/ARM64 均覆盖 PowerShell 5.1/7、原样 `irm | iex`、带引号的路径、真实下载失败和文件占用时保留原程序。主分支源码变更自动验收当前已公开的版本；仅修改 Markdown 文档不会重复运行。
+`v18.8.5-zh.4` 的五平台原生构建、公开发行、安装后 `--smoke-test`、备份与恢复已全部通过[完整发行验收](https://github.com/longzhou23/omp-zh-pack/actions/runs/37838518563)。Windows x64/ARM64 均覆盖 PowerShell 5.1/7、原样 `irm | iex`、带引号的路径、真实下载失败和文件占用时保留原程序。主分支源码变更自动验收当前已公开的版本；仅修改 Markdown 文档不会重复运行。
 
 `v18.8.5-zh.1` 已在 Linux x86_64 上完成锁定源码的隔离构建、发行包校验、公开 GitHub 入口安装和安装后 `--smoke-test`。实测覆盖带空格及单引号的安装目录、符号链接原程序备份、重复安装不覆盖旧备份、运行中程序的原子替换与备份恢复；下载后人为破坏校验和时，安装器拒绝替换并保留原程序。不支持的平台、非法版本标签和目录型目标也已验证拒绝安装。
 
