@@ -1,4 +1,4 @@
-﻿& {
+& {
     # Windows PowerShell 5.1 / PowerShell 7; also supports irm ... | iex.
     $ErrorActionPreference = 'Stop'
     function Quote-PS([string] $Value) { "'" + $Value.Replace("'", "''") + "'" }
