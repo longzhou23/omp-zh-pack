@@ -7,7 +7,7 @@ import { isolatedEnv } from "./release-tools";
 if (process.platform !== "linux" && process.platform !== "darwin") throw new Error("Use the PowerShell verification helper on Windows");
 const version = process.env.OMP_ZH_VERSION ?? "";
 const ref = process.env.OMP_ZH_SOURCE_REF ?? "";
-if (!/^v18\.8\.5-zh\.[1-9][0-9]*$/.test(version) || !/^[0-9a-f]{40}$/.test(ref)) throw new Error("Published version and immutable source commit are required");
+if (!/^v18\.8\.6-zh\.[1-9][0-9]*$/.test(version) || !/^[0-9a-f]{40}$/.test(ref)) throw new Error("Published version and immutable source commit are required");
 const workspace = await mkdtemp(path.join(tmpdir(), "omp public verification-"));
 const hash = async (filename: string) => createHash("sha256").update(await readFile(filename)).digest("hex");
 try {
