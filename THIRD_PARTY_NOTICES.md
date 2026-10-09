@@ -2,7 +2,7 @@
 
 本项目是 OMP 的非官方简体中文终端界面汉化包，不代表或替代上游项目。
 
-- OMP / Oh My Pi：<https://github.com/can1357/oh-my-pi>，上游 `v18.8.5`，提交 `4bf0d9d3e9f910ef4af25dec9733fbb4d6912d4c`。
+- OMP / Oh My Pi：<https://github.com/can1357/oh-my-pi>，上游 `v18.8.6`，提交 `f068751e2f1dbdbc195977776d47a26db8697495`。
 - OMP 顶层许可证为 MIT，版权声明见本仓库 `LICENSE`。
 - 独立程序使用 Bun 运行时：<https://github.com/oven-sh/bun>；初始发布构建使用 Bun `1.3.14`。
 - Bun `1.3.14` 的原始授权说明见 `BUN-LICENSE.md`，来自 <https://github.com/oven-sh/bun/blob/bun-v1.3.14/LICENSE.md>。Bun 自身使用 MIT，但静态链接的 JavaScriptCore/WebKit 等依赖另有 LGPL 等许可证，不因本项目的 MIT 许可证而改变。

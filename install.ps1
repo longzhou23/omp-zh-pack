@@ -132,9 +132,9 @@ namespace OmpZhInstaller {
             'Arm64' { $arch = 'arm64' }
             default { throw ((Get-Text '\u4e0d\u652f\u6301\u6b64 Windows \u67b6\u6784\uff1a{0}\uff1b\u4ec5\u652f\u6301 x64 \u548c arm64\u3002') -f $architecture) }
         }
-        $version = 'v18.8.5-zh.4'
+        $version = 'v18.8.6-zh.1'
         if (Test-Path Env:OMP_ZH_VERSION) { $version = $env:OMP_ZH_VERSION }
-        if ($version -cnotmatch '^v[0-9][A-Za-z0-9._-]*$') { throw (Get-Text 'OMP_ZH_VERSION \u5fc5\u987b\u662f\u5b89\u5168\u7684\u53d1\u5e03\u6807\u7b7e\uff0c\u4f8b\u5982 v18.8.5-zh.4\u3002') }
+        if ($version -cnotmatch '^v[0-9][A-Za-z0-9._-]*$') { throw (Get-Text 'OMP_ZH_VERSION \u5fc5\u987b\u662f\u5b89\u5168\u7684\u53d1\u5e03\u6807\u7b7e\uff0c\u4f8b\u5982 v18.8.6-zh.1\u3002') }
         $installDir = Join-Path $HOME '.local/bin'
         if (Test-Path Env:OMP_ZH_INSTALL_DIR) { $installDir = $env:OMP_ZH_INSTALL_DIR }
         if ([string]::IsNullOrWhiteSpace($installDir)) { throw (Get-Text 'OMP_ZH_INSTALL_DIR \u4e0d\u80fd\u4e3a\u7a7a\u3002') }
@@ -188,11 +188,11 @@ namespace OmpZhInstaller {
             if ($seen.Count -ne $members.Count) { throw (Get-Text 'ZIP \u7f3a\u5c11\u5fc5\u9700\u7684\u7a0b\u5e8f\u3001\u6388\u6743\u58f0\u660e\u6216\u7248\u672c\u6587\u4ef6\u3002') }
         } finally { $zip.Dispose() }
         if ([IO.File]::ReadAllText((Join-Path $temp 'VERSION')).Trim() -cne $version) { throw (Get-Text '\u53d1\u884c\u5305 VERSION \u4e0e\u53d1\u5e03\u6807\u7b7e\u4e0d\u4e00\u81f4\u3002') }
-        if ([IO.File]::ReadAllText((Join-Path $temp 'UPSTREAM_VERSION')).Trim() -cne 'v18.8.5') { throw (Get-Text '\u53d1\u884c\u5305\u4e0a\u6e38\u7248\u672c\u4e0d\u662f v18.8.5\u3002') }
-        if ([IO.File]::ReadAllText((Join-Path $temp 'UPSTREAM_COMMIT')).Trim() -cne '4bf0d9d3e9f910ef4af25dec9733fbb4d6912d4c') { throw (Get-Text '\u53d1\u884c\u5305 UPSTREAM_COMMIT \u4e0e\u56fa\u5b9a\u4e0a\u6e38\u63d0\u4ea4\u4e0d\u4e00\u81f4\u3002') }
+        if ([IO.File]::ReadAllText((Join-Path $temp 'UPSTREAM_VERSION')).Trim() -cne 'v18.8.6') { throw (Get-Text '\u53d1\u884c\u5305\u4e0a\u6e38\u7248\u672c\u4e0d\u662f v18.8.6\u3002') }
+        if ([IO.File]::ReadAllText((Join-Path $temp 'UPSTREAM_COMMIT')).Trim() -cne 'f068751e2f1dbdbc195977776d47a26db8697495') { throw (Get-Text '\u53d1\u884c\u5305 UPSTREAM_COMMIT \u4e0e\u56fa\u5b9a\u4e0a\u6e38\u63d0\u4ea4\u4e0d\u4e00\u81f4\u3002') }
         foreach ($dir in @('home', 'config', 'data', 'cache', 'state', 'agent')) { [IO.Directory]::CreateDirectory((Join-Path $temp $dir)) | Out-Null }
         $versionOutput = Run-Candidate '--version'
-        if ($versionOutput -notmatch '(?<![0-9.])18\.8\.5(?![0-9.])') { throw (Get-Text '\u5019\u9009\u7a0b\u5e8f\u7248\u672c\u4e0e\u4e0a\u6e38\u7248\u672c\u4e0d\u4e00\u81f4\u3002') }
+        if ($versionOutput -notmatch '(?<![0-9.])18\.8\.6(?![0-9.])') { throw (Get-Text '\u5019\u9009\u7a0b\u5e8f\u7248\u672c\u4e0e\u4e0a\u6e38\u7248\u672c\u4e0d\u4e00\u81f4\u3002') }
         $helpOutput = Run-Candidate '--help'
         if ($helpOutput -notmatch '(?m)^\u7528\u6cd5\r?$' -or $helpOutput -notmatch '(?m)^\u9009\u9879\r?$') { throw (Get-Text '\u5019\u9009\u7a0b\u5e8f\u672a\u663e\u793a\u9884\u671f\u7684\u4e2d\u6587\u5e2e\u52a9\u3002') }
         [IO.Directory]::CreateDirectory($installDir) | Out-Null

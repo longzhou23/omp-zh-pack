@@ -16,12 +16,12 @@ if [[ ${1:-} == --help || ${1:-} == -h ]]; then usage; exit 0; fi
 repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)
 for tool in git bun mktemp cp mv chmod; do command -v "$tool" >/dev/null || fail "缺少 $tool"; done
 [[ $(bun --version) == 1.3.14 ]] || fail '请使用 Bun 1.3.14（与发布包运行时授权版本一致）。'
-for file in UPSTREAM_VERSION UPSTREAM_COMMIT VERSION patches/omp-v18.8.5-zh.patch; do
+for file in UPSTREAM_VERSION UPSTREAM_COMMIT VERSION patches/omp-v18.8.6-zh.patch; do
   [[ -s "$repo/$file" ]] || fail "缺少仓库文件：$file"
 done
 version=$(<"$repo/UPSTREAM_VERSION")
 commit=$(<"$repo/UPSTREAM_COMMIT")
-[[ $version == v18.8.5 && $commit =~ ^[0-9a-f]{40}$ ]] || fail '上游版本元数据无效。'
+[[ $version == v18.8.6 && $commit =~ ^[0-9a-f]{40}$ ]] || fail '上游版本元数据无效。'
 target=$(bun "$repo/scripts/release-tools.ts" host)
 cache=${OMP_ZH_NATIVES_DIR:-${HOME:?}/.omp/natives/${version#v}}
 [[ -z ${OMP_ZH_NATIVES_DIR:-} || -d $cache ]] || fail "原生缓存目录不存在：$cache"
@@ -35,8 +35,8 @@ trap 'exit 143' TERM
 checkout=$workspace/upstream
 git clone -c core.autocrlf=false --depth 1 --branch "$version" --single-branch https://github.com/can1357/oh-my-pi.git "$checkout"
 [[ $(git -C "$checkout" rev-parse HEAD) == "$commit" ]] || fail '官方标签提交与 UPSTREAM_COMMIT 不一致。'
-git -C "$checkout" apply --check "$repo/patches/omp-v18.8.5-zh.patch"
-git -C "$checkout" apply "$repo/patches/omp-v18.8.5-zh.patch"
+git -C "$checkout" apply --check "$repo/patches/omp-v18.8.6-zh.patch"
+git -C "$checkout" apply "$repo/patches/omp-v18.8.6-zh.patch"
 (cd -- "$checkout" && bun install --frozen-lockfile --ignore-scripts)
 bun "$repo/scripts/release-tools.ts" native "$checkout" "$cache" "${version#v}"
 # Match upstream's production release compiler (including identifier minification

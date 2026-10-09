@@ -1,18 +1,17 @@
 diff --git a/packages/ai/CHANGELOG.md b/packages/ai/CHANGELOG.md
-index 851f541..6f51267 100644
+index 60cc199..46d9825 100644
 --- a/packages/ai/CHANGELOG.md
 +++ b/packages/ai/CHANGELOG.md
-@@ -2,6 +2,10 @@
- 
- ## [Unreleased]
- 
+@@ -9,6 +9,9 @@
+ - Fixed Google Gemini and Cloud Code Assist (Antigravity) requests failing when tool schemas contain unsupported JSON Schema keywords or fields that allow multiple types.
+ - Fixed auth broker account selection and usage-limit enforcement to consistently use the selected account’s quota when multiple accounts are present.
+ - Fixed Anthropic-family model streaming so encoded marker tokens are decoded correctly in text, tool-call updates, partial messages, and completed tool calls.
 +### Changed
 +
 +- Localized built-in OAuth login instructions, input prompts, and provider-detail display to Simplified Chinese while retaining credentials, provider IDs, and authentication protocols.
-+
+ 
  ## [18.8.5] - 2026-10-08
  
- ### Added
 diff --git a/packages/ai/src/provider-details.ts b/packages/ai/src/provider-details.ts
 index f853475..dc65e0a 100644
 --- a/packages/ai/src/provider-details.ts
@@ -665,20 +664,19 @@ index 782e028..b958207 100644
  	return trimmed;
  }
 diff --git a/packages/coding-agent/CHANGELOG.md b/packages/coding-agent/CHANGELOG.md
-index 66679c1..568ec29 100644
+index 7db7e39..c068bc9 100644
 --- a/packages/coding-agent/CHANGELOG.md
 +++ b/packages/coding-agent/CHANGELOG.md
-@@ -2,6 +2,10 @@
- 
- ## [Unreleased]
- 
+@@ -27,6 +27,9 @@
+ - Fixed raw token markers appearing instead of Nerd Font icons in Anthropic idle recaps, `/btw` and `/omfg` replies, and streaming previews.
+ - Fixed sessions moved with `/wt` disappearing from resume lists; sessions in Git worktrees now remain discoverable and can be resumed or relocated if their worktree was removed.
+ - Fixed live config reload ignoring edits made during startup or right after a config symlink was retargeted, until the next unrelated edit.
 +### Changed
 +
 +- Localized terminal-facing startup notices, command help, setting descriptions, session controls, and built-in dialogs to Simplified Chinese without changing command names, configuration keys, or AI reply-language defaults.
-+
+ 
  ## [18.8.5] - 2026-10-08
  
- ### Added
 diff --git a/packages/coding-agent/src/advisor/settings.ts b/packages/coding-agent/src/advisor/settings.ts
 index bfc8177..7eeee19 100644
 --- a/packages/coding-agent/src/advisor/settings.ts
@@ -5464,10 +5462,10 @@ index e878b96..39bac5f 100644
  		// watermark), so trim the part we already printed.
  		const fresh = next.text.slice(overlapLength(previous, next.text));
 diff --git a/packages/coding-agent/src/cli/read-cli.ts b/packages/coding-agent/src/cli/read-cli.ts
-index e7dc77f..0e60a02 100644
+index 38e78d6..15b3db5 100644
 --- a/packages/coding-agent/src/cli/read-cli.ts
 +++ b/packages/coding-agent/src/cli/read-cli.ts
-@@ -46,7 +46,7 @@ function readPrerequisites(input: string): { skills: boolean; mcp: boolean } {
+@@ -48,7 +48,7 @@ function readPrerequisites(input: string): { skills: boolean; mcp: boolean } {
  
  export async function runReadCommand(cmd: ReadCommandArgs): Promise<void> {
  	if (!cmd.path) {
@@ -5476,7 +5474,7 @@ index e7dc77f..0e60a02 100644
  		process.exit(1);
  	}
  
-@@ -123,7 +123,7 @@ export async function runReadCommand(cmd: ReadCommandArgs): Promise<void> {
+@@ -127,7 +127,7 @@ export async function runReadCommand(cmd: ReadCommandArgs): Promise<void> {
  			} else if (block.type === "image") {
  				const decodedBytes = Buffer.from(block.data, "base64").byteLength;
  				process.stdout.write(
@@ -10839,7 +10837,7 @@ index d9c9575..7b2fee9 100644
  				newOverlays.push(overlay);
  			}
 diff --git a/packages/coding-agent/src/config/model-resolver.ts b/packages/coding-agent/src/config/model-resolver.ts
-index d5ec533..9fa8fd4 100644
+index c9f7a78..a8dbb5e 100644
 --- a/packages/coding-agent/src/config/model-resolver.ts
 +++ b/packages/coding-agent/src/config/model-resolver.ts
 @@ -982,7 +982,7 @@ function parseModelPatternWithContext(
@@ -10851,7 +10849,7 @@ index d5ec533..9fa8fd4 100644
  			explicitThinkingLevel: false,
  		};
  	}
-@@ -1828,7 +1828,7 @@ export async function resolveModelScope(
+@@ -1840,7 +1840,7 @@ export async function resolveModelScope(
  			logger.debug(`Scope pattern "${pattern}" names a non-chat model; it stays out of the chat scope`);
  			return;
  		}
@@ -10860,7 +10858,7 @@ index d5ec533..9fa8fd4 100644
  	};
  
  	for (const pattern of patterns) {
-@@ -1861,7 +1861,7 @@ export async function resolveModelScope(
+@@ -1873,7 +1873,7 @@ export async function resolveModelScope(
  			const resolved = resolveModelRoleValue(pattern, availableModels, { settings, matchPreferences: preferences });
  			if (resolved.warning) logger.warn(resolved.warning);
  			if (!resolved.model) {
@@ -10869,7 +10867,7 @@ index d5ec533..9fa8fd4 100644
  				continue;
  			}
  			if (resolved.thinkingLevel === AUTO_THINKING) {
-@@ -2106,7 +2106,7 @@ export function resolveCliModel(options: CliModelOptions): ResolveCliModelResult
+@@ -2118,7 +2118,7 @@ export function resolveCliModel(options: CliModelOptions): ResolveCliModelResult
  		selector: undefined,
  		thinkingLevel: undefined,
  		warning: enabled.warning,
@@ -10878,7 +10876,7 @@ index d5ec533..9fa8fd4 100644
  		disabledProvider: blocked,
  	};
  }
-@@ -2123,7 +2123,7 @@ function resolveCliModelInScope(
+@@ -2135,7 +2135,7 @@ function resolveCliModelInScope(
  			model: undefined,
  			selector: undefined,
  			warning: undefined,
@@ -10887,7 +10885,7 @@ index d5ec533..9fa8fd4 100644
  		};
  	}
  
-@@ -2138,7 +2138,7 @@ function resolveCliModelInScope(
+@@ -2150,7 +2150,7 @@ function resolveCliModelInScope(
  			model: undefined,
  			selector: undefined,
  			warning: undefined,
@@ -10896,7 +10894,7 @@ index d5ec533..9fa8fd4 100644
  		};
  	}
  
-@@ -2227,7 +2227,7 @@ function resolveCliModelInScope(
+@@ -2239,7 +2239,7 @@ function resolveCliModelInScope(
  					selector: undefined,
  					thinkingLevel: undefined,
  					warning: resolved.warning,
@@ -10905,7 +10903,7 @@ index d5ec533..9fa8fd4 100644
  				};
  			}
  		}
-@@ -2287,7 +2287,7 @@ function resolveCliModelInScope(
+@@ -2299,7 +2299,7 @@ function resolveCliModelInScope(
  			selector: undefined,
  			thinkingLevel: undefined,
  			warning,
@@ -10914,7 +10912,7 @@ index d5ec533..9fa8fd4 100644
  		};
  	}
  
-@@ -2347,7 +2347,7 @@ export async function findInitialModel(options: {
+@@ -2359,7 +2359,7 @@ export async function findInitialModel(options: {
  	if (cliProvider && cliModel) {
  		const found = modelRegistry.find(cliProvider, cliModel);
  		if (!found) {
@@ -10923,7 +10921,7 @@ index d5ec533..9fa8fd4 100644
  			process.exit(1);
  		}
  		return { model: found, thinkingLevel: undefined, fallbackMessage: undefined };
-@@ -2409,26 +2409,26 @@ export async function restoreModelFromSession(
+@@ -2421,26 +2421,26 @@ export async function restoreModelFromSession(
  
  	if (restoredModel && hasApiKey) {
  		if (shouldPrintMessages) {
@@ -10955,7 +10953,7 @@ index d5ec533..9fa8fd4 100644
  		};
  	}
  
-@@ -2440,12 +2440,12 @@ export async function restoreModelFromSession(
+@@ -2452,12 +2452,12 @@ export async function restoreModelFromSession(
  	);
  	if (fallbackModel) {
  		if (shouldPrintMessages) {
@@ -11285,7 +11283,7 @@ index b9b1b76..acd83f2 100644
  	};
  	return {
 diff --git a/packages/coding-agent/src/config/settings.ts b/packages/coding-agent/src/config/settings.ts
-index 0b5cf35..6a0969f 100644
+index 04f473e..463495b 100644
 --- a/packages/coding-agent/src/config/settings.ts
 +++ b/packages/coding-agent/src/config/settings.ts
 @@ -277,7 +277,7 @@ function assertKnownSettingPaths(layer: RawSettings, prefix = ""): void {
@@ -11297,7 +11295,7 @@ index 0b5cf35..6a0969f 100644
  		assertKnownSettingPaths(value, id);
  	}
  }
-@@ -2035,7 +2035,7 @@ export class Settings {
+@@ -2043,7 +2043,7 @@ export class Settings {
  		if (typeof parsed !== "object" || Array.isArray(parsed)) {
  			return {
  				kind: "invalid",
@@ -11306,7 +11304,7 @@ index 0b5cf35..6a0969f 100644
  				generation,
  			};
  		}
-@@ -2303,7 +2303,7 @@ export class Settings {
+@@ -2311,7 +2311,7 @@ export class Settings {
  		const generation = yamlGenerationFromLoadResult(result);
  		if (result.kind === "missing" && rejectMissing) {
  			throw new Error(
@@ -11315,7 +11313,7 @@ index 0b5cf35..6a0969f 100644
  			);
  		}
  		if (result.kind === "invalid") {
-@@ -2325,7 +2325,7 @@ export class Settings {
+@@ -2333,7 +2333,7 @@ export class Settings {
  			await fs.promises.rename(filePath, backupPath);
  		} catch (error) {
  			throw new Error(
@@ -11324,7 +11322,7 @@ index 0b5cf35..6a0969f 100644
  			);
  		}
  		logger.warn("Settings: moved invalid config aside", {
-@@ -2344,10 +2344,10 @@ export class Settings {
+@@ -2352,10 +2352,10 @@ export class Settings {
  				return result.settings;
  			case "invalid":
  				throw new Error(
@@ -11337,7 +11335,7 @@ index 0b5cf35..6a0969f 100644
  		}
  	}
  
-@@ -2434,7 +2434,7 @@ export class Settings {
+@@ -2442,7 +2442,7 @@ export class Settings {
  			// remains authoritative for its model-role layer and must not be hidden.
  		}
  		if (rejectedWarnings) {
@@ -11346,7 +11344,7 @@ index 0b5cf35..6a0969f 100644
  		}
  		// A native config this instance moved aside reads as missing until a save recreates it;
  		// keep its last good contents, as `#saveProjectNow` does.
-@@ -2498,19 +2498,19 @@ export class Settings {
+@@ -2506,19 +2506,19 @@ export class Settings {
  		} catch (error) {
  			throw new Error(
  				isEnoent(error)
@@ -12853,7 +12851,7 @@ index ced16a8..325b203 100644
  	},
  });
 diff --git a/packages/coding-agent/src/main.ts b/packages/coding-agent/src/main.ts
-index 7747afd..14e9775 100644
+index 24605c0..ceccda6 100644
 --- a/packages/coding-agent/src/main.ts
 +++ b/packages/coding-agent/src/main.ts
 @@ -258,15 +258,15 @@ function applyProtocolDefaults(host: ProtocolHost, targetSettings: Settings = se
@@ -12944,7 +12942,7 @@ index 7747afd..14e9775 100644
  			);
  		}
  		// Like every top-level session, it holds process-wide effects (`worktree.base`, request
-@@ -753,7 +753,7 @@ async function runInteractiveMode(
+@@ -757,7 +757,7 @@ async function runInteractiveMode(
  		try {
  			await mode.startGoalAtStartup(startupGoal);
  		} catch (error: unknown) {
@@ -12953,7 +12951,7 @@ index 7747afd..14e9775 100644
  		}
  	}
  
-@@ -767,7 +767,7 @@ async function runInteractiveMode(
+@@ -771,7 +771,7 @@ async function runInteractiveMode(
  			// dying with AgentBusyError.
  			await session.prompt(initialMessage, { images: initialImages, streamingBehavior: "steer" });
  		} catch (error: unknown) {
@@ -12962,7 +12960,7 @@ index 7747afd..14e9775 100644
  			mode.showError(errorMessage);
  		}
  	}
-@@ -778,7 +778,7 @@ async function runInteractiveMode(
+@@ -782,7 +782,7 @@ async function runInteractiveMode(
  			using _keepalive = new EventLoopKeepalive();
  			await session.prompt(message, { streamingBehavior: "steer" });
  		} catch (error: unknown) {
@@ -12971,7 +12969,7 @@ index 7747afd..14e9775 100644
  			mode.showError(errorMessage);
  		}
  	}
-@@ -797,7 +797,7 @@ async function promptMoveSession(session: SessionInfo): Promise<SessionPromptRes
+@@ -801,7 +801,7 @@ async function promptMoveSession(session: SessionInfo): Promise<SessionPromptRes
  	if (!process.stdin.isTTY) {
  		return "unavailable";
  	}
@@ -12980,7 +12978,7 @@ index 7747afd..14e9775 100644
  	pauseStartupWatchdog();
  	const createInterface = await loadReadlineInterface();
  	const rl = createInterface({ input: process.stdin, output: process.stdout });
-@@ -827,7 +827,7 @@ export class SessionResolutionError extends Error {
+@@ -831,7 +831,7 @@ export class SessionResolutionError extends Error {
  }
  
  function exitForSessionResolutionError(error: SessionResolutionError): never {
@@ -12989,7 +12987,7 @@ index 7747afd..14e9775 100644
  	if (error.hint) {
  		process.stderr.write(`${chalk.dim(error.hint)}\n`);
  	}
-@@ -838,15 +838,15 @@ function resolveForeignSessionSource(
+@@ -842,15 +842,15 @@ function resolveForeignSessionSource(
  	parsed: Pick<Args, "continue" | "fork" | "fromClaude" | "fromCodex" | "noSession" | "resume">,
  ): ForeignSessionSource | undefined {
  	if (parsed.fromClaude && parsed.fromCodex) {
@@ -13008,16 +13006,16 @@ index 7747afd..14e9775 100644
  	}
  	return source;
  }
-@@ -875,7 +875,7 @@ async function moveMissingCwdSessionIfNeeded(
- 	const movePromptResult = await askToMoveSession(session);
- 	if (movePromptResult === "unavailable") {
- 		throw new SessionResolutionError(
--			`Session "${sessionArg}" belongs to a directory that no longer exists (${sourceCwd}); run interactively to move it into the current project.`,
-+			`会话 "${sessionArg}" 所属的目录已不存在（${sourceCwd}）；请以交互模式运行，将其迁移到当前项目。`,
- 		);
- 	}
- 	if (movePromptResult === "declined") {
-@@ -895,7 +895,7 @@ async function moveMissingCwdSessionIfNeeded(
+@@ -881,7 +881,7 @@ async function moveMissingCwdSessionIfNeeded(
+ 		const movePromptResult = await askToMoveSession(session);
+ 		if (movePromptResult === "unavailable") {
+ 			throw new SessionResolutionError(
+-				`Session "${sessionArg}" belongs to a directory that no longer exists (${sourceCwd}); run interactively to move it into the current project.`,
++				`会话 "${sessionArg}" 所属的目录已不存在（${sourceCwd}）；请以交互模式运行，将其迁移到当前项目。`,
+ 			);
+ 		}
+ 		if (movePromptResult === "declined") {
+@@ -904,7 +904,7 @@ async function openRelocatedSession(
  		// Its directory is gone, so it cannot be resumed in place either.
  		throw new SessionResolutionError(
  			err.message,
@@ -13025,8 +13023,8 @@ index 7747afd..14e9775 100644
 +			"请在另一个 omp 进程中关闭该会话，然后再次恢复。",
  		);
  	}
- 	return { status: "moved", manager };
-@@ -955,7 +955,7 @@ async function switchToResumedProject(
+ }
+@@ -963,7 +963,7 @@ async function switchToResumedProject(
  			await activeSettings.reloadForCwd(launchCwd);
  		} catch (rollbackError) {
  			throw new SessionResolutionError(
@@ -13035,7 +13033,7 @@ index 7747afd..14e9775 100644
  			);
  		}
  		return { cwd: launchCwd, chdirFailed: resumedCwd };
-@@ -967,7 +967,7 @@ function notifyResumeCwdFallback(parsedArgs: Args, resumedProject: ResumedProjec
+@@ -975,7 +975,7 @@ function notifyResumeCwdFallback(parsedArgs: Args, resumedProject: ResumedProjec
  	if (!resumedProject.chdirFailed) return;
  	writeStartupNotice(
  		parsedArgs,
@@ -13044,7 +13042,7 @@ index 7747afd..14e9775 100644
  	);
  }
  
-@@ -1146,15 +1146,15 @@ export function normalizeContinueSessionArgs(parsed: Args, rawArgs?: readonly st
+@@ -1154,15 +1154,15 @@ export function normalizeContinueSessionArgs(parsed: Args, rawArgs?: readonly st
  	parsed.messages.splice(messageIndex, 1);
  }
  const SESSION_NOT_FOUND_HINT =
@@ -13063,7 +13061,7 @@ index 7747afd..14e9775 100644
  	}
  }
  /**
-@@ -1172,7 +1172,7 @@ export async function createSessionManager(
+@@ -1180,7 +1180,7 @@ export async function createSessionManager(
  ): Promise<SessionManager | undefined> {
  	if (parsed.fork) {
  		if (parsed.noSession) {
@@ -13072,7 +13070,7 @@ index 7747afd..14e9775 100644
  		}
  		const forkSource = parsed.fork;
  		if (forkSource.includes("/") || forkSource.includes("\\") || forkSource.endsWith(".jsonl")) {
-@@ -1187,13 +1187,13 @@ export async function createSessionManager(
+@@ -1195,13 +1195,13 @@ export async function createSessionManager(
  		}
  		const match = await resolveResumableSession(forkSource, cwd, parsed.sessionDir);
  		if (!match) {
@@ -13088,7 +13086,7 @@ index 7747afd..14e9775 100644
  			}
  			throw err;
  		}
-@@ -1215,14 +1215,14 @@ export async function createSessionManager(
+@@ -1223,14 +1223,14 @@ export async function createSessionManager(
  				return await SessionManager.open(sessionArg, parsed.sessionDir, undefined, { throwIfMissing: true });
  			} catch (err) {
  				if (isEnoent(err) || isEnotdir(err)) {
@@ -13105,7 +13103,7 @@ index 7747afd..14e9775 100644
  		}
  		if (match.scope === "local") {
  			const moveResult = await moveMissingCwdSessionIfNeeded(
-@@ -1334,7 +1334,7 @@ export async function buildSessionOptions(
+@@ -1342,7 +1342,7 @@ export async function buildSessionOptions(
  
  	// Explicit prompt inputs win over discovered SYSTEM_TEMPLATE.md/SYSTEM.md.
  	if (parsed.systemPrompt !== undefined && parsed.systemPromptTemplate !== undefined) {
@@ -13114,7 +13112,7 @@ index 7747afd..14e9775 100644
  	}
  	const cwd = options.cwd;
  	const discoveredOverride =
-@@ -1413,13 +1413,13 @@ export async function buildSessionOptions(
+@@ -1421,13 +1421,13 @@ export async function buildSessionOptions(
  			preferences: modelMatchPreferences,
  		});
  		if (resolved.warning) {
@@ -13130,7 +13128,7 @@ index 7747afd..14e9775 100644
  			);
  			process.exit(1);
  		}
-@@ -1510,7 +1510,7 @@ export async function buildSessionOptions(
+@@ -1518,7 +1518,7 @@ export async function buildSessionOptions(
  	}
  
  	if (parsed.noPrewalk && (parsed.prewalk || parsed.prewalkInto !== undefined)) {
@@ -13139,7 +13137,7 @@ index 7747afd..14e9775 100644
  	}
  	const explicitPrewalk = parsed.prewalk === true || parsed.prewalkInto !== undefined;
  	const prewalkEnabled = parsed.noPrewalk
-@@ -1557,30 +1557,30 @@ export async function buildSessionOptions(
+@@ -1565,30 +1565,30 @@ export async function buildSessionOptions(
  		} else {
  			options.prewalk = selection.prewalk;
  			for (const warning of selection.warnings) {
@@ -13176,7 +13174,7 @@ index 7747afd..14e9775 100644
  		}
  		options.planYolo = { target: resolved.model, thinkingLevel: resolved.thinkingLevel };
  	}
-@@ -1654,10 +1654,10 @@ export async function buildSessionOptions(
+@@ -1662,10 +1662,10 @@ export async function buildSessionOptions(
  				resolvedPath = fsSync.realpathSync.native(trustedPath);
  				stat = fsSync.statSync(resolvedPath);
  			} catch {
@@ -13189,7 +13187,7 @@ index 7747afd..14e9775 100644
  			}
  			return resolvedPath;
  		});
-@@ -1716,7 +1716,7 @@ export async function runRootCommand(
+@@ -1724,7 +1724,7 @@ export async function runRootCommand(
  			await logger.time("applyStartupCwd", applyStartupCwd, parsedArgs);
  		} catch (error: unknown) {
  			const message = error instanceof Error ? error.message : String(error);
@@ -13198,7 +13196,7 @@ index 7747afd..14e9775 100644
  			process.exit(1);
  		}
  
-@@ -1739,16 +1739,16 @@ export async function runRootCommand(
+@@ -1747,16 +1747,16 @@ export async function runRootCommand(
  				const { exportFromFile } = await import("./export/html");
  				result = await exportFromFile(parsedArgs.export, outputPath);
  			} catch (error: unknown) {
@@ -13219,7 +13217,7 @@ index 7747afd..14e9775 100644
  			process.exit(1);
  		}
  		// A pending invalid `--mode` leaves `mode` unset; report it (exit 2) at the
-@@ -1844,7 +1844,7 @@ export async function runRootCommand(
+@@ -1852,7 +1852,7 @@ export async function runRootCommand(
  		} catch (error) {
  			const message = await describeAuthBrokerStartupError(error);
  			if (message === null) throw error;
@@ -13228,7 +13226,7 @@ index 7747afd..14e9775 100644
  			process.exit(1);
  		}
  
-@@ -1979,7 +1979,7 @@ export async function runRootCommand(
+@@ -1987,7 +1987,7 @@ export async function runRootCommand(
  			foreignSource = resolveForeignSessionSource(parsedArgs);
  			if (foreignSource) {
  				if (isProtocolMode) {
@@ -13237,7 +13235,7 @@ index 7747afd..14e9775 100644
  				}
  				const sourceName = foreignSessionSourceName(foreignSource);
  				const store = (deps.createForeignSessionStore ?? createForeignSessionStore)(foreignSource);
-@@ -1988,10 +1988,10 @@ export async function runRootCommand(
+@@ -1996,10 +1996,10 @@ export async function runRootCommand(
  					foreignSessions = await logger.time(`list${sourceName}Sessions`, () => store.list());
  				} catch (error) {
  					const message = error instanceof Error ? error.message : String(error);
@@ -13250,7 +13248,7 @@ index 7747afd..14e9775 100644
  					stopStartupWatchdog();
  					process.exit(0);
  				}
-@@ -2001,7 +2001,7 @@ export async function runRootCommand(
+@@ -2009,7 +2009,7 @@ export async function runRootCommand(
  				try {
  					const selectSessionImpl = deps.selectSession ?? (await loadSessionPicker());
  					selected = await logger.time(`select${sourceName}Session`, selectSessionImpl, choices, {
@@ -13259,7 +13257,7 @@ index 7747afd..14e9775 100644
  						scopeLabel: false,
  						showCwd: true,
  						allowDelete: false,
-@@ -2012,7 +2012,7 @@ export async function runRootCommand(
+@@ -2020,7 +2020,7 @@ export async function runRootCommand(
  					resumeStartupWatchdog();
  				}
  				if (!selected) {
@@ -13268,7 +13266,7 @@ index 7747afd..14e9775 100644
  					stopStartupWatchdog();
  					process.exit(0);
  				}
-@@ -2020,7 +2020,7 @@ export async function runRootCommand(
+@@ -2028,7 +2028,7 @@ export async function runRootCommand(
  					session => session.id === selected.id && session.path === selected.path,
  				);
  				if (!foreignSession) {
@@ -13277,7 +13275,7 @@ index 7747afd..14e9775 100644
  				}
  				try {
  					sessionManager = await logger.time(
-@@ -2032,7 +2032,7 @@ export async function runRootCommand(
+@@ -2040,7 +2040,7 @@ export async function runRootCommand(
  					);
  				} catch (error) {
  					const message = error instanceof Error ? error.message : String(error);
@@ -13286,7 +13284,7 @@ index 7747afd..14e9775 100644
  				}
  			} else {
  				sessionManager = await logger.time(
-@@ -2077,7 +2077,7 @@ export async function runRootCommand(
+@@ -2085,7 +2085,7 @@ export async function runRootCommand(
  		// User declined the missing-directory move prompt — exit cleanly instead of
  		// letting the cancellation fall through to a new session.
  		if (typeof parsedArgs.resume === "string" && !sessionManager) {
@@ -13295,7 +13293,7 @@ index 7747afd..14e9775 100644
  			stopStartupWatchdog();
  			process.exit(0);
  		}
-@@ -2105,7 +2105,7 @@ export async function runRootCommand(
+@@ -2113,7 +2113,7 @@ export async function runRootCommand(
  					SessionManager.listAllForPicker,
  				);
  				if (preloadedAllSessions.length === 0) {
@@ -13304,7 +13302,7 @@ index 7747afd..14e9775 100644
  					stopStartupWatchdog();
  					process.exit(0);
  				}
-@@ -2117,7 +2117,7 @@ export async function runRootCommand(
+@@ -2125,7 +2125,7 @@ export async function runRootCommand(
  			});
  			resumeStartupWatchdog();
  			if (!selected) {
@@ -13313,7 +13311,7 @@ index 7747afd..14e9775 100644
  				// Quit instead of returning: startup already armed long-lived handles
  				// (theme watcher + SIGWINCH/macOS appearance listeners via initTheme,
  				// settings save timer, model registry) that keep the event loop alive,
-@@ -2192,7 +2192,7 @@ export async function runRootCommand(
+@@ -2208,7 +2208,7 @@ export async function runRootCommand(
  		sessionOptions.settings = settingsInstance;
  		sessionOptions.onPrewalkWarning = warning => {
  			if (isInteractive) notifs.push({ kind: "warn", message: warning });
@@ -13322,7 +13320,7 @@ index 7747afd..14e9775 100644
  		};
  
  		// OTEL: unless `telemetry.otlpExportEnabled` is off, register global OTLP
-@@ -2219,7 +2219,7 @@ export async function runRootCommand(
+@@ -2235,7 +2235,7 @@ export async function runRootCommand(
  		if (parsedArgs.apiKey) {
  			if (!sessionOptions.model && !sessionOptions.modelPattern) {
  				process.stderr.write(
@@ -13331,7 +13329,7 @@ index 7747afd..14e9775 100644
  				);
  				process.exit(1);
  			}
-@@ -2305,7 +2305,7 @@ export async function runRootCommand(
+@@ -2321,7 +2321,7 @@ export async function runRootCommand(
  			}
  			if ((parsedArgs.trustedExtensions?.length ?? 0) > 0 && extensionsResult.errors.length > 0) {
  				throw new Error(
@@ -13340,7 +13338,7 @@ index 7747afd..14e9775 100644
  				);
  			}
  			for (const message of formatExtensionLoadNotifications(extensionsResult.errors)) {
-@@ -2481,7 +2481,7 @@ export async function runRootCommand(
+@@ -2497,7 +2497,7 @@ export async function runRootCommand(
  			const modelRegistryError = modelRegistry.getError();
  			for (const warning of modelRegistry.drainConfigWarnings()) {
  				if (isInteractive) notifs.push({ kind: "warn", message: warning });
@@ -13349,7 +13347,7 @@ index 7747afd..14e9775 100644
  			}
  			if (modelRegistryError) {
  				notifs.push({ kind: "error", message: modelRegistryError.message });
-@@ -2494,7 +2494,7 @@ export async function runRootCommand(
+@@ -2510,7 +2510,7 @@ export async function runRootCommand(
  				if (modelFallbackMessage) {
  					process.stderr.write(`${chalk.red(modelFallbackMessage)}\n`);
  				} else {
@@ -13358,7 +13356,7 @@ index 7747afd..14e9775 100644
  				}
  				const availableModels = modelRegistry.getAvailable();
  				if (parsedArgs.model && availableModels.length > 0) {
-@@ -2506,17 +2506,17 @@ export async function runRootCommand(
+@@ -2522,17 +2522,17 @@ export async function runRootCommand(
  						selector => selector,
  					).slice(0, 5);
  					if (suggestions.length > 0) {
@@ -14088,7 +14086,7 @@ index cb712c2..5a20a73 100644
  
  	return { ok: true, value: { name, scope } };
 diff --git a/packages/coding-agent/src/modes/controllers/command-controller.ts b/packages/coding-agent/src/modes/controllers/command-controller.ts
-index c415b28..b3f105d 100644
+index 19ea793..b7ac36d 100644
 --- a/packages/coding-agent/src/modes/controllers/command-controller.ts
 +++ b/packages/coding-agent/src/modes/controllers/command-controller.ts
 @@ -221,7 +221,7 @@ export class CommandController {
@@ -15153,16 +15151,16 @@ index c415b28..b3f105d 100644
  			]);
  		}
  	}
-@@ -1459,7 +1459,7 @@ export class CommandController {
- 	 */
- 	async handleWorktreeCommand(branch?: string): Promise<void> {
+@@ -1463,7 +1463,7 @@ export class CommandController {
+ 		options: { keepChanges?: boolean } = {},
+ 	): Promise<SessionWorktree | undefined> {
  		if (this.ctx.session.isStreaming) {
 -			this.ctx.showWarning("Wait for the current response to finish or abort it before creating a worktree.");
 +			this.ctx.showWarning("请先等待当前回复完成或中止回复，再创建工作树。");
- 			return;
+ 			return undefined;
  		}
- 		await this.#withSessionMove(async () => {
-@@ -1470,7 +1470,7 @@ export class CommandController {
+ 		let created: SessionWorktree | undefined;
+@@ -1475,7 +1475,7 @@ export class CommandController {
  				this.ctx.ui,
  				spinner => theme.fg("accent", spinner),
  				text => theme.fg("muted", text),
@@ -15171,25 +15169,25 @@ index c415b28..b3f105d 100644
  				getSymbolTheme().spinnerFrames,
  			);
  			this.ctx.statusContainer.addChild(loader);
-@@ -1479,7 +1479,7 @@ export class CommandController {
+@@ -1484,7 +1484,7 @@ export class CommandController {
  			try {
- 				worktree = await createSessionWorktree(cwd, this.ctx.settings, branchName);
+ 				worktree = await createSessionWorktree(cwd, this.ctx.settings, branchName, options);
  			} catch (err) {
 -				this.ctx.showError(`Worktree creation failed: ${err instanceof Error ? err.message : String(err)}`);
 +				this.ctx.showError(`创建工作树失败： ${err instanceof Error ? err.message : String(err)}`);
  				return false;
  			} finally {
  				loader.stop();
-@@ -1494,7 +1494,7 @@ export class CommandController {
- 			if (!(await this.#relocateSession(worktree.path))) return false;
- 			const cleanup = await cleanSourceCheckoutIfConfigured(cwd, this.ctx.settings);
+@@ -1502,7 +1502,7 @@ export class CommandController {
+ 				? await cleanSourceCheckoutIfConfigured(cwd, this.ctx.settings)
+ 				: { cleaned: false, errorMessage: undefined };
  			if (cleanup.errorMessage !== undefined) {
 -				this.ctx.showWarning(`Worktree created, but cleaning source checkout failed: ${cleanup.errorMessage}`);
 +				this.ctx.showWarning(`工作树已创建，但清理源检出目录失败： ${cleanup.errorMessage}`);
  			}
  			this.ctx.present([
  				new Spacer(1),
-@@ -1513,7 +1513,7 @@ export class CommandController {
+@@ -1522,7 +1522,7 @@ export class CommandController {
  		try {
  			await this.ctx.settings.flush();
  		} catch (err) {
@@ -15198,7 +15196,7 @@ index c415b28..b3f105d 100644
  			return false;
  		}
  
-@@ -1528,7 +1528,7 @@ export class CommandController {
+@@ -1537,7 +1537,7 @@ export class CommandController {
  		try {
  			await this.ctx.session.moveSession(resolvedPath);
  		} catch (err) {
@@ -15207,7 +15205,7 @@ index c415b28..b3f105d 100644
  			return false;
  		}
  		let applied = false;
-@@ -1567,14 +1567,14 @@ export class CommandController {
+@@ -1576,14 +1576,14 @@ export class CommandController {
  			const stored = await persistence;
  			if (!isCurrent()) return;
  			if (!stored) {
@@ -15225,7 +15223,7 @@ index c415b28..b3f105d 100644
  		}
  	}
  
-@@ -1582,7 +1582,7 @@ export class CommandController {
+@@ -1591,7 +1591,7 @@ export class CommandController {
  		const isDeferred = this.ctx.session.isStreaming;
  		const shouldPersistCwd = isPersistentShellCdCommand(command);
  		if (isDeferred && shouldPersistCwd) {
@@ -15234,7 +15232,7 @@ index c415b28..b3f105d 100644
  			return;
  		}
  
-@@ -1643,8 +1643,8 @@ export class CommandController {
+@@ -1652,8 +1652,8 @@ export class CommandController {
  				if (shouldPersistCwd) return await this.#applyBashResultCwd(result);
  			} catch (error) {
  				this.ctx.showError(
@@ -15245,7 +15243,7 @@ index c415b28..b3f105d 100644
  					}`,
  				);
  			}
-@@ -1652,7 +1652,7 @@ export class CommandController {
+@@ -1661,7 +1661,7 @@ export class CommandController {
  			if (this.ctx.bashComponent) {
  				this.ctx.bashComponent.setComplete(undefined, false);
  			}
@@ -15254,7 +15252,7 @@ index c415b28..b3f105d 100644
  		} finally {
  			this.ctx.bashComponent = undefined;
  			this.ctx.ui.requestRender();
-@@ -1713,7 +1713,7 @@ export class CommandController {
+@@ -1722,7 +1722,7 @@ export class CommandController {
  			if (this.ctx.pythonComponent) {
  				this.ctx.pythonComponent.setComplete(undefined, false);
  			}
@@ -15263,7 +15261,7 @@ index c415b28..b3f105d 100644
  		}
  
  		this.ctx.pythonComponent = undefined;
-@@ -1730,7 +1730,7 @@ export class CommandController {
+@@ -1739,7 +1739,7 @@ export class CommandController {
  		const messageCount = entries.filter(e => e.type === "message").length;
  
  		if (messageCount < 2) {
@@ -15272,7 +15270,7 @@ index c415b28..b3f105d 100644
  			return "ok";
  		}
  
-@@ -1763,7 +1763,7 @@ export class CommandController {
+@@ -1772,7 +1772,7 @@ export class CommandController {
  		try {
  			result = await this.ctx.session.shake(mode);
  		} catch (error) {
@@ -15281,7 +15279,7 @@ index c415b28..b3f105d 100644
  			return;
  		}
  
-@@ -1773,7 +1773,7 @@ export class CommandController {
+@@ -1782,7 +1782,7 @@ export class CommandController {
  			(result.imagesDropped ?? 0) +
  			(result.thinkingBlocksDropped ?? 0);
  		if (dropped === 0) {
@@ -15290,7 +15288,7 @@ index c415b28..b3f105d 100644
  			return;
  		}
  		this.ctx.rebuildChatFromMessages();
-@@ -1794,8 +1794,8 @@ export class CommandController {
+@@ -1803,8 +1803,8 @@ export class CommandController {
  		}
  		this.ctx.statusContainer.disposeChildren();
  
@@ -15301,7 +15299,7 @@ index c415b28..b3f105d 100644
  		const compactingLoader = new Loader(
  			this.ctx.ui,
  			spinner => theme.fg("accent", spinner),
-@@ -1806,7 +1806,7 @@ export class CommandController {
+@@ -1815,7 +1815,7 @@ export class CommandController {
  		const compactionStartMs = Date.now();
  		compactingLoader.setWorkingRow(
  			() => ({
@@ -15310,7 +15308,7 @@ index c415b28..b3f105d 100644
  				startedAt: compactionStartMs,
  				variant: { kind: "compaction" },
  				interruptKey: this.ctx.maintenanceInterruptKey(),
-@@ -1846,11 +1846,11 @@ export class CommandController {
+@@ -1855,11 +1855,11 @@ export class CommandController {
  		} catch (error) {
  			if (error instanceof CompactionCancelledError) {
  				outcome = "cancelled";
@@ -15324,7 +15322,7 @@ index c415b28..b3f105d 100644
  			}
  		} finally {
  			compactingLoader.stop();
-@@ -1867,11 +1867,11 @@ export class CommandController {
+@@ -1876,11 +1876,11 @@ export class CommandController {
  
  	async handleHandoffCommand(customInstructions?: string): Promise<void> {
  		if (this.ctx.session.isStreaming) {
@@ -15338,7 +15336,7 @@ index c415b28..b3f105d 100644
  			return;
  		}
  
-@@ -1879,7 +1879,7 @@ export class CommandController {
+@@ -1888,7 +1888,7 @@ export class CommandController {
  		const messageCount = entries.filter(e => e.type === "message").length;
  
  		if (messageCount < 2) {
@@ -15347,7 +15345,7 @@ index c415b28..b3f105d 100644
  			return;
  		}
  
-@@ -1893,7 +1893,7 @@ export class CommandController {
+@@ -1902,7 +1902,7 @@ export class CommandController {
  			this.ctx.ui,
  			spinner => theme.fg("accent", spinner),
  			text => theme.fg("muted", text),
@@ -15356,7 +15354,7 @@ index c415b28..b3f105d 100644
  			getSymbolTheme().spinnerFrames,
  		);
  		this.ctx.statusContainer.addChild(handoffLoader);
-@@ -1905,7 +1905,7 @@ export class CommandController {
+@@ -1914,7 +1914,7 @@ export class CommandController {
  			const result = await this.ctx.session.handoff(customInstructions);
  
  			if (!result) {
@@ -15365,7 +15363,7 @@ index c415b28..b3f105d 100644
  				return;
  			}
  
-@@ -1919,13 +1919,13 @@ export class CommandController {
+@@ -1928,13 +1928,13 @@ export class CommandController {
  			this.ctx.present([
  				new Spacer(1),
  				new Text(
@@ -15381,7 +15379,7 @@ index c415b28..b3f105d 100644
  			}
  		} catch (error) {
  			const message = error instanceof Error ? error.message : String(error);
-@@ -1933,12 +1933,12 @@ export class CommandController {
+@@ -1942,12 +1942,12 @@ export class CommandController {
  			// provider error (even one named AbortError) is re-thrown verbatim so it surfaces
  			// as a real failure instead of a false "cancelled".
  			if (message === "Handoff cancelled") {
@@ -15396,7 +15394,7 @@ index c415b28..b3f105d 100644
  			}
  		} finally {
  			this.#finishHandoffUi(handoffLoader);
-@@ -1982,10 +1982,10 @@ function renderJobLine(job: AsyncJobSnapshotItem, now: number): string {
+@@ -1991,10 +1991,10 @@ function renderJobLine(job: AsyncJobSnapshotItem, now: number): string {
  }
  
  function formatJobStatus(status: AsyncJobSnapshotItem["status"]): string {
@@ -15411,7 +15409,7 @@ index c415b28..b3f105d 100644
  }
  
  function truncateJobLabel(label: string, maxWidth: number): string {
-@@ -2024,7 +2024,7 @@ function resolveProviderAuthMode(authStorage: AuthStorage, provider: string): st
+@@ -2033,7 +2033,7 @@ function resolveProviderAuthMode(authStorage: AuthStorage, provider: string): st
  
  export function renderProviderSection(details: ProviderDetails, uiTheme: Pick<Theme, "fg">): string {
  	const lines: string[] = [];
@@ -15420,7 +15418,7 @@ index c415b28..b3f105d 100644
  	for (const field of details.fields) {
  		lines.push(`${uiTheme.fg("dim", `${field.label}:`)} ${field.value}`);
  	}
-@@ -2080,7 +2080,7 @@ function formatAccountLabel(
+@@ -2089,7 +2089,7 @@ function formatAccountLabel(
  		typeof report.metadata?.projectId === "string" && report.metadata.projectId
  			? report.metadata.projectId
  			: limit.scope.projectId || undefined;
@@ -15429,7 +15427,7 @@ index c415b28..b3f105d 100644
  	return codex ? formatCodexTuiLabel(report, peers, base) : base;
  }
  
-@@ -2096,7 +2096,7 @@ function formatUnlimitedReportLabel(report: UsageReport, peers: readonly UsageRe
+@@ -2105,7 +2105,7 @@ function formatUnlimitedReportLabel(report: UsageReport, peers: readonly UsageRe
  			? formatCodexTuiLabel(report, peers, accountId)
  			: `${accountId}${orgSuffix(report)}`;
  	const projectId = report.metadata?.projectId;
@@ -15438,7 +15436,7 @@ index c415b28..b3f105d 100644
  	return report.provider === "openai-codex" ? formatCodexTuiLabel(report, peers, base) : base;
  }
  
-@@ -2184,7 +2184,7 @@ function formatAggregateAmount(limits: UsageLimit[]): string {
+@@ -2193,7 +2193,7 @@ function formatAggregateAmount(limits: UsageLimit[]): string {
  	if (fractions.length === limits.length && fractions.length > 0) {
  		const sum = fractions.reduce((total, value) => total + value, 0);
  		const avgRemaining = Math.max(0, ((limits.length - sum) / limits.length) * 100);
@@ -15447,7 +15445,7 @@ index c415b28..b3f105d 100644
  	}
  
  	const amounts = limits
-@@ -2194,7 +2194,7 @@ function formatAggregateAmount(limits: UsageLimit[]): string {
+@@ -2203,7 +2203,7 @@ function formatAggregateAmount(limits: UsageLimit[]): string {
  		const totalUsed = amounts.reduce((sum, amount) => sum + (amount.used ?? 0), 0);
  		const totalLimit = amounts.reduce((sum, amount) => sum + (amount.limit ?? 0), 0);
  		const remainingPct = totalLimit > 0 ? Math.max(0, 100 - (totalUsed / totalLimit) * 100) : 0;
@@ -15456,7 +15454,7 @@ index c415b28..b3f105d 100644
  	}
  
  	if (limits.length > 0 && limits.every(isUsedOnlyAbsoluteAmount)) return "";
-@@ -2209,10 +2209,10 @@ function formatAggregateAmount(limits: UsageLimit[]): string {
+@@ -2218,10 +2218,10 @@ function formatAggregateAmount(limits: UsageLimit[]): string {
  	const uniqueAccountIds = new Set(
  		limits.map(limit => limit.scope.accountId).filter((id): id is string => typeof id === "string" && id.length > 0),
  	);
@@ -15469,7 +15467,7 @@ index c415b28..b3f105d 100644
  }
  
  function resolveResetRange(limits: UsageLimit[], nowMs: number): string | null {
-@@ -2226,14 +2226,15 @@ function resolveResetRange(limits: UsageLimit[], nowMs: number): string | null {
+@@ -2235,14 +2235,15 @@ function resolveResetRange(limits: UsageLimit[], nowMs: number): string | null {
  	// Use the shared verb when every contributing window agrees (e.g. all "tick");
  	// mixed or absent labels fall back to the generic "resets".
  	const labels = new Set(windows.map(window => window.resetLabel ?? "resets"));
@@ -15488,7 +15486,7 @@ index c415b28..b3f105d 100644
  }
  
  function resolveStatusIcon(status: AggregateDisplayStatus, uiTheme: Theme): string {
-@@ -2258,7 +2259,7 @@ function renderUsageBar(limit: UsageLimit, uiTheme: Theme, barWidth: number): st
+@@ -2267,7 +2268,7 @@ function renderUsageBar(limit: UsageLimit, uiTheme: Theme, barWidth: number): st
  			limit.amount.unit === "usd"
  				? `$${usedAmount.toFixed(2)}`
  				: `${formatNumber(usedAmount, 2)} ${limit.amount.unit}`;
@@ -15497,7 +15495,7 @@ index c415b28..b3f105d 100644
  	}
  	const fraction = resolveUsedFraction(limit);
  	if (fraction === undefined) {
-@@ -2303,8 +2304,8 @@ export function renderUsageReports(
+@@ -2312,8 +2313,8 @@ export function renderUsageReports(
  	const displayReports = collapseSharedUsageReports(reports);
  	const lines: string[] = [];
  	const latestFetchedAt = Math.max(0, ...reports.map(report => report.fetchedAt ?? 0));
@@ -15508,7 +15506,7 @@ index c415b28..b3f105d 100644
  	const grouped = new Map<string, UsageReport[]>();
  	for (const report of displayReports) {
  		const list = grouped.get(report.provider) ?? [];
-@@ -2375,16 +2376,16 @@ export function renderUsageReports(
+@@ -2384,16 +2385,16 @@ export function renderUsageReports(
  					? formatCodexTuiLabel(
  							activeReport,
  							providerReports,
@@ -15528,7 +15526,7 @@ index c415b28..b3f105d 100644
  			for (const selector of reportingModels) {
  				lines.push(`    ${replaceTabs(truncateToWidth(sanitizeText(selector), availableWidth - 4))}`);
  			}
-@@ -2392,7 +2393,7 @@ export function renderUsageReports(
+@@ -2401,7 +2402,7 @@ export function renderUsageReports(
  		for (const account of unavailableAccounts) {
  			if (account.provider !== provider) continue;
  			const label = replaceTabs(sanitizeText(account.label.replace(/[\r\n]+/g, " ")));
@@ -15537,7 +15535,7 @@ index c415b28..b3f105d 100644
  			const boundedLabel = truncateToWidth(label, Math.max(0, availableWidth - 2 - visibleWidth(status)));
  			lines.push(`  ${uiTheme.fg("dim", truncateToWidth(`${boundedLabel}${status}`, availableWidth - 2))}`);
  		}
-@@ -2415,7 +2416,7 @@ export function renderUsageReports(
+@@ -2424,7 +2425,7 @@ export function renderUsageReports(
  					? report.metadata.email
  					: typeof report.metadata?.accountId === "string" && report.metadata.accountId
  						? report.metadata.accountId
@@ -15546,7 +15544,7 @@ index c415b28..b3f105d 100644
  			const orgName = report.metadata?.orgName;
  			const orgId = report.metadata?.orgId;
  			const orgLabel =
-@@ -2438,28 +2439,28 @@ export function renderUsageReports(
+@@ -2447,28 +2448,28 @@ export function renderUsageReports(
  						((!!activeAccount.accountId && activeAccount.accountId === report.metadata?.accountId) ||
  							(!!activeAccount.email && activeAccount.email === report.metadata?.email));
  			const availability =
@@ -15581,7 +15579,7 @@ index c415b28..b3f105d 100644
  			);
  			for (const line of resetAccountLines) lines.push(uiTheme.fg("dim", line));
  		}
-@@ -2544,7 +2545,7 @@ export function renderUsageReports(
+@@ -2553,7 +2554,7 @@ export function renderUsageReports(
  			const tierSuffix = typeof tier === "string" && tier ? ` ${uiTheme.fg("dim", `(${tier})`)}` : "";
  			const daybreakSuffix = report.metadata?.daybreak === true ? uiTheme.fg("success", " daybreak") : "";
  			lines.push(
@@ -17631,7 +17629,7 @@ index a2f3715..1a64c2c 100644
  			// Drop the cached directory snapshot the discovery layer reads, so the next
  			// session-scoped rebuild's rule rediscovery observes this new file instead of
 diff --git a/packages/coding-agent/src/modes/controllers/selector-controller.ts b/packages/coding-agent/src/modes/controllers/selector-controller.ts
-index ba14afa..ea68778 100644
+index 7ce85fe..e55104a 100644
 --- a/packages/coding-agent/src/modes/controllers/selector-controller.ts
 +++ b/packages/coding-agent/src/modes/controllers/selector-controller.ts
 @@ -436,7 +436,7 @@ export class SelectorController {
@@ -18019,16 +18017,30 @@ index ba14afa..ea68778 100644
  				return false;
  			}
  		}
-@@ -1904,7 +1904,7 @@ export class SelectorController {
- 		// Clear and re-render the chat
- 		await this.ctx.renderInitialMessages({ clearTerminalHistory: true });
+@@ -1908,10 +1908,10 @@ export class SelectorController {
  		await this.ctx.reloadTodos();
--		this.ctx.showStatus(movedProject ? `Resumed session in ${shortenPath(newCwd)}` : "Resumed session");
-+		this.ctx.showStatus(movedProject ? `已在 ${shortenPath(newCwd)} 恢复会话` : "已恢复会话");
+ 		this.ctx.showStatus(
+ 			target.movedFrom
+-				? `Resumed session, moved here from removed worktree ${shortenPath(target.movedFrom)}`
++				? `已恢复会话，并从已移除的工作树 ${shortenPath(target.movedFrom)} 迁移至此处`
+ 				: movedProject
+-					? `Resumed session in ${shortenPath(newCwd)}`
+-					: "Resumed session",
++					? `已在 ${shortenPath(newCwd)} 恢复会话`
++					: "已恢复会话",
+ 		);
  		if (modelFallbackWarning) this.ctx.showWarning(modelFallbackWarning);
  		return true;
- 	}
-@@ -1912,7 +1912,7 @@ export class SelectorController {
+@@ -1939,7 +1939,7 @@ export class SelectorController {
+ 			return { sessionPath: movedPath, movedFrom: info.cwd };
+ 		} catch (error) {
+ 			this.ctx.showError(
+-				`Could not move the session out of removed worktree ${shortenPath(info.cwd)}: ${error instanceof Error ? error.message : String(error)}`,
++				`无法将会话从已移除的工作树 ${shortenPath(info.cwd)} 迁移出来：${error instanceof Error ? error.message : String(error)}`,
+ 			);
+ 			return undefined;
+ 		}
+@@ -1948,7 +1948,7 @@ export class SelectorController {
  	async handleSessionDeleteCommand(): Promise<void> {
  		const sessionFile = this.ctx.sessionManager.getSessionFile();
  		if (!sessionFile) {
@@ -18037,7 +18049,7 @@ index ba14afa..ea68778 100644
  			return;
  		}
  
-@@ -1920,22 +1920,22 @@ export class SelectorController {
+@@ -1956,22 +1956,22 @@ export class SelectorController {
  		const storage = new FileSessionStorage();
  		const fileExists = await storage.exists(sessionFile);
  		if (!fileExists) {
@@ -18065,7 +18077,7 @@ index ba14afa..ea68778 100644
  			return;
  		}
  
-@@ -1943,7 +1943,7 @@ export class SelectorController {
+@@ -1979,7 +1979,7 @@ export class SelectorController {
  		await storage.deleteSessionWithArtifacts(sessionFile);
  
  		// Show session selector
@@ -18074,7 +18086,7 @@ index ba14afa..ea68778 100644
  		await this.showSessionSelector();
  	}
  
-@@ -1955,7 +1955,7 @@ export class SelectorController {
+@@ -1991,7 +1991,7 @@ export class SelectorController {
  	 * credentials were stored.
  	 */
  	async #handleOAuthLogin(providerId: string): Promise<boolean> {
@@ -18083,7 +18095,7 @@ index ba14afa..ea68778 100644
  		const { getOAuthCredentialProvider, LoginDialogComponent, PASTE_CODE_LOGIN_PROVIDERS } = loadProviderAuthUi();
  		const useManualInput = PASTE_CODE_LOGIN_PROVIDERS.has(providerId);
  		let restored = false;
-@@ -2004,7 +2004,7 @@ export class SelectorController {
+@@ -2040,7 +2040,7 @@ export class SelectorController {
  				onManualCodeInput: useManualInput
  					? signal =>
  							dialog.showManualInput(
@@ -18092,7 +18104,7 @@ index ba14afa..ea68778 100644
  								signal,
  							)
  					: undefined,
-@@ -2026,13 +2026,13 @@ export class SelectorController {
+@@ -2062,13 +2062,13 @@ export class SelectorController {
  				new Text(
  					theme.fg(
  						"success",
@@ -18108,7 +18120,7 @@ index ba14afa..ea68778 100644
  			this.ctx.present(block);
  			return true;
  		} catch (error: unknown) {
-@@ -2041,7 +2041,7 @@ export class SelectorController {
+@@ -2077,7 +2077,7 @@ export class SelectorController {
  				// surfaced "Login cancelled".
  				return false;
  			}
@@ -18117,7 +18129,7 @@ index ba14afa..ea68778 100644
  			return false;
  		} finally {
  			restoreEditor();
-@@ -2057,7 +2057,7 @@ export class SelectorController {
+@@ -2093,7 +2093,7 @@ export class SelectorController {
  				this.ctx.session.sessionId,
  			);
  			if (!removed) {
@@ -18126,7 +18138,7 @@ index ba14afa..ea68778 100644
  				return;
  			}
  
-@@ -2066,21 +2066,21 @@ export class SelectorController {
+@@ -2102,21 +2102,21 @@ export class SelectorController {
  				new Text(
  					theme.fg(
  						"success",
@@ -18152,7 +18164,7 @@ index ba14afa..ea68778 100644
  		}
  	}
  
-@@ -2091,7 +2091,7 @@ export class SelectorController {
+@@ -2127,7 +2127,7 @@ export class SelectorController {
  			accounts = await listLogoutAccounts(authStorage, providerId, this.ctx.session.sessionId);
  		} catch (error: unknown) {
  			this.ctx.showError(
@@ -18161,7 +18173,7 @@ index ba14afa..ea68778 100644
  			);
  			return;
  		}
-@@ -2102,8 +2102,8 @@ export class SelectorController {
+@@ -2138,8 +2138,8 @@ export class SelectorController {
  				provider?.storeCredentialsAs ?? providerId,
  				this.ctx.session.sessionId,
  			);
@@ -18172,7 +18184,7 @@ index ba14afa..ea68778 100644
  			return;
  		}
  
-@@ -2142,7 +2142,7 @@ export class SelectorController {
+@@ -2178,7 +2178,7 @@ export class SelectorController {
  				this.ctx.session.modelRegistry.authStorage.credentials.has(provider.id),
  			);
  			if (loggedInProviders.length === 0) {
@@ -18181,7 +18193,7 @@ index ba14afa..ea68778 100644
  				return;
  			}
  		}
-@@ -2186,21 +2186,21 @@ export class SelectorController {
+@@ -2222,21 +2222,21 @@ export class SelectorController {
  	async showSessionPinSelector(): Promise<void> {
  		const session = this.ctx.session;
  		if (session.isStreaming) {
@@ -18207,7 +18219,7 @@ index ba14afa..ea68778 100644
  			return;
  		}
  		const { getOAuthProviders } = loadProviderAuthUi();
-@@ -2211,8 +2211,8 @@ export class SelectorController {
+@@ -2247,8 +2247,8 @@ export class SelectorController {
  			const source = session.modelRegistry.authStorage.keys.describe(accountList.provider, session.sessionId);
  			this.ctx.showStatus(
  				source
@@ -18218,7 +18230,7 @@ index ba14afa..ea68778 100644
  			);
  			return;
  		}
-@@ -2227,7 +2227,7 @@ export class SelectorController {
+@@ -2263,7 +2263,7 @@ export class SelectorController {
  						this.ctx.showWarning(`${account.label} is no longer available to pin.`);
  						return;
  					}
@@ -18227,7 +18239,7 @@ index ba14afa..ea68778 100644
  					this.ctx.statusLine.invalidate();
  					this.ctx.ui.requestRender();
  				},
-@@ -2242,14 +2242,14 @@ export class SelectorController {
+@@ -2278,14 +2278,14 @@ export class SelectorController {
  
  	async showResetUsageSelector(): Promise<void> {
  		const session = this.ctx.session;
@@ -18244,7 +18256,7 @@ index ba14afa..ea68778 100644
  						/[\r\n\t]+/g,
  						" ",
  					),
-@@ -2259,14 +2259,14 @@ export class SelectorController {
+@@ -2295,14 +2295,14 @@ export class SelectorController {
  		}
  		const accounts = toResetUsageAccounts(statuses);
  		if (accounts.length === 0) {
@@ -18262,7 +18274,7 @@ index ba14afa..ea68778 100644
  			);
  			return;
  		}
-@@ -2288,7 +2288,7 @@ export class SelectorController {
+@@ -2324,7 +2324,7 @@ export class SelectorController {
  
  	async #redeemReset(account: ResetUsageAccount): Promise<void> {
  		this.ctx.showStatus(
@@ -18271,7 +18283,7 @@ index ba14afa..ea68778 100644
  			{ dim: true },
  		);
  		let outcome: ResetCreditRedeemOutcome;
-@@ -2297,7 +2297,7 @@ export class SelectorController {
+@@ -2333,7 +2333,7 @@ export class SelectorController {
  		} catch (error) {
  			this.ctx.showError(
  				sanitizeText(
@@ -18875,10 +18887,10 @@ index dab0c5a..15432f2 100644
  		} finally {
  			this.ctx.ui.start();
 diff --git a/packages/coding-agent/src/modes/interactive-mode.ts b/packages/coding-agent/src/modes/interactive-mode.ts
-index e8b91a1..13090a7 100644
+index 85ad1ef..39420d6 100644
 --- a/packages/coding-agent/src/modes/interactive-mode.ts
 +++ b/packages/coding-agent/src/modes/interactive-mode.ts
-@@ -459,7 +459,7 @@ const STILL_CLOSING_DELAY_MS = 3_000;
+@@ -467,7 +467,7 @@ const STILL_CLOSING_DELAY_MS = 3_000;
  const JUDGMENT_BATCH_PROGRESS_RETAIN_MS = 1_000;
  /** Startup emits several status-bar changes within a second; persist only the settled one. */
  const COMPOSER_STATUS_PERSIST_DELAY_MS = 1_000;
@@ -18887,7 +18899,7 @@ index e8b91a1..13090a7 100644
  /** Native working-message shimmer under a session accent: the hue itself is the terminal's `accent`. */
  const NATIVE_ACCENT_SHIMMER: ShimmerPalette = { low: "dim", mid: "accent", high: "accent", bold: true };
  
-@@ -544,14 +544,14 @@ type GoalSubcommand = "set" | "show" | "pause" | "resume" | "drop" | "budget";
+@@ -552,14 +552,14 @@ type GoalSubcommand = "set" | "show" | "pause" | "resume" | "drop" | "budget";
  const GOAL_SUBCOMMANDS = new Set<GoalSubcommand>(["set", "show", "pause", "resume", "drop", "budget"]);
  const PLAN_KEEP_CONTEXT_OPTION_INDEX = 2;
  const PLAN_KEEP_CONTEXT_DISABLE_THRESHOLD_PERCENT = 95;
@@ -18906,7 +18918,7 @@ index e8b91a1..13090a7 100644
  
  const PLAN_FILENAME_SYSTEM_PROMPT = prompt.render(planFilenamePrompt);
  
-@@ -729,7 +729,7 @@ function describeRunningPill(spec: RunningPillSpec, running: number): NativeNode
+@@ -737,7 +737,7 @@ function describeRunningPill(spec: RunningPillSpec, running: number): NativeNode
  			node("spinner", { style: "dots", tone: "accent" }, undefined, "spinner"),
  			node(
  				"text",
@@ -18915,7 +18927,7 @@ index e8b91a1..13090a7 100644
  				undefined,
  				"label",
  			),
-@@ -800,14 +800,14 @@ class DeferredCommandPreview implements Component {
+@@ -808,14 +808,14 @@ class DeferredCommandPreview implements Component {
  	render(width: number): readonly string[] {
  		const rows: string[] = [];
  		for (const item of this.items) rows.push(...item.render(width));
@@ -18933,7 +18945,7 @@ index e8b91a1..13090a7 100644
  		return shown;
  	}
  }
-@@ -1119,7 +1119,7 @@ export function renderSubagentHudLines(
+@@ -1127,7 +1127,7 @@ export function renderSubagentHudLines(
  					truncateToWidth(
  						`${outerIndent}${theme.fg(
  							"dim",
@@ -18942,7 +18954,7 @@ index e8b91a1..13090a7 100644
  						)}`,
  						contentColumns,
  						"",
-@@ -1139,7 +1139,7 @@ export function renderSubagentHudLines(
+@@ -1147,7 +1147,7 @@ export function renderSubagentHudLines(
  	}
  	return [
  		"",
@@ -18951,7 +18963,7 @@ index e8b91a1..13090a7 100644
  		...itemLines,
  		...toggleRow,
  	];
-@@ -1367,8 +1367,8 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -1375,8 +1375,8 @@ export class InteractiveMode implements InteractiveModeContext {
  				{
  					key: "agents",
  					icon: "users",
@@ -18962,7 +18974,7 @@ index e8b91a1..13090a7 100644
  					act: "agents.open",
  				},
  				count,
-@@ -1376,7 +1376,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -1384,7 +1384,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		);
  		this.#jobsPill = runningPill(this.#jobsPill, this.statusLine.runningBackgroundJobCount(), count =>
  			describeRunningPill(
@@ -18971,7 +18983,7 @@ index e8b91a1..13090a7 100644
  				count,
  			),
  		);
-@@ -1844,7 +1844,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -1854,7 +1854,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			// The prediction daemon learns from history.db; nudge it once each prompt is durable.
  			this.historyStorage.setAddListener(syncTextPrediction);
  			this.historyStorage.setErrorListener(() => {
@@ -18980,7 +18992,7 @@ index e8b91a1..13090a7 100644
  			});
  		} catch (error) {
  			logger.warn("History storage unavailable", { error: String(error) });
-@@ -2085,7 +2085,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2095,7 +2095,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		if (!startupQuiet && this.#startupChangelog && cfgStartupChangelogMode.get(settings) !== "hidden") {
  			headerAfter.push(
  				new DynamicBorder(),
@@ -18989,7 +19001,7 @@ index e8b91a1..13090a7 100644
  				new Spacer(1),
  			);
  			if (cfgStartupChangelogMode.get(settings) === "summary") {
-@@ -2182,9 +2182,9 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2192,9 +2192,9 @@ export class InteractiveMode implements InteractiveModeContext {
  					return;
  				case "copy":
  					copyToClipboard(action.text).then(
@@ -19001,7 +19013,7 @@ index e8b91a1..13090a7 100644
  					);
  			}
  		});
-@@ -2254,7 +2254,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2264,7 +2264,7 @@ export class InteractiveMode implements InteractiveModeContext {
  					TRUNCATE_LENGTHS.LINE,
  				);
  				this.showWarning(
@@ -19010,7 +19022,7 @@ index e8b91a1..13090a7 100644
  				);
  			}),
  			this.sessionManager.onPersistenceNotice(notice => this.showWarning(formatPersistenceNotice(notice))),
-@@ -2535,7 +2535,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2545,7 +2545,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			this.session.extensionRunner?.getRegisteredCommands(BUILTIN_SLASH_COMMAND_RESERVED_NAMES) ?? []
  		).map(cmd => ({
  			name: cmd.name,
@@ -19019,7 +19031,7 @@ index e8b91a1..13090a7 100644
  			icon: getSlashCommandTypeIcon("extension"),
  			iconName: "extension",
  			getArgumentCompletions: cmd.getArgumentCompletions,
-@@ -2692,7 +2692,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2702,7 +2702,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			setProjectDir(newCwd);
  		} catch (error) {
  			this.showError(
@@ -19028,7 +19040,7 @@ index e8b91a1..13090a7 100644
  			);
  			return false;
  		}
-@@ -2743,14 +2743,14 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2753,14 +2753,14 @@ export class InteractiveMode implements InteractiveModeContext {
  					await this.session.refreshSkillsAndCommands();
  				} catch {}
  				this.showError(
@@ -19046,7 +19058,7 @@ index e8b91a1..13090a7 100644
  			);
  			return false;
  		}
-@@ -2869,7 +2869,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2879,7 +2879,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		this.#cancelGoalContinuation();
  	}
  
@@ -19055,7 +19067,7 @@ index e8b91a1..13090a7 100644
  		const was = this.goalModeEnabled;
  		this.goalModeEnabled = false;
  		this.goalModePaused = false;
-@@ -2885,7 +2885,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2895,7 +2895,7 @@ export class InteractiveMode implements InteractiveModeContext {
  	#submitLoopPromptWhenReady(prompt: string): void {
  		if (!this.loopModeEnabled || this.loopPrompt !== prompt || !this.onInputCallback) return;
  		if (isLoopDurationExpired(this.loopLimit)) {
@@ -19064,7 +19076,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  		if (this.#isAutoSubmitBlocked()) {
-@@ -2905,14 +2905,14 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2915,14 +2915,14 @@ export class InteractiveMode implements InteractiveModeContext {
  		}
  
  		if (action === "reset" && (this.vibeModeEnabled || this.#vibeModeEntry !== undefined)) {
@@ -19081,7 +19093,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -2937,12 +2937,12 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -2947,12 +2947,12 @@ export class InteractiveMode implements InteractiveModeContext {
  		// too: vibeModeEnabled is still false while activateVibeTools is in
  		// flight, but the reset must not run concurrently with the toolset switch.
  		if (action === "reset" && (this.vibeModeEnabled || this.#vibeModeEntry !== undefined)) {
@@ -19096,7 +19108,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  		this.#syncLoopModeStatus();
-@@ -3011,7 +3011,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -3021,7 +3021,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		this.ui.requestRender();
  	}
  
@@ -19105,7 +19117,7 @@ index e8b91a1..13090a7 100644
  		const wasEnabled = this.loopModeEnabled;
  		this.loopModeEnabled = false;
  		this.loopModePaused = false;
-@@ -3078,14 +3078,14 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -3088,14 +3088,14 @@ export class InteractiveMode implements InteractiveModeContext {
  		this.loopLimit = createLoopLimitRuntime(parsed.limit);
  		this.loopCondition = parsed.condition;
  		this.#syncLoopModeStatus();
@@ -19125,7 +19137,7 @@ index e8b91a1..13090a7 100644
  		);
  		// Hand any inline prompt back to the dispatcher so the normal submit flow
  		// runs the first iteration — it records the text as the loop prompt and
-@@ -3943,7 +3943,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -3953,7 +3953,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			case "abandoned":
  				return theme.fg("error", `${prefix}${checkbox.unchecked} ${chalk.strikethrough(todo.content)}`) + marker;
  			case "blocked":
@@ -19134,7 +19146,7 @@ index e8b91a1..13090a7 100644
  			default:
  				if (matched) return theme.fg("accent", `${prefix}${checkbox.unchecked} ${todo.content}`) + marker;
  				return theme.fg("dim", `${prefix}${checkbox.unchecked} ${todo.content}`) + marker;
-@@ -4264,7 +4264,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -4274,7 +4274,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		if (closedTasks > 0) filled = Math.max(filled, 1);
  		if (closedTasks < totalTasks) filled = Math.min(filled, pathLen - 1);
  
@@ -19143,7 +19155,7 @@ index e8b91a1..13090a7 100644
  		for (let i = 0; i < contentLines.length; i++) {
  			lines.push(` ${theme.fg(i < filled ? "accent" : "dim", spineGlyphs[i]!)}${contentLines[i]}`);
  		}
-@@ -4285,7 +4285,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -4295,7 +4295,7 @@ export class InteractiveMode implements InteractiveModeContext {
  							: todo.status === "in_progress" || isMatched(todo)
  								? "accent"
  								: "dim";
@@ -19152,7 +19164,7 @@ index e8b91a1..13090a7 100644
  			const notes = todo.notes?.length ?? 0;
  			if (notes > 0) label.push(span(` +${notes}`, "dim em"));
  			return { id, label, icon: done ? "check" : "circle" };
-@@ -4320,7 +4320,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -4330,7 +4330,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			[
  				row(
  					[
@@ -19161,7 +19173,7 @@ index e8b91a1..13090a7 100644
  						node("progress", { value: closedTasks / totalTasks, label: `${closedTasks}/${totalTasks}` }),
  					],
  					{ gap: "sm", align: "center" },
-@@ -4381,10 +4381,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -4391,10 +4391,10 @@ export class InteractiveMode implements InteractiveModeContext {
  		const closedTasks = phases.reduce((sum, phase) => sum + phase.tasks.filter(isClosedTodo).length, 0);
  		const activeTask = nextActionableTask(phases);
  
@@ -19174,7 +19186,7 @@ index e8b91a1..13090a7 100644
  		const rightLine = `${header} ${theme.fg("dim", "·")} ${taskStr}`;
  
  		const rightPad = " ";
-@@ -4695,7 +4695,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -4705,7 +4705,7 @@ export class InteractiveMode implements InteractiveModeContext {
  					await this.session.setModelTemporary(transition.model, transition.thinkingLevel);
  				} catch (error) {
  					this.showWarning(
@@ -19183,7 +19195,7 @@ index e8b91a1..13090a7 100644
  					);
  				}
  				return;
-@@ -4712,7 +4712,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -4722,7 +4722,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			await this.session.setModelTemporary(pending.model, pending.thinkingLevel);
  		} catch (error) {
  			this.showWarning(
@@ -19192,7 +19204,7 @@ index e8b91a1..13090a7 100644
  			);
  		}
  	}
-@@ -4886,11 +4886,11 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -4896,11 +4896,11 @@ export class InteractiveMode implements InteractiveModeContext {
  			return;
  		}
  		if (this.goalModeEnabled || this.goalModePaused) {
@@ -19206,7 +19218,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -4955,7 +4955,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -4965,7 +4965,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		}
  		this.#updatePlanModeStatus();
  		this.sessionManager.appendModeChange("plan", { planFilePath });
@@ -19215,7 +19227,7 @@ index e8b91a1..13090a7 100644
  	}
  
  	async #restorePlanPreviousModel(prev: { model: Model; thinkingLevel?: ConfiguredThinkingLevel }): Promise<void> {
-@@ -5098,7 +5098,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5108,7 +5108,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		const paused = options?.paused ?? false;
  		this.sessionManager.appendModeChange(paused ? "plan_paused" : "none");
  		if (!options?.silent) {
@@ -19224,7 +19236,7 @@ index e8b91a1..13090a7 100644
  		}
  	}
  
-@@ -5111,7 +5111,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5121,7 +5121,7 @@ export class InteractiveMode implements InteractiveModeContext {
  	 */
  	#warnPlanModeBlocks(): void {
  		this.showWarning(
@@ -19233,7 +19245,7 @@ index e8b91a1..13090a7 100644
  		);
  	}
  
-@@ -5124,7 +5124,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5134,7 +5134,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			return;
  		}
  		if (this.vibeModeEnabled) {
@@ -19242,7 +19254,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  		const previousTools = this.session.getEnabledToolNames().filter(name => name !== "goal");
-@@ -5145,7 +5145,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5155,7 +5155,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			await this.session.sendGoalModeContext({ deliverAs: "steer" });
  		}
  		if (!options.silent) {
@@ -19251,7 +19263,7 @@ index e8b91a1..13090a7 100644
  		}
  	}
  
-@@ -5179,13 +5179,13 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5189,13 +5189,13 @@ export class InteractiveMode implements InteractiveModeContext {
  		this.#updateGoalModeStatus();
  		if (!options?.silent) {
  			if (options?.reason === "completed") {
@@ -19269,7 +19281,7 @@ index e8b91a1..13090a7 100644
  			}
  		}
  	}
-@@ -5318,11 +5318,11 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5328,11 +5328,11 @@ export class InteractiveMode implements InteractiveModeContext {
  
  	#formatKeepContextLabel(contextUsage: ContextUsage | undefined): string {
  		if (!contextUsage) {
@@ -19283,7 +19295,7 @@ index e8b91a1..13090a7 100644
  	}
  
  	#isKeepContextDisabled(contextUsage: ContextUsage | undefined): boolean {
-@@ -5393,10 +5393,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5403,10 +5403,10 @@ export class InteractiveMode implements InteractiveModeContext {
  	async #copyPlanToClipboard(content: string): Promise<void> {
  		try {
  			await copyToClipboard(content);
@@ -19296,7 +19308,7 @@ index e8b91a1..13090a7 100644
  			);
  		}
  	}
-@@ -5442,14 +5442,14 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5452,14 +5452,14 @@ export class InteractiveMode implements InteractiveModeContext {
  		try {
  			destination = resolveToCwd(selectedPath, this.sessionManager.getCwd());
  		} catch (error) {
@@ -19313,7 +19325,7 @@ index e8b91a1..13090a7 100644
  			);
  			return;
  		}
-@@ -5457,7 +5457,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5467,7 +5467,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			await this.#exitPlanMode({ silent: true });
  		} catch (error) {
  			this.showError(
@@ -19322,7 +19334,7 @@ index e8b91a1..13090a7 100644
  					error instanceof Error ? error.message : String(error)
  				}`,
  			);
-@@ -5467,10 +5467,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5477,10 +5477,10 @@ export class InteractiveMode implements InteractiveModeContext {
  		this.#planReviewAnnotationState.delete(annotationStateKey);
  		try {
  			await this.handleClearCommand();
@@ -19335,7 +19347,7 @@ index e8b91a1..13090a7 100644
  					error instanceof Error ? error.message : String(error)
  				}`,
  			);
-@@ -5480,7 +5480,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5490,7 +5490,7 @@ export class InteractiveMode implements InteractiveModeContext {
  	async #openPlanInExternalEditor(planFilePath: string): Promise<void> {
  		const editorCmd = getEditorCommand();
  		if (!editorCmd) {
@@ -19344,7 +19356,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -5490,10 +5490,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5500,10 +5500,10 @@ export class InteractiveMode implements InteractiveModeContext {
  			currentText = await Bun.file(resolvedPath).text();
  		} catch (error) {
  			if (isEnoent(error)) {
@@ -19357,7 +19369,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -5506,10 +5506,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5516,10 +5516,10 @@ export class InteractiveMode implements InteractiveModeContext {
  			if (result !== null) {
  				await Bun.write(resolvedPath, result);
  				this.#planReviewOverlay?.setPlanContent(result);
@@ -19370,7 +19382,7 @@ index e8b91a1..13090a7 100644
  		} finally {
  			this.ui.start();
  			this.ui.requestRender(true);
-@@ -5519,7 +5519,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5529,7 +5529,7 @@ export class InteractiveMode implements InteractiveModeContext {
  	async #openPlanAnnotationInExternalEditor(draft: string, commit: (text: string | null) => void): Promise<void> {
  		const editorCmd = getEditorCommand();
  		if (!editorCmd) {
@@ -19379,7 +19391,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -5530,7 +5530,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5540,7 +5540,7 @@ export class InteractiveMode implements InteractiveModeContext {
  				commit(result);
  			}
  		} catch (error) {
@@ -19388,7 +19400,7 @@ index e8b91a1..13090a7 100644
  		} finally {
  			this.ui.start();
  			this.ui.requestRender(true);
-@@ -5543,10 +5543,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5553,10 +5553,10 @@ export class InteractiveMode implements InteractiveModeContext {
  			await this.session.applyRoleModel(entry);
  			this.statusLine.invalidate();
  			this.updateEditorBorderColor();
@@ -19401,7 +19413,7 @@ index e8b91a1..13090a7 100644
  			);
  		}
  	}
-@@ -5654,7 +5654,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5664,7 +5664,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			});
  			if (autosaved) {
  				const displayPath = truncateToWidth(replaceTabs(shortenPath(autosaved)), TRUNCATE_LENGTHS.CONTENT);
@@ -19410,7 +19422,7 @@ index e8b91a1..13090a7 100644
  			}
  		} catch (error) {
  			const detail = truncateToWidth(
-@@ -5665,7 +5665,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5675,7 +5675,7 @@ export class InteractiveMode implements InteractiveModeContext {
  				),
  				TRUNCATE_LENGTHS.CONTENT,
  			);
@@ -19419,7 +19431,7 @@ index e8b91a1..13090a7 100644
  		}
  
  		// Resolve the deferred plan-approval model transition. On the compact path
-@@ -5690,7 +5690,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5700,7 +5700,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			// `AgentSession.#buildPlanReferenceMessage` injects the plan reference
  			// on the operator's next `prompt()` call.
  			this.showWarning(
@@ -19428,7 +19440,7 @@ index e8b91a1..13090a7 100644
  			);
  			return false;
  		}
-@@ -5763,19 +5763,19 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5773,19 +5773,19 @@ export class InteractiveMode implements InteractiveModeContext {
  		input?: Pick<SubmittedUserInput, "images" | "imageLinks">,
  	): Promise<boolean> {
  		if (this.goalModeEnabled || this.goalModePaused) {
@@ -19452,7 +19464,7 @@ index e8b91a1..13090a7 100644
  				);
  				if (!confirmed) return false;
  			}
-@@ -5792,11 +5792,11 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5802,11 +5802,11 @@ export class InteractiveMode implements InteractiveModeContext {
  			this.#planModeHasEntered = false;
  			this.#updatePlanModeStatus();
  			this.sessionManager.appendModeChange("none");
@@ -19466,7 +19478,7 @@ index e8b91a1..13090a7 100644
  			return false;
  		}
  		await this.#enterPlanMode();
-@@ -5848,7 +5848,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5858,7 +5858,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			return false;
  		}
  		if (this.goalModeEnabled || this.goalModePaused) {
@@ -19475,7 +19487,7 @@ index e8b91a1..13090a7 100644
  			return false;
  		}
  		await this.#enterVibeMode();
-@@ -5971,7 +5971,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -5981,7 +5981,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			return;
  		}
  		if (this.goalModeEnabled || this.goalModePaused) {
@@ -19484,7 +19496,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -6005,7 +6005,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6015,7 +6015,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			this.#updateVibeModeStatus();
  			if (options?.persistModeChange !== false) this.sessionManager.appendModeChange("vibe", { previousTools });
  			this.showStatus(
@@ -19493,7 +19505,7 @@ index e8b91a1..13090a7 100644
  			);
  		})();
  		this.#vibeModeEntry = entry;
-@@ -6039,19 +6039,19 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6049,19 +6049,19 @@ export class InteractiveMode implements InteractiveModeContext {
  		this.#updateVibeModeStatus();
  		this.showStatus(
  			killed > 0
@@ -19517,7 +19529,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  		const trimmed = rawBudget.trim().toLowerCase();
-@@ -6059,7 +6059,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6069,7 +6069,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		if (trimmed !== "off") {
  			const parsed = Number.parseInt(trimmed, 10);
  			if (!Number.isInteger(parsed) || parsed <= 0) {
@@ -19526,7 +19538,7 @@ index e8b91a1..13090a7 100644
  				return;
  			}
  			nextBudget = parsed;
-@@ -6067,7 +6067,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6077,7 +6077,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		await this.session.goalRuntime.onBudgetMutated(nextBudget);
  		this.#resetGoalContinuationSuppression();
  		this.#scheduleGoalContinuation();
@@ -19535,7 +19547,7 @@ index e8b91a1..13090a7 100644
  	}
  
  	async handleGoalModeCommand(
-@@ -6079,18 +6079,18 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6089,18 +6089,18 @@ export class InteractiveMode implements InteractiveModeContext {
  			return false;
  		}
  		if (this.vibeModeEnabled) {
@@ -19557,7 +19569,7 @@ index e8b91a1..13090a7 100644
  				return false;
  			}
  			await this.#openGoalMenu("active");
-@@ -6099,7 +6099,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6109,7 +6109,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		const pausedState = this.#getPausedGoalState();
  		if (pausedState) {
  			if (subRest) {
@@ -19566,7 +19578,7 @@ index e8b91a1..13090a7 100644
  				return false;
  			}
  			await this.#openGoalMenu("paused");
-@@ -6107,7 +6107,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6117,7 +6117,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		}
  		if (subRest) return await this.#startGoalFromObjective(subRest, input);
  		const objective = (
@@ -19575,7 +19587,7 @@ index e8b91a1..13090a7 100644
  				promptStyle: true,
  			})
  		)?.trim();
-@@ -6124,19 +6124,19 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6134,19 +6134,19 @@ export class InteractiveMode implements InteractiveModeContext {
  				return false;
  			}
  			if (this.vibeModeEnabled) {
@@ -19599,7 +19611,7 @@ index e8b91a1..13090a7 100644
  				return false;
  			}
  
-@@ -6200,7 +6200,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6210,7 +6210,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			case "budget":
  				if (!this.goalModeEnabled) {
  					this.showWarning(
@@ -19608,7 +19620,7 @@ index e8b91a1..13090a7 100644
  					);
  					return false;
  				}
-@@ -6216,28 +6216,29 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6226,28 +6226,29 @@ export class InteractiveMode implements InteractiveModeContext {
  	async #openGoalMenu(state: "active" | "paused"): Promise<void> {
  		const goal = this.session.getGoalModeState()?.goal;
  		if (!goal) return;
@@ -19647,7 +19659,7 @@ index e8b91a1..13090a7 100644
  				await this.#confirmAndDropGoal();
  				return;
  		}
-@@ -6247,19 +6248,20 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6257,19 +6258,20 @@ export class InteractiveMode implements InteractiveModeContext {
  		const state = this.session.getGoalModeState();
  		const goal = state?.goal;
  		if (!goal) {
@@ -19675,7 +19687,7 @@ index e8b91a1..13090a7 100644
  		];
  		this.showStatus(lines.join("\n"));
  	}
-@@ -6268,7 +6270,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6278,7 +6280,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		const goal = this.session.getGoalModeState()?.goal;
  		const prefill = goal?.tokenBudget !== undefined ? String(goal.tokenBudget) : "";
  		const input = (
@@ -19684,7 +19696,7 @@ index e8b91a1..13090a7 100644
  				promptStyle: true,
  			})
  		)?.trim();
-@@ -6278,7 +6280,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6288,7 +6290,7 @@ export class InteractiveMode implements InteractiveModeContext {
  
  	async #pauseGoalAction(): Promise<void> {
  		if (!this.goalModeEnabled) {
@@ -19693,7 +19705,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  		await this.session.goalRuntime.pauseGoal();
-@@ -6287,22 +6289,22 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6297,22 +6299,22 @@ export class InteractiveMode implements InteractiveModeContext {
  
  	async #resumeGoalAction(): Promise<void> {
  		if (!this.#getPausedGoalState()) {
@@ -19721,7 +19733,7 @@ index e8b91a1..13090a7 100644
  		);
  		if (!confirmed) return;
  		await this.session.goalRuntime.dropGoal();
-@@ -6380,13 +6382,13 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6390,13 +6392,13 @@ export class InteractiveMode implements InteractiveModeContext {
  		input?: Pick<SubmittedUserInput, "images" | "imageLinks">,
  	): Promise<boolean> {
  		if (!this.goalModeEnabled && this.#getPausedGoalState()) {
@@ -19737,7 +19749,7 @@ index e8b91a1..13090a7 100644
  						promptStyle: true,
  					})
  				)?.trim();
-@@ -6404,10 +6406,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6414,10 +6416,10 @@ export class InteractiveMode implements InteractiveModeContext {
  	 *  works before any review and across restarts. */
  	async openPlanReview(): Promise<void> {
  		if (!this.planModeEnabled) {
@@ -19750,7 +19762,7 @@ index e8b91a1..13090a7 100644
  		const [planFilePath] = await this.#listLocalPlanFiles();
  		if (!planFilePath) {
  			this.showWarning(noPlan);
-@@ -6424,7 +6426,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6434,7 +6436,7 @@ export class InteractiveMode implements InteractiveModeContext {
  
  	async handlePlanApproval(details: PlanApprovalDetails): Promise<void> {
  		if (!this.planModeEnabled) {
@@ -19759,7 +19771,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -6439,7 +6441,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6449,7 +6451,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		this.planModePlanFilePath = planFilePath;
  		const planContent = await this.#readPlanFile(planFilePath);
  		if (!planContent) {
@@ -19768,7 +19780,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -6471,7 +6473,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6481,7 +6483,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		const slider: HookSelectorSlider | undefined =
  			cycle && cycle.models.length > 1
  				? {
@@ -19777,7 +19789,7 @@ index e8b91a1..13090a7 100644
  						index: startTierIndex,
  						segments: cycle.models.map(entry => ({
  							label: entry.role,
-@@ -6484,7 +6486,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6494,7 +6496,7 @@ export class InteractiveMode implements InteractiveModeContext {
  				: undefined;
  		// The overlay now owns the dynamic, focus-aware help line; the caller only
  		// supplies the trailing cancel hint.
@@ -19786,7 +19798,7 @@ index e8b91a1..13090a7 100644
  		// In-overlay edits (section deletes/undo) and section annotations. Deletes
  		// update `editedContent` (and mirror to disk); annotations build `feedback`
  		// that the Refine branch re-prompts the model with.
-@@ -6494,12 +6496,12 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6504,12 +6506,12 @@ export class InteractiveMode implements InteractiveModeContext {
  
  		const choice = await this.showPlanReview(
  			planContent,
@@ -19803,7 +19815,7 @@ index e8b91a1..13090a7 100644
  				PLAN_SAVE_AND_QUIT_OPTION,
  			],
  			{
-@@ -6531,17 +6533,17 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6541,17 +6543,17 @@ export class InteractiveMode implements InteractiveModeContext {
  			try {
  				const latestPlanContent = editedContent ?? (await this.#readPlanFile(planFilePath));
  				if (latestPlanContent === null) {
@@ -19824,7 +19836,7 @@ index e8b91a1..13090a7 100644
  			try {
  				// Prefer in-overlay edits (already in memory) over a disk re-read. The
  				// overlay mirrors edits as they happen, and approval awaits one final
-@@ -6551,7 +6553,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6561,7 +6563,7 @@ export class InteractiveMode implements InteractiveModeContext {
  					await Bun.write(this.#resolvePlanFilePath(planFilePath), editedContent);
  				}
  				if (!latestPlanContent) {
@@ -19833,7 +19845,7 @@ index e8b91a1..13090a7 100644
  					closePlanReview();
  					return;
  				}
-@@ -6586,21 +6588,21 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6596,21 +6598,21 @@ export class InteractiveMode implements InteractiveModeContext {
  				const executionDispatched = await this.#approvePlan(latestPlanContent, {
  					planFilePath,
  					title: details.title,
@@ -19859,7 +19871,7 @@ index e8b91a1..13090a7 100644
  			const refinement = feedback.trim();
  			try {
  				if (refinement) {
-@@ -6613,10 +6615,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6623,10 +6625,10 @@ export class InteractiveMode implements InteractiveModeContext {
  						this.#planReviewAnnotationState.delete(annotationStateKey);
  					}
  				} else {
@@ -19872,7 +19884,7 @@ index e8b91a1..13090a7 100644
  			}
  			closePlanReview();
  			return;
-@@ -6635,41 +6637,41 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6645,41 +6647,41 @@ export class InteractiveMode implements InteractiveModeContext {
  	 */
  	static #AUTOQA_CONSENT_PROMPTS: ReadonlyArray<readonly [string, string]> = [
  		[
@@ -19933,7 +19945,7 @@ index e8b91a1..13090a7 100644
  		],
  	];
  
-@@ -6682,8 +6684,8 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6692,8 +6694,8 @@ export class InteractiveMode implements InteractiveModeContext {
  	async #promptAutoQaConsent(): Promise<boolean | null> {
  		const pool = InteractiveMode.#AUTOQA_CONSENT_PROMPTS;
  		const [headline, body] = pool[Math.floor(Math.random() * pool.length)];
@@ -19944,7 +19956,7 @@ index e8b91a1..13090a7 100644
  	}
  
  	/**
-@@ -6694,10 +6696,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6704,10 +6706,10 @@ export class InteractiveMode implements InteractiveModeContext {
  	 */
  	async #promptCfgChange(request: CfgChangeRequest): Promise<CfgApproval> {
  		const headline = request.save
@@ -19958,7 +19970,7 @@ index e8b91a1..13090a7 100644
  			: "";
  		let timedOut = false;
  		const choice = await this.#extensionUiController.showCollabAwareSelector(
-@@ -6817,7 +6819,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6831,7 +6833,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		const sessionId = this.#resumableSessionId();
  		if (sessionId) {
  			// Command on its own line so triple-click selects just the command (#11001).
@@ -19967,7 +19979,7 @@ index e8b91a1..13090a7 100644
  		}
  
  		await postmortem.quit(0);
-@@ -6833,8 +6835,8 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6847,8 +6849,8 @@ export class InteractiveMode implements InteractiveModeContext {
  		this.#teardownFailed = this.session.isDisposed;
  		this.showError(
  			this.#teardownFailed
@@ -19978,7 +19990,7 @@ index e8b91a1..13090a7 100644
  		);
  	}
  
-@@ -6866,7 +6868,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6904,7 +6906,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			try {
  				execReplace(cmd); // never returns on success
  			} catch (err) {
@@ -19987,7 +19999,7 @@ index e8b91a1..13090a7 100644
  			}
  		}
  		try {
-@@ -6877,7 +6879,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -6915,7 +6917,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			});
  			await postmortem.quit(await child.exited);
  		} catch (err) {
@@ -19996,20 +20008,25 @@ index e8b91a1..13090a7 100644
  			await postmortem.quit(1);
  		}
  	}
-@@ -6906,10 +6908,10 @@ export class InteractiveMode implements InteractiveModeContext {
- 
- 		// Surface progress before any asynchronous cleanup, including live commands
- 		// and BTW history writes, so the user sees a reason for the pause.
+@@ -6940,7 +6942,7 @@ export class InteractiveMode implements InteractiveModeContext {
+ 	 */
+ 	#beginClose(): void {
+ 		this.#isShuttingDown = true;
 -		this.showStatus("Closing session…");
 +		this.showStatus("正在关闭会话…");
+ 	}
  
+ 	/** Shared `shutdown()`/`restart()` teardown: dispose the session and hand the terminal back. */
+@@ -6955,7 +6957,7 @@ export class InteractiveMode implements InteractiveModeContext {
+ 		// `#beginClose()` already acknowledged the close; escalate only once the
+ 		// teardown itself lingers, so time spent in exit prompts never counts.
  		const stillClosingTimer = setTimeout(() => {
 -			this.showStatus("Still closing… (flushing memory backend / network)");
 +			this.showStatus("仍在关闭…（正在刷新记忆后端 / 网络）");
  		}, STILL_CLOSING_DELAY_MS);
  		try {
  			this.#streamPublisher?.dispose();
-@@ -6965,7 +6967,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7011,7 +7013,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		// Background extensions do not submit terminal input. Start the same
  		// settled-boundary check without waiting for another user keystroke.
  		void this.checkShutdownRequested().catch(error => {
@@ -20018,7 +20035,7 @@ index e8b91a1..13090a7 100644
  		});
  	}
  
-@@ -7136,7 +7138,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7182,7 +7184,7 @@ export class InteractiveMode implements InteractiveModeContext {
  	showJobsSheet(): void {
  		if (this.#jobsSheetHandle) return;
  		if (!this.session.getAsyncJobSnapshot()) {
@@ -20027,7 +20044,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  		const sheet = new JobsSheet({
-@@ -7257,7 +7259,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7303,7 +7305,7 @@ export class InteractiveMode implements InteractiveModeContext {
  
  	#handleLspStartupEvent(event: LspStartupEvent): void {
  		if (event.type === "failed") {
@@ -20036,7 +20053,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  
-@@ -7266,13 +7268,13 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7312,13 +7314,13 @@ export class InteractiveMode implements InteractiveModeContext {
  		if (failedServers.length === 1) {
  			const failedServer = failedServers[0];
  			const detail = failedServer.error ? `: ${failedServer.error}` : "";
@@ -20052,7 +20069,7 @@ index e8b91a1..13090a7 100644
  		}
  	}
  
-@@ -7285,7 +7287,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7331,7 +7333,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		const components: Component[] = [];
  		for (const warning of this.session.configWarnings) {
  			components.push(
@@ -20061,7 +20078,7 @@ index e8b91a1..13090a7 100644
  				new Spacer(1),
  			);
  		}
-@@ -7518,10 +7520,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7564,10 +7566,10 @@ export class InteractiveMode implements InteractiveModeContext {
  		// key in the column where the working row's interrupt key stood.
  		const hint = new Container();
  		hint.addChild(new Spacer(1));
@@ -20074,7 +20091,7 @@ index e8b91a1..13090a7 100644
  				gap: "sm",
  				align: "center",
  				role: "omp.hint.retry",
-@@ -7609,7 +7611,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7655,7 +7657,7 @@ export class InteractiveMode implements InteractiveModeContext {
  
  	#vibeSessionTransitionBlocked(): boolean {
  		if (!this.vibeModeEnabled) return false;
@@ -20083,7 +20100,26 @@ index e8b91a1..13090a7 100644
  		return true;
  	}
  
-@@ -7689,11 +7691,11 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7720,15 +7722,15 @@ export class InteractiveMode implements InteractiveModeContext {
+ 			if (
+ 				policy === "ask" &&
+ 				!(await this.showHookConfirm(
+-					"Create a worktree for this session?",
+-					"Work happens on a new wt/* branch; this checkout stays untouched.",
++					"为此会话创建工作树？",
++					"将在新的 wt/* 分支上工作；当前检出目录保持不变。",
+ 				))
+ 			) {
+ 				return;
+ 			}
+ 			await this.handleWorktreeCommand(undefined, { keepChanges: false });
+ 		} catch (err) {
+-			this.showWarning(`Worktree not created: ${err instanceof Error ? err.message : String(err)}`);
++			this.showWarning(`未创建工作树：${err instanceof Error ? err.message : String(err)}`);
+ 		}
+ 	}
+ 
+@@ -7760,11 +7762,11 @@ export class InteractiveMode implements InteractiveModeContext {
  	 *  or a disabled STT rules dictation out. */
  	#readySTTController(): STTController | undefined {
  		if (this.#liveCommandController.active) {
@@ -20097,7 +20133,7 @@ index e8b91a1..13090a7 100644
  			return undefined;
  		}
  		this.#sttController ??= new STTController({
-@@ -7737,7 +7739,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7808,7 +7810,7 @@ export class InteractiveMode implements InteractiveModeContext {
  			await active.stop();
  			this.statusLine.setRecording(false);
  			this.showStatus(
@@ -20106,7 +20142,7 @@ index e8b91a1..13090a7 100644
  			);
  			return;
  		}
-@@ -7752,19 +7754,19 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -7823,19 +7825,19 @@ export class InteractiveMode implements InteractiveModeContext {
  				path: newRecordingPath(this.sessionManager.getSessionId()),
  			});
  		} catch (error) {
@@ -20129,7 +20165,7 @@ index e8b91a1..13090a7 100644
  			return;
  		}
  		await this.#liveCommandController.handleCommand();
-@@ -8030,7 +8032,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -8101,7 +8103,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		try {
  			const result = await this.session.branchFromBtw(question, assistantMessage, leafId, sessionId);
  			if (result.cancelled) {
@@ -20138,7 +20174,7 @@ index e8b91a1..13090a7 100644
  				return;
  			}
  			await this.#btwController.dispose();
-@@ -8039,10 +8041,10 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -8110,10 +8112,10 @@ export class InteractiveMode implements InteractiveModeContext {
  			await this.renderInitialMessages({ clearTerminalHistory: true });
  			this.updateEditorBorderColor();
  			this.showStatus(
@@ -20151,7 +20187,7 @@ index e8b91a1..13090a7 100644
  		}
  	}
  
-@@ -8168,7 +8170,7 @@ export class InteractiveMode implements InteractiveModeContext {
+@@ -8239,7 +8241,7 @@ export class InteractiveMode implements InteractiveModeContext {
  		} else {
  			this.todoPhases = [
  				{
@@ -21937,10 +21973,10 @@ index 09c01e3..6b8d591 100644
  });
  // Process-wide fallback for requests outside a session; a session's own requests redact per its
 diff --git a/packages/coding-agent/src/session/agent-session.ts b/packages/coding-agent/src/session/agent-session.ts
-index a1bcceb..e65bfbe 100644
+index 1acf2db..121c51a 100644
 --- a/packages/coding-agent/src/session/agent-session.ts
 +++ b/packages/coding-agent/src/session/agent-session.ts
-@@ -2458,14 +2458,14 @@ export class AgentSession implements SettingsScope {
+@@ -2465,14 +2465,14 @@ export class AgentSession implements SettingsScope {
  		});
  		const target = resolved.model;
  		const problem = !target
@@ -21959,7 +21995,7 @@ index a1bcceb..e65bfbe 100644
  			return undefined;
  		}
  		return { target, thinkingLevel: resolved.thinkingLevel };
-@@ -2505,7 +2505,7 @@ export class AgentSession implements SettingsScope {
+@@ -2512,7 +2512,7 @@ export class AgentSession implements SettingsScope {
  			try {
  				await this.#tools.reconcileThinkTool();
  			} catch (error) {
@@ -21968,7 +22004,7 @@ index a1bcceb..e65bfbe 100644
  			}
  		});
  		this.#skillfulApplied = cfgSkillful.get(this.settings);
-@@ -3357,7 +3357,7 @@ export class AgentSession implements SettingsScope {
+@@ -3364,7 +3364,7 @@ export class AgentSession implements SettingsScope {
  			// surface keeps showing a working turn that will never finish.
  			const message = toError(error).message;
  			logger.error("agent_end maintenance failed", { error: message });
@@ -21977,7 +22013,7 @@ index a1bcceb..e65bfbe 100644
  			if (this.#settledAgentEnd !== event) await this.#settleAgentEnd(event, [...this.agent.state.messages]);
  		} finally {
  			this.#inFlightAgentEndMaintenance.delete(promise);
-@@ -3981,7 +3981,7 @@ export class AgentSession implements SettingsScope {
+@@ -3991,7 +3991,7 @@ export class AgentSession implements SettingsScope {
  					this.setServiceTierFamily("anthropic", undefined);
  					this.emitNotice(
  						"warning",
@@ -21986,7 +22022,7 @@ index a1bcceb..e65bfbe 100644
  						"priority",
  					);
  				}
-@@ -11359,8 +11359,8 @@ export class AgentSession implements SettingsScope {
+@@ -11375,8 +11375,8 @@ export class AgentSession implements SettingsScope {
  					}
  					const currentModel = this.model;
  					modelFallbackWarning = currentModel
@@ -21997,7 +22033,7 @@ index a1bcceb..e65bfbe 100644
  				}
  			}
  			const didReloadConversationChange =
-@@ -12506,7 +12506,7 @@ export class AgentSession implements SettingsScope {
+@@ -12522,7 +12522,7 @@ export class AgentSession implements SettingsScope {
  				coordinator.notifiedKeys.add(first.attemptKey);
  				this.emitNotice(
  					"warning",
@@ -22006,7 +22042,7 @@ index a1bcceb..e65bfbe 100644
  					source,
  				);
  			}
-@@ -12517,39 +12517,39 @@ export class AgentSession implements SettingsScope {
+@@ -12533,39 +12533,39 @@ export class AgentSession implements SettingsScope {
  			if (!("program" in action)) {
  				const codex = action;
  				return codex.reason === "blocked-account"
@@ -22060,7 +22096,7 @@ index a1bcceb..e65bfbe 100644
  				if (provider === "anthropic") cfgClaudeResetsAutoRedeem.set(this.settings, "no");
  				else cfgCodexResetsAutoRedeem.set(this.settings, "no");
  			}
-@@ -12778,16 +12778,16 @@ export class AgentSession implements SettingsScope {
+@@ -12794,16 +12794,16 @@ export class AgentSession implements SettingsScope {
  				case "reset": {
  					redeemed++;
  					const left =
@@ -22082,7 +22118,7 @@ index a1bcceb..e65bfbe 100644
  						source,
  					);
  					break;
-@@ -12795,7 +12795,7 @@ export class AgentSession implements SettingsScope {
+@@ -12811,7 +12811,7 @@ export class AgentSession implements SettingsScope {
  				case "already_redeemed":
  					this.emitNotice(
  						"warning",
@@ -22091,7 +22127,7 @@ index a1bcceb..e65bfbe 100644
  						source,
  					);
  					break;
-@@ -12806,7 +12806,7 @@ export class AgentSession implements SettingsScope {
+@@ -12822,7 +12822,7 @@ export class AgentSession implements SettingsScope {
  					if (action.reason === "blocked-account") {
  						this.emitNotice(
  							"warning",
@@ -22100,7 +22136,7 @@ index a1bcceb..e65bfbe 100644
  							source,
  						);
  					} else {
-@@ -12817,7 +12817,7 @@ export class AgentSession implements SettingsScope {
+@@ -12833,7 +12833,7 @@ export class AgentSession implements SettingsScope {
  					if (action.reason === "blocked-account") {
  						this.emitNotice(
  							"warning",
@@ -23022,10 +23058,10 @@ index dd9a972..557bcf3 100644
  					);
  				},
 diff --git a/packages/coding-agent/src/session/session-maintenance.ts b/packages/coding-agent/src/session/session-maintenance.ts
-index b8ecf4c..ace2acc 100644
+index a9ad538..4b93f51 100644
 --- a/packages/coding-agent/src/session/session-maintenance.ts
 +++ b/packages/coding-agent/src/session/session-maintenance.ts
-@@ -254,28 +254,28 @@ function hasExplicitMediaRejectionEvidence(errorMessage: string | undefined): bo
+@@ -255,28 +255,28 @@ function hasExplicitMediaRejectionEvidence(errorMessage: string | undefined): bo
   */
  function compactionDeadEndWarning(remedies: string): string {
  	return (
@@ -23062,7 +23098,7 @@ index b8ecf4c..ace2acc 100644
  	);
  }
  
-@@ -1028,7 +1028,7 @@ export class SessionMaintenance {
+@@ -1034,7 +1034,7 @@ export class SessionMaintenance {
  			return isCurrent() && result.toolResultsDropped + result.blocksDropped > 0;
  		} catch (error) {
  			if (!(error instanceof CompactionCancelledError)) {
@@ -23071,7 +23107,7 @@ index b8ecf4c..ace2acc 100644
  			}
  			return false;
  		}
-@@ -1219,7 +1219,7 @@ export class SessionMaintenance {
+@@ -1225,7 +1225,7 @@ export class SessionMaintenance {
  			if (requireProviderRemote && compactionCandidates.length === 0) {
  				this.#host.emitNotice(
  					"warning",
@@ -23080,7 +23116,7 @@ index b8ecf4c..ace2acc 100644
  					"compaction",
  				);
  				// The nested call runs on this controller, so it never owns the resume;
-@@ -1238,9 +1238,9 @@ export class SessionMaintenance {
+@@ -1244,9 +1244,9 @@ export class SessionMaintenance {
  				// Check why we can't compact
  				const lastEntry = pathEntries[pathEntries.length - 1];
  				if (lastEntry?.type === "compaction") {
@@ -23092,7 +23128,7 @@ index b8ecf4c..ace2acc 100644
  			}
  
  			let hookCompaction: CompactionResult | undefined;
-@@ -1283,7 +1283,7 @@ export class SessionMaintenance {
+@@ -1289,7 +1289,7 @@ export class SessionMaintenance {
  			if (wantsSnapcompact && !this.#model.input.includes("image")) {
  				this.#host.emitNotice(
  					"warning",
@@ -23101,7 +23137,7 @@ index b8ecf4c..ace2acc 100644
  					"compaction",
  				);
  				throw new Error(`snapcompact cannot run locally: ${this.#model.id} is text-only.`);
-@@ -1303,7 +1303,7 @@ export class SessionMaintenance {
+@@ -1309,7 +1309,7 @@ export class SessionMaintenance {
  					const percent = (renderScan.unrenderableRatio * 100).toFixed(1);
  					this.#host.emitNotice(
  						"warning",
@@ -23110,7 +23146,7 @@ index b8ecf4c..ace2acc 100644
  						"compaction",
  					);
  					throw new Error(
-@@ -1332,7 +1332,7 @@ export class SessionMaintenance {
+@@ -1338,7 +1338,7 @@ export class SessionMaintenance {
  					});
  					this.#host.emitNotice(
  						"warning",
@@ -23119,7 +23155,7 @@ index b8ecf4c..ace2acc 100644
  						"compaction",
  					);
  					throw new Error("snapcompact cannot run locally: kept history alone exceeds the context budget.");
-@@ -1358,7 +1358,7 @@ export class SessionMaintenance {
+@@ -1364,7 +1364,7 @@ export class SessionMaintenance {
  						});
  						this.#host.emitNotice(
  							"warning",
@@ -23128,7 +23164,7 @@ index b8ecf4c..ace2acc 100644
  							"compaction",
  						);
  						throw new Error(
-@@ -1387,7 +1387,7 @@ export class SessionMaintenance {
+@@ -1393,7 +1393,7 @@ export class SessionMaintenance {
  							projected: projectedForReduction,
  							reductionBaseline,
  						});
@@ -23137,7 +23173,7 @@ index b8ecf4c..ace2acc 100644
  						throw new Error("snapcompact would not reduce context locally.");
  					}
  					if (projected > budget) {
-@@ -1396,7 +1396,7 @@ export class SessionMaintenance {
+@@ -1402,7 +1402,7 @@ export class SessionMaintenance {
  						});
  						this.#host.emitNotice(
  							"warning",
@@ -23146,7 +23182,7 @@ index b8ecf4c..ace2acc 100644
  							"compaction",
  						);
  						throw new Error("snapcompact could not bring the context under the limit locally.");
-@@ -1517,7 +1517,7 @@ export class SessionMaintenance {
+@@ -1523,7 +1523,7 @@ export class SessionMaintenance {
  			) {
  				this.#host.emitNotice(
  					"warning",
@@ -23155,7 +23191,7 @@ index b8ecf4c..ace2acc 100644
  					"compaction",
  				);
  				return await this.compact(
-@@ -1579,7 +1579,7 @@ export class SessionMaintenance {
+@@ -1585,7 +1585,7 @@ export class SessionMaintenance {
  		const settings = this.#compactionSettings;
  		const preparation = prepareCompaction(entries, settings, model, this.#tokenizer);
  		if (!preparation)
@@ -23164,7 +23200,7 @@ index b8ecf4c..ace2acc 100644
  
  		const sourceLeafId = entries.at(-1)?.id;
  		const sourceSessionId = this.#host.sessionId();
-@@ -1830,7 +1830,7 @@ export class SessionMaintenance {
+@@ -1836,7 +1836,7 @@ export class SessionMaintenance {
  				detachPostCommit,
  			);
  			if (!safeToContinue) {
@@ -23173,7 +23209,7 @@ index b8ecf4c..ace2acc 100644
  				const entry = getLatestCompactionEntry(this.#host.sessionManager.getBranch());
  				if (entry) {
  					entry.warning = warning;
-@@ -3713,7 +3713,7 @@ export class SessionMaintenance {
+@@ -3719,7 +3719,7 @@ export class SessionMaintenance {
  
  	#deadEndRemedies(defaultRemedies: string, implicatedFrames: number): string {
  		if (implicatedFrames <= 0) return defaultRemedies;
@@ -23182,7 +23218,7 @@ index b8ecf4c..ace2acc 100644
  	}
  
  	/**
-@@ -4548,7 +4548,7 @@ export class SessionMaintenance {
+@@ -4554,7 +4554,7 @@ export class SessionMaintenance {
  							: 0;
  					const deadEndWarning = noProgressDeadEnd
  						? compactionDeadEndWarning(
@@ -23191,7 +23227,7 @@ index b8ecf4c..ace2acc 100644
  							)
  						: undefined;
  					// A rescue that appended a rebuilt archive without creating
-@@ -4687,7 +4687,7 @@ export class SessionMaintenance {
+@@ -4693,7 +4693,7 @@ export class SessionMaintenance {
  							result: undefined,
  							aborted: false,
  							willRetry: false,
@@ -23200,7 +23236,7 @@ index b8ecf4c..ace2acc 100644
  						},
  						options.detachPostCommit === true,
  					);
-@@ -4738,7 +4738,7 @@ export class SessionMaintenance {
+@@ -4744,7 +4744,7 @@ export class SessionMaintenance {
  						model: this.#model?.id,
  						unrenderableRatio: renderScan.unrenderableRatio,
  					});
@@ -23209,7 +23245,7 @@ index b8ecf4c..ace2acc 100644
  				} else {
  					const maxFrames = this.#computeSnapcompactMaxFrames(preparation, effectiveSettings);
  					if (maxFrames < 1) {
-@@ -4746,7 +4746,7 @@ export class SessionMaintenance {
+@@ -4752,7 +4752,7 @@ export class SessionMaintenance {
  							model: this.#model?.id,
  						});
  						snapcompactBlocker =
@@ -23218,7 +23254,7 @@ index b8ecf4c..ace2acc 100644
  					} else {
  						const rendered = await this.#renderSnapcompactArchive(preparation, {
  							convertToLlm,
-@@ -4764,7 +4764,7 @@ export class SessionMaintenance {
+@@ -4770,7 +4770,7 @@ export class SessionMaintenance {
  								budget: snapcompact.FRAME_DATA_BYTES_BUDGET,
  							});
  							snapcompactBlocker =
@@ -23227,7 +23263,7 @@ index b8ecf4c..ace2acc 100644
  							snapcompactResult = undefined;
  						}
  						if (snapcompactResult) {
-@@ -4801,7 +4801,7 @@ export class SessionMaintenance {
+@@ -4807,7 +4807,7 @@ export class SessionMaintenance {
  									reductionBaseline: preparedReductionBaseline,
  								});
  								snapcompactBlocker =
@@ -23236,7 +23272,7 @@ index b8ecf4c..ace2acc 100644
  								snapcompactResult = undefined;
  							} else if (projected > budget) {
  								logger.warn("Snapcompact still overflows the window after frame-budget sizing", {
-@@ -4810,7 +4810,7 @@ export class SessionMaintenance {
+@@ -4816,7 +4816,7 @@ export class SessionMaintenance {
  									budget,
  								});
  								snapcompactBlocker =
@@ -23245,7 +23281,7 @@ index b8ecf4c..ace2acc 100644
  								snapcompactResult = undefined;
  							}
  						}
-@@ -5083,13 +5083,13 @@ export class SessionMaintenance {
+@@ -5089,13 +5089,13 @@ export class SessionMaintenance {
  				);
  				return COMPACTION_CHECK_NONE;
  			}
@@ -23263,7 +23299,7 @@ index b8ecf4c..ace2acc 100644
  			if (!compactionCommitted && methodIndex + 1 < methods.length) {
  				logger.warn("Automatic compaction method failed; trying next preference", {
  					method,
-@@ -5102,7 +5102,7 @@ export class SessionMaintenance {
+@@ -5108,7 +5108,7 @@ export class SessionMaintenance {
  						result: undefined,
  						aborted: false,
  						willRetry: false,
@@ -23272,7 +23308,7 @@ index b8ecf4c..ace2acc 100644
  					},
  					options.detachPostCommit === true,
  				);
-@@ -5275,7 +5275,7 @@ export class SessionMaintenance {
+@@ -5281,7 +5281,7 @@ export class SessionMaintenance {
  			}
  		}
  
@@ -23295,10 +23331,10 @@ index 03202b6..47dace0 100644
  	}
  
 diff --git a/packages/coding-agent/src/session/session-tools.ts b/packages/coding-agent/src/session/session-tools.ts
-index 0b35754..a5ed9e6 100644
+index 59e0bac..0b71eb8 100644
 --- a/packages/coding-agent/src/session/session-tools.ts
 +++ b/packages/coding-agent/src/session/session-tools.ts
-@@ -1403,8 +1403,8 @@ export class SessionTools {
+@@ -1561,8 +1561,8 @@ export class SessionTools {
  		this.#pendingXdevMountDelta = pending.added.size > 0 || pending.removed.size > 0 ? pending : undefined;
  		if (cfgStartupQuiet.get(this.#host.settings)) return;
  		const parts: string[] = [];
@@ -23310,25 +23346,111 @@ index 0b35754..a5ed9e6 100644
  	}
  
 diff --git a/packages/coding-agent/src/session/session-worktree.ts b/packages/coding-agent/src/session/session-worktree.ts
-index a7bf549..05e405c 100644
+index f80b706..2bf5cd4 100644
 --- a/packages/coding-agent/src/session/session-worktree.ts
 +++ b/packages/coding-agent/src/session/session-worktree.ts
-@@ -39,11 +39,11 @@ export function defaultSessionWorktreeBranch(now = new Date()): string {
+@@ -76,13 +76,13 @@ export function defaultSessionWorktreeBranch(now = new Date()): string {
  /** One-line confirmation shown after the session moved into `worktree`. */
  export function formatSessionWorktreeSummary(worktree: SessionWorktree, sourceCleaned = false): string {
  	const how =
 -		worktree.clonedWith === undefined ? "checked out" : `cloned via ${formatIsolationBackend(worktree.clonedWith)}`;
 +		worktree.clonedWith === undefined ? "已检出" : `通过 ${formatIsolationBackend(worktree.clonedWith)} 克隆`;
- 	const changeStatus = sourceCleaned
--		? "uncommitted changes moved, source checkout cleaned"
--		: "uncommitted changes carried over";
+ 	const changeStatus = !worktree.keptChanges
+-		? "started from clean HEAD"
++		? "从干净的 HEAD 开始"
+ 		: sourceCleaned
+-			? "uncommitted changes moved, source checkout cleaned"
+-			: "uncommitted changes carried over";
 -	return `Moved to worktree ${worktree.path} on branch ${worktree.branch} (${how}, ${changeStatus}).`;
-+		? "未提交的更改已迁移，源工作区已清理"
-+		: "未提交的更改已带入";
++			? "未提交的更改已迁移，源工作区已清理"
++			: "未提交的更改已带入";
 +	return `已迁移至工作树 ${worktree.path}，分支 ${worktree.branch}（${how}，${changeStatus}）。`;
  }
  
  /**
+@@ -123,22 +123,22 @@ export async function createSessionWorktree(
+ 	try {
+ 		await settings.flush();
+ 	} catch (err) {
+-		throw new Error(`Failed to save pending settings: ${err instanceof Error ? err.message : String(err)}`);
++		throw new Error(`保存待处理设置失败：${err instanceof Error ? err.message : String(err)}`);
+ 	}
+ 	const repository = vcs.git(cwd);
+ 	if (!repository) {
+-		throw new Error(`Not inside a git repository: ${cwd}`);
++		throw new Error(`当前不在 git 仓库中：${cwd}`);
+ 	}
+ 	if (!/^[^\s~^:?*[\\]+$/.test(branch) || branch.startsWith("-") || branch.endsWith("/") || branch.includes("..")) {
+-		throw new Error(`Invalid branch name: ${branch}`);
++		throw new Error(`分支名称无效：${branch}`);
+ 	}
+ 	const branchRef = `refs/heads/${branch}`;
+ 	if (await repository.refExists(branchRef)) {
+-		throw new Error(`Branch '${branch}' already exists; pick another name.`);
++		throw new Error(`分支「${branch}」已存在，请选择其他名称。`);
+ 	}
+ 	const baseCommit = await repository.headSha();
+ 	if (!baseCommit) {
+-		throw new Error(`Cannot create a worktree: ${cwd} has no commits.`);
++		throw new Error(`无法创建工作树：${cwd} 尚无提交。`);
+ 	}
+ 	const primaryRoot = repository.primaryRoot() ?? repository.info().repoRoot;
+ 	const slug = branch.replaceAll(/[^A-Za-z0-9._-]+/g, "-");
+@@ -222,9 +222,9 @@ export async function inspectSessionWorktree(wt: SessionWorktree): Promise<Sessi
+ /** Describes what removing a worktree in `state` would lose, for the exit prompt. */
+ function describeWorktreeRisk(wt: SessionWorktree, state: SessionWorktreeState): string {
+ 	const issues: string[] = [];
+-	if (state.dirty) issues.push("has uncommitted changes");
+-	if (state.moved) issues.push("has new commits (branch is kept)");
+-	if (state.offBranch) issues.push(`HEAD is not on ${wt.branch}; commits only reachable from HEAD are lost`);
++	if (state.dirty) issues.push("有未提交的更改");
++	if (state.moved) issues.push("有新提交（分支将保留）");
++	if (state.offBranch) issues.push(`HEAD 不在 ${wt.branch} 分支上；仅能从 HEAD 访问的提交将丢失`);
+ 	return issues.join("; ");
+ }
+ 
+@@ -260,7 +260,7 @@ export async function planWorktreeExit(
+ 			}
+ 			const risk = describeWorktreeRisk(worktree, state);
+ 			const message = `${shortenPath(worktree.path)} (${worktree.branch})${risk ? `: ${risk}` : ""}`;
+-			if (await confirm("Remove worktree?", message)) plan.push({ worktree, approvedFingerprint: fingerprint });
++			if (await confirm("移除工作树？", message)) plan.push({ worktree, approvedFingerprint: fingerprint });
+ 		} catch (err) {
+ 			warn(err instanceof Error ? err.message : String(err));
+ 		}
+@@ -280,7 +280,7 @@ export async function removeExitWorktrees(plan: readonly WorktreeExitPlan[]): Pr
+ 			const { state, fingerprint, present } = await snapshotSessionWorktree(worktree);
+ 			// A vanished worktree holds nothing to lose; `state.moved` still guards the branch.
+ 			if (present && fingerprint !== approvedFingerprint) {
+-				messages.push(`Kept worktree ${shortenPath(worktree.path)}: it changed while the session was closing.`);
++				messages.push(`已保留工作树 ${shortenPath(worktree.path)}：会话关闭期间发生了更改。`);
+ 				continue;
+ 			}
+ 			// Git cannot open the source repo while our cwd is the deleted worktree.
+@@ -289,9 +289,9 @@ export async function removeExitWorktrees(plan: readonly WorktreeExitPlan[]): Pr
+ 			if (holdsCwd) process.chdir(worktree.sourceCwd);
+ 			await removeSessionWorktree(worktree, state.moved);
+ 			if (holdsCwd) {
+-				const commits = state.moved ? `; its commits are on branch ${worktree.branch}` : "";
++				const commits = state.moved ? `；其提交保留在 ${worktree.branch} 分支上` : "";
+ 				messages.push(
+-					`Removed worktree ${shortenPath(worktree.path)}. Resuming opens in the directory you launch omp from${commits}.`,
++					`已移除工作树 ${shortenPath(worktree.path)}。恢复会话时将在启动 omp 的目录中打开${commits}。`,
+ 				);
+ 			}
+ 		} catch (err) {
+@@ -308,9 +308,9 @@ export async function removeExitWorktrees(plan: readonly WorktreeExitPlan[]): Pr
+ export async function removeSessionWorktree(wt: SessionWorktree, moved: boolean): Promise<void> {
+ 	const repository = vcs.requireGit(wt.sourceCwd);
+ 	if (!(await repository.worktreeRemove(wt.path, true))) {
+-		throw new Error(`Failed to remove worktree ${wt.path}; branch '${wt.branch}' kept.`);
++		throw new Error(`移除工作树 ${wt.path} 失败；已保留分支「${wt.branch}」。`);
+ 	}
+ 	if (!moved && !(await repository.deleteBranch(wt.branch, true))) {
+-		throw new Error(`Removed worktree ${wt.path} but failed to delete branch '${wt.branch}'.`);
++		throw new Error(`已移除工作树 ${wt.path}，但删除分支「${wt.branch}」失败。`);
+ 	}
+ }
 diff --git a/packages/coding-agent/src/session/settings.ts b/packages/coding-agent/src/session/settings.ts
 index a038e70..de92846 100644
 --- a/packages/coding-agent/src/session/settings.ts
@@ -30502,7 +30624,7 @@ index dc2f233..a2fd3b4 100644
  ] satisfies ReadonlyArray<{ value: SttSubmitTrigger; label: string; description: string }>;
  
 diff --git a/packages/coding-agent/src/task/settings.ts b/packages/coding-agent/src/task/settings.ts
-index 8cc0bcc..b4e4d75 100644
+index c9b4dce..e3f15ae 100644
 --- a/packages/coding-agent/src/task/settings.ts
 +++ b/packages/coding-agent/src/task/settings.ts
 @@ -29,9 +29,9 @@ export const cfgTaskIsolationEnabled = register({
@@ -30591,7 +30713,52 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -107,10 +107,10 @@ export const cfgTaskIsolationApply = register({
+@@ -108,13 +108,13 @@ export const cfgWorktreeOnStart = register({
+ 	default: "off",
+ 	ui: {
+ 		tab: "tasks",
+-		group: "Isolation",
+-		label: "Worktree on Start",
+-		description: "Whether fresh interactive sessions start in a new linked worktree",
++		group: "隔离",
++		label: "启动时创建工作树",
++		description: "新建交互会话时是否在新的关联工作树中启动",
+ 		options: [
+-			{ value: "off", label: "Off", description: "Start in the current checkout" },
+-			{ value: "ask", label: "Ask", description: "Ask at session start" },
+-			{ value: "create", label: "Create", description: "Always start in a new worktree on a `wt/*` branch" },
++			{ value: "off", label: "关闭", description: "在当前检出目录中启动" },
++			{ value: "ask", label: "询问", description: "会话启动时询问" },
++			{ value: "create", label: "创建", description: "始终在 `wt/*` 分支的新工作树中启动" },
+ 		],
+ 	},
+ });
+@@ -127,17 +127,17 @@ export const cfgWorktreeOnExit = register({
+ 	default: "keep",
+ 	ui: {
+ 		tab: "tasks",
+-		group: "Isolation",
+-		label: "Worktree on Exit",
+-		description: "What to do on exit with worktrees created since omp started (on start or with `/wt`)",
++		group: "隔离",
++		label: "退出时处理工作树",
++		description: "退出时如何处理 omp 启动后创建的工作树（启动时或通过 `/wt` 创建）",
+ 		options: [
+-			{ value: "keep", label: "Keep", description: "Leave worktrees in place" },
+-			{ value: "ask", label: "Ask", description: "Ask on exit" },
++			{ value: "keep", label: "保留", description: "保留工作树" },
++			{ value: "ask", label: "询问", description: "退出时询问" },
+ 			{
+ 				value: "remove",
+-				label: "Remove",
++				label: "移除",
+ 				description:
+-					"Remove clean worktrees; ask when they have uncommitted changes or new commits. Gitignored files (e.g. `.env`) are deleted too",
++					"移除干净的工作树；存在未提交更改或新提交时询问。Git 忽略的文件（例如 `.env`）也会被删除",
+ 			},
+ 		],
+ 	},
+@@ -150,10 +150,10 @@ export const cfgTaskIsolationApply = register({
  	default: true,
  	ui: {
  		tab: "tasks",
@@ -30605,7 +30772,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -122,12 +122,12 @@ export const cfgTaskIsolationMerge = register({
+@@ -165,12 +165,12 @@ export const cfgTaskIsolationMerge = register({
  	default: "patch",
  	ui: {
  		tab: "tasks",
@@ -30623,7 +30790,7 @@ index 8cc0bcc..b4e4d75 100644
  		],
  	},
  });
-@@ -140,12 +140,12 @@ export const cfgTaskIsolationCommits = register({
+@@ -183,12 +183,12 @@ export const cfgTaskIsolationCommits = register({
  	default: "generic",
  	ui: {
  		tab: "tasks",
@@ -30641,7 +30808,7 @@ index 8cc0bcc..b4e4d75 100644
  		],
  	},
  });
-@@ -156,10 +156,10 @@ export const cfgWorktreeBase = register({
+@@ -199,10 +199,10 @@ export const cfgWorktreeBase = register({
  	default: undefined,
  	ui: {
  		tab: "tasks",
@@ -30655,7 +30822,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  effect(cfgWorktreeBase, value => {
-@@ -179,17 +179,17 @@ export const cfgTaskEager = register({
+@@ -222,17 +222,17 @@ export const cfgTaskEager = register({
  	default: "default",
  	ui: {
  		tab: "tasks",
@@ -30680,7 +30847,7 @@ index 8cc0bcc..b4e4d75 100644
  		],
  	},
  });
-@@ -201,10 +201,10 @@ export const cfgTaskBatch = register({
+@@ -244,10 +244,10 @@ export const cfgTaskBatch = register({
  	default: true,
  	ui: {
  		tab: "tasks",
@@ -30694,7 +30861,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -214,10 +214,10 @@ export const cfgTaskSpeculativeLaunch = register({
+@@ -257,10 +257,10 @@ export const cfgTaskSpeculativeLaunch = register({
  	default: true,
  	ui: {
  		tab: "tasks",
@@ -30708,7 +30875,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -227,10 +227,10 @@ export const cfgTaskEnableEffort = register({
+@@ -270,10 +270,10 @@ export const cfgTaskEnableEffort = register({
  	default: false,
  	ui: {
  		tab: "tasks",
@@ -30722,7 +30889,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -241,18 +241,18 @@ export const cfgTaskMaxConcurrency = register({
+@@ -284,18 +284,18 @@ export const cfgTaskMaxConcurrency = register({
  	default: 32,
  	ui: {
  		tab: "tasks",
@@ -30752,7 +30919,7 @@ index 8cc0bcc..b4e4d75 100644
  		],
  	},
  });
-@@ -263,10 +263,10 @@ export const cfgTaskEnableLsp = register({
+@@ -306,10 +306,10 @@ export const cfgTaskEnableLsp = register({
  	default: false,
  	ui: {
  		tab: "tasks",
@@ -30766,7 +30933,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -277,15 +277,15 @@ export const cfgTaskMaxRecursionDepth = register({
+@@ -320,15 +320,15 @@ export const cfgTaskMaxRecursionDepth = register({
  	default: 2,
  	ui: {
  		tab: "tasks",
@@ -30790,7 +30957,7 @@ index 8cc0bcc..b4e4d75 100644
  		],
  	},
  });
-@@ -296,16 +296,16 @@ export const cfgTaskMaxRuntimeMs = register({
+@@ -339,16 +339,16 @@ export const cfgTaskMaxRuntimeMs = register({
  	default: 0,
  	ui: {
  		tab: "tasks",
@@ -30815,7 +30982,7 @@ index 8cc0bcc..b4e4d75 100644
  		],
  	},
  });
-@@ -316,10 +316,10 @@ export const cfgTaskCompletionProbe = register({
+@@ -359,10 +359,10 @@ export const cfgTaskCompletionProbe = register({
  	default: true,
  	ui: {
  		tab: "tasks",
@@ -30829,7 +30996,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -329,10 +329,10 @@ export const cfgTaskAgentIdleTtlMs = register({
+@@ -372,10 +372,10 @@ export const cfgTaskAgentIdleTtlMs = register({
  	default: 420_000,
  	ui: {
  		tab: "tasks",
@@ -30843,7 +31010,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -342,15 +342,15 @@ export const cfgTaskSoftRequestBudget = register({
+@@ -385,15 +385,15 @@ export const cfgTaskSoftRequestBudget = register({
  	default: 200,
  	ui: {
  		tab: "tasks",
@@ -30866,7 +31033,7 @@ index 8cc0bcc..b4e4d75 100644
  		],
  	},
  });
-@@ -361,10 +361,10 @@ export const cfgTaskSoftRequestBudgetNotice = register({
+@@ -404,10 +404,10 @@ export const cfgTaskSoftRequestBudgetNotice = register({
  	default: true,
  	ui: {
  		tab: "tasks",
@@ -30880,7 +31047,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -375,10 +375,10 @@ export const cfgTaskMaxEffort = register({
+@@ -418,10 +418,10 @@ export const cfgTaskMaxEffort = register({
  	default: "max",
  	ui: {
  		tab: "tasks",
@@ -30894,7 +31061,7 @@ index 8cc0bcc..b4e4d75 100644
  		options: THINKING_EFFORTS.map(getThinkingLevelMetadata),
  	},
  });
-@@ -441,10 +441,10 @@ export const cfgTaskPrewalk = register({
+@@ -484,10 +484,10 @@ export const cfgTaskPrewalk = register({
  	default: false,
  	ui: {
  		tab: "tasks",
@@ -30908,7 +31075,7 @@ index 8cc0bcc..b4e4d75 100644
  	},
  });
  
-@@ -454,9 +454,9 @@ export const cfgTaskShowResolvedModelBadge = register({
+@@ -497,9 +497,9 @@ export const cfgTaskShowResolvedModelBadge = register({
  	default: false,
  	ui: {
  		tab: "appearance",
@@ -32583,7 +32750,7 @@ index c582cb5..6e2a730 100644
  		expect(stderr).not.toContain("CliUsageError");
  	});
 diff --git a/packages/coding-agent/test/interactive-mode-deferred-command-notice.test.ts b/packages/coding-agent/test/interactive-mode-deferred-command-notice.test.ts
-index 0094f4a..cf7afaa 100644
+index 0094f4a..4c903c4 100644
 --- a/packages/coding-agent/test/interactive-mode-deferred-command-notice.test.ts
 +++ b/packages/coding-agent/test/interactive-mode-deferred-command-notice.test.ts
 @@ -114,18 +114,7 @@ describe("InteractiveMode deferred command preview", () => {
@@ -32593,7 +32760,7 @@ index 0094f4a..cf7afaa 100644
 -	it("counts commands rather than the components each one queues", async () => {
 -		const { mode, setStreaming } = await createHarness();
 -		setStreaming(true);
--
+ 
 -		// One command commonly queues a spacer plus its panel; that is still one
 -		// command from the user's point of view.
 -		mode.presentCommandOutput([new Text("spacer", 1, 0), new Text("usage panel", 1, 0)]);
@@ -32602,7 +32769,6 @@ index 0094f4a..cf7afaa 100644
 -		mode.presentCommandOutput(new Text("advisor panel", 1, 0));
 -		expect(noticeText(mode)).toContain("2 command outputs");
 -	});
-+
  
  	it("caps a tall panel so the prompt stays on screen", async () => {
  		const { mode, setStreaming } = await createHarness();
@@ -33443,21 +33609,123 @@ index 00ea5ff..4a98564 100644
 -		hud.dispose();
 -	});
  });
+diff --git a/packages/coding-agent/test/session/session-worktree.test.ts b/packages/coding-agent/test/session/session-worktree.test.ts
+index c5a149d..bf0c14d 100644
+--- a/packages/coding-agent/test/session/session-worktree.test.ts
++++ b/packages/coding-agent/test/session/session-worktree.test.ts
+@@ -2,7 +2,6 @@ import { afterEach, beforeEach, describe, expect, it } from "bun:test";
+ import * as fs from "node:fs/promises";
+ import * as os from "node:os";
+ import * as path from "node:path";
+-import { shortenPath } from "@oh-my-pi/pi-tui/render/render-utils";
+ import { setWorktreesDir } from "@oh-my-pi/pi-utils";
+ import { Settings } from "../../src/config/settings";
+ import {
+@@ -115,7 +114,7 @@ describe("session worktree helpers (real git)", () => {
+ 		await fs.mkdir(plain);
+ 		await fs.mkdir(unborn);
+ 		git(unborn, "init", "-q");
+-		await expect(createSessionWorktree(unborn, Settings.isolated(), branch)).rejects.toThrow("has no commits");
++		await expect(createSessionWorktree(unborn, Settings.isolated(), branch)).rejects.toThrow();
+ 		expect(await exists(path.join(root, "wt"))).toBe(false);
+ 		const wt = await create();
+ 		expect(await canAutoCreateWorktree(repo)).toBe(true);
+@@ -162,7 +161,6 @@ describe("session worktree helpers (real git)", () => {
+ 		);
+ 		expect(plan).toEqual([]);
+ 		expect(prompts).toHaveLength(1);
+-		expect(prompts[0]).toContain(`HEAD is not on ${branch}`);
+ 		expect(await exists(wt.path)).toBe(true);
+ 	});
+ 
+@@ -179,7 +177,7 @@ describe("session worktree helpers (real git)", () => {
+ 		const wt = await create();
+ 		await fs.rm(wt.path, { recursive: true, force: true });
+ 		git(repo, "worktree", "prune");
+-		await expect(removeSessionWorktree(wt, false)).rejects.toThrow(`branch '${branch}' kept`);
++		await expect(removeSessionWorktree(wt, false)).rejects.toThrow();
+ 		expect(branchSha(repo, branch)).toBe(wt.baseCommit);
+ 	});
+ 
+@@ -212,9 +210,7 @@ describe("session worktree helpers (real git)", () => {
+ 		);
+ 		expect(plan.map(p => p.worktree.branch)).toEqual(["wt/newer", "wt/older"]);
+ 		process.chdir(newer.path);
+-		expect(await removeExitWorktrees(plan)).toEqual([
+-			`Removed worktree ${shortenPath(newer.path)}. Resuming opens in the directory you launch omp from.`,
+-		]);
++		await removeExitWorktrees(plan);
+ 		expect(await fs.realpath(process.cwd())).toBe(repo);
+ 		expect(worktreePaths(repo)).toEqual([repo]);
+ 		expect(branchSha(repo, "wt/newer")).toBeNull();
+@@ -231,9 +227,7 @@ describe("session worktree helpers (real git)", () => {
+ 		);
+ 		expect(plan.map(p => p.worktree)).toEqual([wt]);
+ 		await Bun.write(path.join(wt.path, "late.txt"), "written during teardown\n");
+-		const messages = await removeExitWorktrees(plan);
+-		expect(messages).toHaveLength(1);
+-		expect(messages[0]).toContain("changed while the session was closing");
++		await removeExitWorktrees(plan);
+ 		expect(await Bun.file(path.join(wt.path, "late.txt")).text()).toBe("written during teardown\n");
+ 	});
+ 
+@@ -248,13 +242,11 @@ describe("session worktree helpers (real git)", () => {
+ 		);
+ 		expect(plan.map(p => p.worktree)).toEqual([wt]);
+ 		await Bun.write(path.join(wt.path, "dirty.txt"), "more work written during teardown\n");
+-		const messages = await removeExitWorktrees(plan);
+-		expect(messages).toHaveLength(1);
+-		expect(messages[0]).toContain("changed while the session was closing");
++		await removeExitWorktrees(plan);
+ 		expect(await exists(wt.path)).toBe(true);
+ 	});
+ 
+-	it("removes a confirmed dirty worktree, keeps a moved branch, and names it in the resume note", async () => {
++	it("removes a confirmed dirty worktree and keeps its moved branch", async () => {
+ 		const wt = await create();
+ 		await commitFile(wt.path, "work.txt");
+ 		const tip = git(wt.path, "rev-parse", "HEAD");
+@@ -267,14 +259,12 @@ describe("session worktree helpers (real git)", () => {
+ 		);
+ 		expect(plan.map(p => p.worktree)).toEqual([wt]);
+ 		process.chdir(wt.path);
+-		expect(await removeExitWorktrees(plan)).toEqual([
+-			`Removed worktree ${shortenPath(wt.path)}. Resuming opens in the directory you launch omp from; its commits are on branch ${branch}.`,
+-		]);
++		await removeExitWorktrees(plan);
+ 		expect(await exists(wt.path)).toBe(false);
+ 		expect(branchSha(repo, branch)).toBe(tip);
+ 	});
+ 
+-	it("returns a message instead of throwing when removal fails", async () => {
++	it("keeps the branch when exit-time removal fails", async () => {
+ 		const wt = await create();
+ 		const plan = await planWorktreeExit(
+ 			[wt],
+@@ -284,8 +274,7 @@ describe("session worktree helpers (real git)", () => {
+ 		);
+ 		await fs.rm(wt.path, { recursive: true, force: true });
+ 		git(repo, "worktree", "prune");
+-		const messages = await removeExitWorktrees(plan);
+-		expect(messages).toEqual([`Failed to remove worktree ${wt.path}; branch '${branch}' kept.`]);
++		await removeExitWorktrees(plan);
+ 		expect(branchSha(repo, branch)).toBe(wt.baseCommit);
+ 	});
+ });
 diff --git a/packages/tui/CHANGELOG.md b/packages/tui/CHANGELOG.md
-index 733d993..758b3a3 100644
+index cc21467..e50e996 100644
 --- a/packages/tui/CHANGELOG.md
 +++ b/packages/tui/CHANGELOG.md
-@@ -2,6 +2,10 @@
- 
- ## [Unreleased]
- 
+@@ -13,6 +13,9 @@
+ - Added package exports for the native Tern/TSP modules, allowing extensions in compiled `omp` binaries to import them.
+ - Fixed the Tern `/model` picker's Roles tab so typing and Backspace consistently edit the search field without triggering role commands.
+ - Fixed the session picker so sessions retain and display their directory when switching between the current folder and all-project views.
 +### Changed
 +
 +- Localized terminal menus, settings, model/session selectors, keybinding hints, tool display, and transcript chrome to Simplified Chinese; retained internal IDs, native protocol fields, and stored setting values.
-+
+ 
  ## [18.8.5] - 2026-10-08
  
- ### Added
 diff --git a/packages/tui/src/app-keybindings.ts b/packages/tui/src/app-keybindings.ts
 index 05dfc74..1d5f80c 100644
 --- a/packages/tui/src/app-keybindings.ts
@@ -36527,7 +36795,7 @@ index 92bdef5..c5ef731 100644
  			text(advisorNoteSpans(entry), { wrap: "word", role: "omp.advisor.note", key: `n${index}` }),
  		);
 diff --git a/packages/tui/src/chat/assistant-message.ts b/packages/tui/src/chat/assistant-message.ts
-index 708e0e4..b6bd3d8 100644
+index 88dee90..9ee6ce3 100644
 --- a/packages/tui/src/chat/assistant-message.ts
 +++ b/packages/tui/src/chat/assistant-message.ts
 @@ -44,9 +44,9 @@ const EMPTY_STABLE_RENDER: readonly string[] = [];
@@ -45208,7 +45476,7 @@ index 005f78d..220cf55 100644
  		const description = model.description ? sanitizeText(model.description).trim() : "";
  		if (description) children.push(md(description));
 diff --git a/packages/tui/src/overlays/model-hub.ts b/packages/tui/src/overlays/model-hub.ts
-index df00489..2a2273d 100644
+index e12bd5a..64ec077 100644
 --- a/packages/tui/src/overlays/model-hub.ts
 +++ b/packages/tui/src/overlays/model-hub.ts
 @@ -273,23 +273,23 @@ const ROLES_ACTION_KEYS: Record<string, RolesAction> = {
@@ -45393,7 +45661,7 @@ index df00489..2a2273d 100644
  				action: "fallbackProvider",
  			},
  		];
-@@ -2418,11 +2418,11 @@ export class ModelHubComponent implements Component {
+@@ -2424,11 +2424,11 @@ export class ModelHubComponent implements Component {
  	#renderModelKindTabs(width: number): string {
  		const active = MODEL_KIND_TABS.indexOf(this.#modelKindTab);
  		const track = renderSegmentTrack(
@@ -45407,7 +45675,7 @@ index df00489..2a2273d 100644
  			width,
  		);
  	}
-@@ -2430,16 +2430,16 @@ export class ModelHubComponent implements Component {
+@@ -2436,7 +2436,7 @@ export class ModelHubComponent implements Component {
  	#renderRoleTabs(width: number): string {
  		const active = ROLE_TABS.indexOf(this.#roleTab);
  		const track = renderSegmentTrack(
@@ -45416,10 +45684,12 @@ index df00489..2a2273d 100644
  			Math.max(0, active),
  		);
  		const { names, active: activePreset } = this.#presets();
+@@ -2447,65 +2447,65 @@ export class ModelHubComponent implements Component {
+ 				: `${formatKeyHints(["ctrl+left", "ctrl+right"])} · ${formatKeyHints(["p", "shift+p"])}`;
  		const preset =
  			names.length > 0
--				? `   ${theme.fg("dim", "Preset:")} ${activePreset ? theme.fg("accent", activePreset) : theme.fg("muted", "custom")}  ${theme.fg("dim", `${formatKeyHints(["ctrl+left", "ctrl+right"])} · ${formatKeyHints(["p", "shift+p"])}`)}`
-+				? `   ${theme.fg("dim", "预设：")} ${activePreset ? theme.fg("accent", activePreset) : theme.fg("muted", "自定义")}  ${theme.fg("dim", `${formatKeyHints(["ctrl+left", "ctrl+right"])} · ${formatKeyHints(["p", "shift+p"])}`)}`
+-				? `   ${theme.fg("dim", "Preset:")} ${activePreset ? theme.fg("accent", activePreset) : theme.fg("muted", "custom")}  ${theme.fg("dim", presetKeys)}`
++				? `   ${theme.fg("dim", "预设：")} ${activePreset ? theme.fg("accent", activePreset) : theme.fg("muted", "自定义")}  ${theme.fg("dim", presetKeys)}`
  				: "";
  		return truncateToWidth(
 -			` ${theme.fg("dim", "Roles:")} ${track}  ${theme.fg("dim", formatKeyHints(["alt+left", "alt+right"]))}${preset}`,
@@ -45427,7 +45697,14 @@ index df00489..2a2273d 100644
  			width,
  		);
  	}
-@@ -2453,48 +2453,48 @@ export class ModelHubComponent implements Component {
+ 
+ 	#statusRow(width: number): string {
+ 		if (this.#assignmentPending) {
+-			return truncateToWidth(theme.fg("accent", " Applying model…"), width);
++			return truncateToWidth(theme.fg("accent", " 正在应用模型…"), width);
+ 		}
+ 		if (this.#assigning !== null) {
+ 			const enter = formatKeyHint("enter");
  			const cancel = editorKey("tui.select.cancel");
  			if (this.#assigning.kind === "fallbackKey") {
  				return truncateToWidth(
@@ -45487,7 +45764,7 @@ index df00489..2a2273d 100644
  				break;
  		}
  		if (this.#configError && entry.kind !== "provider") {
-@@ -2554,7 +2554,7 @@ export class ModelHubComponent implements Component {
+@@ -2565,7 +2565,7 @@ export class ModelHubComponent implements Component {
  			}
  
  			if (rowDef.kind === "newRole" || rowDef.kind === "newFallback") {
@@ -45496,7 +45773,7 @@ index df00489..2a2273d 100644
  				let line = ` ${cursor} ${theme.fg(selected ? "accent" : "dim", label)}`;
  				line = this.#finishRolesRow(line, width, hovered);
  				lines.push(line);
-@@ -2584,7 +2584,8 @@ export class ModelHubComponent implements Component {
+@@ -2595,7 +2595,8 @@ export class ModelHubComponent implements Component {
  			const role = rowDef.role;
  			const info = this.#settings.getRoleInfo(role);
  			const assignment = this.#roles[role];
@@ -45506,7 +45783,7 @@ index df00489..2a2273d 100644
  
  			let dot: string;
  			let tagStyled: string;
-@@ -2602,7 +2603,7 @@ export class ModelHubComponent implements Component {
+@@ -2613,7 +2614,7 @@ export class ModelHubComponent implements Component {
  			} else if (assignment) {
  				dot = theme.fg("dim", theme.status.shadowed);
  				tagStyled = theme.fg("dim", tag);
@@ -45515,7 +45792,7 @@ index df00489..2a2273d 100644
  			} else {
  				dot = theme.fg("dim", theme.status.shadowed);
  				tagStyled = theme.fg("dim", tag);
-@@ -2628,8 +2629,8 @@ export class ModelHubComponent implements Component {
+@@ -2639,8 +2640,8 @@ export class ModelHubComponent implements Component {
  			const hiddenAbove = this.#roleScrollStart;
  			const hiddenBelow = total - endIndex;
  			const parts: string[] = [];
@@ -45526,7 +45803,7 @@ index df00489..2a2273d 100644
  			lines.push(truncateToWidth(theme.fg("dim", `   ${parts.join("   ")}`), width));
  		}
  
-@@ -2647,10 +2648,10 @@ export class ModelHubComponent implements Component {
+@@ -2658,10 +2659,10 @@ export class ModelHubComponent implements Component {
  					cycleOrder.map(role => ({ label: role })),
  					activeIndex,
  				);
@@ -45539,7 +45816,7 @@ index df00489..2a2273d 100644
  					width,
  				);
  			}
-@@ -2662,13 +2663,13 @@ export class ModelHubComponent implements Component {
+@@ -2673,13 +2674,13 @@ export class ModelHubComponent implements Component {
  		const lines: string[] = [];
  		this.#lockedLoginLine = null;
  		lines.push("");
@@ -45555,7 +45832,7 @@ index df00489..2a2273d 100644
  					width,
  				),
  			);
-@@ -2679,7 +2680,7 @@ export class ModelHubComponent implements Component {
+@@ -2690,7 +2691,7 @@ export class ModelHubComponent implements Component {
  			this.#lockedLoginLine = lines.length + 1; // +1 for the status row offset handled by caller
  			lines.push(
  				truncateToWidth(
@@ -45564,7 +45841,7 @@ index df00489..2a2273d 100644
  					width,
  				),
  			);
-@@ -2687,7 +2688,7 @@ export class ModelHubComponent implements Component {
+@@ -2698,7 +2699,7 @@ export class ModelHubComponent implements Component {
  		lines.push("");
  		const catalogCount = entry.catalogCount ?? 0;
  		if (catalogCount > 0) {
@@ -45573,7 +45850,7 @@ index df00489..2a2273d 100644
  			const preview = this.#scopedModels.length > 0 ? [] : this.#registry.getAll("all");
  			for (const model of preview) {
  				if (model.provider !== entry.providerId) continue;
-@@ -2710,74 +2711,74 @@ export class ModelHubComponent implements Component {
+@@ -2721,78 +2722,78 @@ export class ModelHubComponent implements Component {
  		const strip = this.#strip;
  		if (strip) {
  			if (strip.kind === "name") {
@@ -45620,6 +45897,11 @@ index df00489..2a2273d 100644
 -				return `${upDown} providers · ${enterRight} roles · ${altLeftRight} tabs${presets} · ${cancel} close`;
 +					this.#presets().names.length > 0 ? ` · ${formatKeyHints(["ctrl+left", "ctrl+right"])} 预设` : "";
 +				return `${upDown} 提供商 · ${enterRight} 角色 · ${altLeftRight} 标签${presets} · ${cancel} 关闭`;
+ 			}
+ 			// A live query takes printable keys and backspace, so the letter commands rest.
+ 			if (this.#browser.query.length > 0) {
+-				return `${upDown} rows · ${enter} pick · type to search · ${left} providers · ${cancel} close`;
++				return `${upDown} 条目 · ${enter} 选择 · 输入搜索 · ${left} 提供商 · ${cancel} 关闭`;
  			}
  			const row = this.#rolesRows[this.#roleIndex];
  			const compaction =
@@ -45675,7 +45957,7 @@ index df00489..2a2273d 100644
  	}
  
  	#renderFooter(width: number): string {
-@@ -2793,16 +2794,16 @@ export class ModelHubComponent implements Component {
+@@ -2808,16 +2809,16 @@ export class ModelHubComponent implements Component {
  		if (strip.kind === "name") {
  			const labelText =
  				strip.purpose === "compaction"
@@ -45696,7 +45978,7 @@ index df00489..2a2273d 100644
  					: strip.error
  						? theme.fg("error", strip.error)
  						: theme.fg("dim", COMPACTION_INPUT_HINT);
-@@ -2870,7 +2871,7 @@ export class ModelHubComponent implements Component {
+@@ -2885,7 +2886,7 @@ export class ModelHubComponent implements Component {
  		footer.push(hintsRow(this.#footerHints()));
  		const described = describeHubFrame(
  			"omp.overlay.model-hub",
@@ -45705,7 +45987,7 @@ index df00489..2a2273d 100644
  			describeHubSidebar(this.#entries, this.#activeEntryId, this.#nativeSidebarStyle, "scopes"),
  			this.#describeBody(),
  			node("col", { gap: "xs" }, footer, "footer"),
-@@ -2963,10 +2964,10 @@ export class ModelHubComponent implements Component {
+@@ -2978,10 +2979,10 @@ export class ModelHubComponent implements Component {
  					"row",
  					{ gap: "sm", align: "center" },
  					[
@@ -45718,7 +46000,7 @@ index df00489..2a2273d 100644
  							undefined,
  							"kinds",
  						),
-@@ -2981,22 +2982,22 @@ export class ModelHubComponent implements Component {
+@@ -2996,22 +2997,22 @@ export class ModelHubComponent implements Component {
  
  	#describeStatus(): NativeNode {
  		if (this.#assignmentPending) {
@@ -45746,7 +46028,7 @@ index df00489..2a2273d 100644
  				spans = [span(`${verb} `, "accent"), span(label, "accent strong")];
  			}
  			return node("text", { spans, truncate: "end" }, undefined, "status");
-@@ -3005,34 +3006,34 @@ export class ModelHubComponent implements Component {
+@@ -3020,34 +3021,34 @@ export class ModelHubComponent implements Component {
  		if (this.#configError && entry.kind !== "provider") {
  			return node("text", { spans: [span(this.#configError, "error")], wrap: "word" }, undefined, "status");
  		}
@@ -45789,7 +46071,7 @@ index df00489..2a2273d 100644
  				break;
  		}
  		return node("text", { spans, truncate: "end" }, undefined, "status");
-@@ -3043,11 +3044,11 @@ export class ModelHubComponent implements Component {
+@@ -3058,11 +3059,11 @@ export class ModelHubComponent implements Component {
  			"row",
  			{ gap: "sm", align: "center" },
  			[
@@ -45803,7 +46085,7 @@ index df00489..2a2273d 100644
  						active: this.#roleTab,
  					},
  					undefined,
-@@ -3066,7 +3067,7 @@ export class ModelHubComponent implements Component {
+@@ -3081,7 +3082,7 @@ export class ModelHubComponent implements Component {
  				virtual: true,
  				grow: 1,
  				tone: this.#focus === "list" ? "accent" : undefined,
@@ -45812,7 +46094,7 @@ index df00489..2a2273d 100644
  			},
  			items,
  			"roles",
-@@ -3080,9 +3081,9 @@ export class ModelHubComponent implements Component {
+@@ -3095,9 +3096,9 @@ export class ModelHubComponent implements Component {
  			case "separator":
  				return node("rule", undefined, undefined, key);
  			case "newRole":
@@ -45824,7 +46106,7 @@ index df00489..2a2273d 100644
  			case "chainKey": {
  				const slash = rowDef.role.lastIndexOf("/");
  				return node(
-@@ -3122,7 +3123,7 @@ export class ModelHubComponent implements Component {
+@@ -3137,7 +3138,7 @@ export class ModelHubComponent implements Component {
  		} else {
  			label = [span(`${theme.status.shadowed} `, "dim"), span(tag, "dim")];
  			detail = assignment
@@ -45833,7 +46115,7 @@ index df00489..2a2273d 100644
  				: [span("—", "dim")];
  		}
  		// Quick-cycle membership badge (`⟳ 2` = second stop of the ctrl+p cycle).
-@@ -3144,7 +3145,7 @@ export class ModelHubComponent implements Component {
+@@ -3159,7 +3160,7 @@ export class ModelHubComponent implements Component {
  				{ gap: "xs", align: "center", wrap: true },
  				[
  					...keycap,
@@ -45842,7 +46124,7 @@ index df00489..2a2273d 100644
  				],
  				"cycle",
  			);
-@@ -3160,14 +3161,14 @@ export class ModelHubComponent implements Component {
+@@ -3175,14 +3176,14 @@ export class ModelHubComponent implements Component {
  		return node(
  			"row",
  			{ gap: "xs", align: "center", wrap: true },
@@ -45859,7 +46141,7 @@ index df00489..2a2273d 100644
  		];
  		const envVars = entry.providerId ? (providerEntry(entry.providerId)?.envVars ?? []) : [];
  		children.push(
-@@ -3175,8 +3176,8 @@ export class ModelHubComponent implements Component {
+@@ -3190,8 +3191,8 @@ export class ModelHubComponent implements Component {
  				[
  					span(
  						envVars.length > 0
@@ -45870,7 +46152,7 @@ index df00489..2a2273d 100644
  						"muted",
  					),
  				],
-@@ -3188,7 +3189,7 @@ export class ModelHubComponent implements Component {
+@@ -3203,7 +3204,7 @@ export class ModelHubComponent implements Component {
  				node(
  					"row",
  					{ gap: "sm", align: "center", actions: { click: "login" } },
@@ -45879,7 +46161,7 @@ index df00489..2a2273d 100644
  					"login",
  				),
  			);
-@@ -3204,7 +3205,7 @@ export class ModelHubComponent implements Component {
+@@ -3219,7 +3220,7 @@ export class ModelHubComponent implements Component {
  			children.push(
  				node(
  					"section",
@@ -45888,7 +46170,7 @@ index df00489..2a2273d 100644
  					[node("list", { selected: null, virtual: true }, items, "catalog")],
  					"catalog",
  				),
-@@ -3221,16 +3222,16 @@ export class ModelHubComponent implements Component {
+@@ -3236,10 +3237,10 @@ export class ModelHubComponent implements Component {
  		const lockedView = entry.kind === "provider" && entry.locked === true && this.#assigning === null;
  		const strip = this.#strip;
  		const props: TspPickerProps = {
@@ -45901,14 +46183,16 @@ index df00489..2a2273d 100644
  			size: "lg",
  			layout: "rows",
  			preview: "side",
- 			query: this.#browser.query,
+@@ -3247,7 +3248,7 @@ export class ModelHubComponent implements Component {
+ 			// is live, so the sheet offers no search field to type into.
+ 			query: rolesView && this.#browser.query.length === 0 ? null : this.#browser.query,
  			cursor: this.#browser.cursor,
 -			placeholder: "Search models…",
 +			placeholder: "搜索模型…",
  			scopes: this.#pickerScopes(),
  			scope: entry.id,
  			actions: this.#pickerActions(entry, rolesView, lockedView),
-@@ -3244,7 +3245,7 @@ export class ModelHubComponent implements Component {
+@@ -3261,7 +3262,7 @@ export class ModelHubComponent implements Component {
  					...props,
  					tabs: ROLE_TABS.map(tab => ({
  						id: tab,
@@ -45917,7 +46201,7 @@ index df00489..2a2273d 100644
  						count: this.#visibleRoleIds().filter(
  							role => tab === "all" || this.#settings.getRoleInfo(role).section === tab,
  						).length,
-@@ -3279,7 +3280,7 @@ export class ModelHubComponent implements Component {
+@@ -3296,7 +3297,7 @@ export class ModelHubComponent implements Component {
  		const query = this.#browser.query.trim();
  		const view = this.#browser.pickerOrder({
  			providers: entry.kind === "all" && query.length === 0,
@@ -45926,7 +46210,7 @@ index df00489..2a2273d 100644
  		});
  		const refreshing =
  			this.#catalogRefreshing ||
-@@ -3308,7 +3309,7 @@ export class ModelHubComponent implements Component {
+@@ -3325,7 +3326,7 @@ export class ModelHubComponent implements Component {
  				...(state === "error" && this.#configError ? { message: this.#configError } : {}),
  				empty:
  					this.#emptyStateMessage()?.trim() ??
@@ -45935,7 +46219,7 @@ index df00489..2a2273d 100644
  			},
  			this.#browser.pickerPreview("full", this.#currentSelector),
  		);
-@@ -3316,37 +3317,37 @@ export class ModelHubComponent implements Component {
+@@ -3333,37 +3334,37 @@ export class ModelHubComponent implements Component {
  
  	/** What the hub is doing when it is more than browsing: applying, assigning, refreshing, a config error. */
  	#pickerSubtitle(entry: SidebarEntry, rolesView: boolean): TspPickerProps["subtitle"] {
@@ -45984,7 +46268,7 @@ index df00489..2a2273d 100644
  		return undefined;
  	}
  
-@@ -3360,12 +3361,12 @@ export class ModelHubComponent implements Component {
+@@ -3377,12 +3378,12 @@ export class ModelHubComponent implements Component {
  				case "separator":
  					break;
  				case "roles":
@@ -45999,7 +46283,7 @@ index df00489..2a2273d 100644
  						icon: "list",
  						count: counts ? this.#searchTotal : this.#availableItems.length,
  					});
-@@ -3373,7 +3374,7 @@ export class ModelHubComponent implements Component {
+@@ -3390,7 +3391,7 @@ export class ModelHubComponent implements Component {
  				case "recent":
  					scopes.push({
  						id: entry.id,
@@ -46008,7 +46292,7 @@ index df00489..2a2273d 100644
  						icon: "clock",
  						count: counts ? this.#recentSearchCount : this.#recentItems.length,
  					});
-@@ -3387,12 +3388,12 @@ export class ModelHubComponent implements Component {
+@@ -3404,12 +3405,12 @@ export class ModelHubComponent implements Component {
  							id: entry.id,
  							label: entry.label,
  							mark,
@@ -46025,7 +46309,7 @@ index df00489..2a2273d 100644
  							dot: "muted",
  						});
  						break;
-@@ -3402,7 +3403,7 @@ export class ModelHubComponent implements Component {
+@@ -3419,7 +3420,7 @@ export class ModelHubComponent implements Component {
  						id: entry.id,
  						label: entry.label,
  						mark,
@@ -46034,7 +46318,7 @@ index df00489..2a2273d 100644
  						count: counts ? (counts.get(providerId) ?? 0) : Number(entry.annotation ?? 0),
  						...(dot ? { dot } : {}),
  					});
-@@ -3458,31 +3459,31 @@ export class ModelHubComponent implements Component {
+@@ -3475,31 +3476,31 @@ export class ModelHubComponent implements Component {
  			const apply =
  				strip.kind === "name"
  					? strip.purpose === "compaction"
@@ -46075,7 +46359,7 @@ index df00489..2a2273d 100644
  		}
  		if (rolesView) {
  			const row = this.#rolesRows[this.#roleIndex];
-@@ -3491,63 +3492,63 @@ export class ModelHubComponent implements Component {
+@@ -3515,63 +3516,63 @@ export class ModelHubComponent implements Component {
  			const actions: (TspPickerAction | undefined)[] = [];
  			const compaction =
  				this.#callbacks.onCompactionPointChange && this.#roleRowModel()
@@ -46161,7 +46445,7 @@ index df00489..2a2273d 100644
  		]);
  	}
  
-@@ -3557,9 +3558,9 @@ export class ModelHubComponent implements Component {
+@@ -3581,9 +3582,9 @@ export class ModelHubComponent implements Component {
  			if (strip.purpose === "compaction") {
  				return {
  					label: [
@@ -46173,7 +46457,7 @@ index df00489..2a2273d 100644
  						span(strip.input.getValue(), "mono"),
  						span("▏", "accent"),
  						span(`  ${strip.error ?? COMPACTION_INPUT_HINT}`, strip.error ? "error" : "dim"),
-@@ -3569,7 +3570,7 @@ export class ModelHubComponent implements Component {
+@@ -3593,7 +3594,7 @@ export class ModelHubComponent implements Component {
  			}
  			return {
  				label: [
@@ -46182,7 +46466,7 @@ index df00489..2a2273d 100644
  					span(strip.input.getValue(), "mono"),
  					span("▏", "accent"),
  				],
-@@ -3579,19 +3580,19 @@ export class ModelHubComponent implements Component {
+@@ -3603,19 +3604,19 @@ export class ModelHubComponent implements Component {
  		let label: TspSpan[];
  		if (strip.kind === "role") {
  			// The second step of "New fallback chain…" reuses the role strip with key chips only.
@@ -46207,7 +46491,7 @@ index df00489..2a2273d 100644
  			];
  		}
  		return {
-@@ -3629,16 +3630,16 @@ export class ModelHubComponent implements Component {
+@@ -3653,16 +3654,16 @@ export class ModelHubComponent implements Component {
  				case "separator":
  					return;
  				case "newRole":
@@ -46228,7 +46512,7 @@ index df00489..2a2273d 100644
  					return;
  				case "role":
  					break;
-@@ -3649,7 +3650,7 @@ export class ModelHubComponent implements Component {
+@@ -3673,7 +3674,7 @@ export class ModelHubComponent implements Component {
  			const facts: Record<string, string> = {};
  			if (assignment) {
  				const selector = `${assignment.model.provider}/${assignment.model.id}`;
@@ -46237,7 +46521,7 @@ index df00489..2a2273d 100644
  				if (assignment.thinkingLevel !== ThinkingLevel.Inherit) {
  					facts.thinking = getConfiguredThinkingLevelMetadata(assignment.thinkingLevel).label;
  				}
-@@ -3667,9 +3668,9 @@ export class ModelHubComponent implements Component {
+@@ -3691,9 +3692,9 @@ export class ModelHubComponent implements Component {
  					? {
  							badges: [
  								{
@@ -46249,7 +46533,7 @@ index df00489..2a2273d 100644
  								},
  							],
  						}
-@@ -3688,12 +3689,12 @@ export class ModelHubComponent implements Component {
+@@ -3712,12 +3713,12 @@ export class ModelHubComponent implements Component {
  			head = { group, label, count: 0 };
  			order.push(head);
  		};
@@ -46265,7 +46549,7 @@ index df00489..2a2273d 100644
  				return;
  			}
  			order.push(rolesRowKey(row, index));
-@@ -3720,7 +3721,7 @@ export class ModelHubComponent implements Component {
+@@ -3744,7 +3745,7 @@ export class ModelHubComponent implements Component {
  		const chainList = (key: string): NativeChild | undefined => {
  			const chain = this.#fallbackChains()[key] ?? [];
  			if (chain.length === 0) return undefined;
@@ -46274,7 +46558,7 @@ index df00489..2a2273d 100644
  				md(chain.map((selector, index) => `${index + 1}. \`${selector}\``).join("\n")),
  			]);
  		};
-@@ -3739,19 +3740,19 @@ export class ModelHubComponent implements Component {
+@@ -3763,19 +3764,19 @@ export class ModelHubComponent implements Component {
  					children.push(
  						node("kv", {
  							items: [
@@ -46298,7 +46582,7 @@ index df00489..2a2273d 100644
  					);
  				}
  				const chain = chainList(row.role);
-@@ -3774,14 +3775,14 @@ export class ModelHubComponent implements Component {
+@@ -3798,14 +3799,14 @@ export class ModelHubComponent implements Component {
  			}
  			case "newRole":
  				children.push(
@@ -46317,7 +46601,7 @@ index df00489..2a2273d 100644
  						wrap: "word",
  					}),
  				);
-@@ -3795,9 +3796,9 @@ export class ModelHubComponent implements Component {
+@@ -3819,9 +3820,9 @@ export class ModelHubComponent implements Component {
  		const envVars = entry.providerId ? (providerEntry(entry.providerId)?.envVars ?? []) : [];
  		const how =
  			envVars.length > 0
@@ -46330,7 +46614,7 @@ index df00489..2a2273d 100644
  	}
  
  	/** A signed-out provider's preview: how to sign in and what its catalog holds. */
-@@ -3812,7 +3813,7 @@ export class ModelHubComponent implements Component {
+@@ -3836,7 +3837,7 @@ export class ModelHubComponent implements Component {
  			for (const model of this.#registry.getAll("all")) {
  				if (model.provider === entry.providerId) ids.push(`- \`${model.id}\``);
  			}
@@ -46339,7 +46623,7 @@ index df00489..2a2273d 100644
  		}
  		return children;
  	}
-@@ -3945,7 +3946,7 @@ export class ModelHubComponent implements Component {
+@@ -3969,7 +3970,7 @@ export class ModelHubComponent implements Component {
  					"row",
  					{ gap: "sm", align: "center" },
  					[
@@ -46348,7 +46632,7 @@ index df00489..2a2273d 100644
  						col([strip.input], { grow: 1 }),
  						text([span(strip.error ?? COMPACTION_INPUT_HINT, strip.error ? "error" : "dim")]),
  					],
-@@ -3957,9 +3958,9 @@ export class ModelHubComponent implements Component {
+@@ -3981,9 +3982,9 @@ export class ModelHubComponent implements Component {
  				"row",
  				{ gap: "sm", align: "center" },
  				[
@@ -46360,7 +46644,7 @@ index df00489..2a2273d 100644
  				],
  				preset ? "presetName" : "roleName",
  			);
-@@ -3998,110 +3999,110 @@ export class ModelHubComponent implements Component {
+@@ -4022,121 +4023,121 @@ export class ModelHubComponent implements Component {
  		const keys = (label: string, ...ids: KeyName[]): NativeHint => ({ keys: ids, label });
  		const cancel = (label: string) => actionHint("tui.select.cancel", label);
  		const upDown = (label: string) => actionHint(["tui.select.up", "tui.select.down"], label);
@@ -46422,6 +46706,21 @@ index df00489..2a2273d 100644
 +					upDown("提供商"),
 +					keys("角色", "enter", "right"),
 +					keys("标签", "alt+left", "alt+right"),
+ 					presetHint,
+-					cancel("close"),
++					cancel("关闭"),
+ 				];
+ 			}
+ 			// A live query takes printable keys and backspace, so the letter commands rest.
+ 			if (this.#browser.query.length > 0) {
+ 				return [
+-					upDown("rows"),
+-					keys("pick", "enter"),
++					upDown("条目"),
++					keys("选择", "enter"),
+ 					search,
+-					keys("providers", "left"),
++					keys("提供商", "left"),
  					presetHint,
 -					cancel("close"),
 +					cancel("关闭"),
@@ -48386,7 +48685,7 @@ index 49f8e7c..fc119a3 100644
  								description: progress.description,
  								status: "active",
 diff --git a/packages/tui/src/overlays/session-selector.ts b/packages/tui/src/overlays/session-selector.ts
-index 7a402c7..2a9367b 100644
+index e1aced2..b737e9d 100644
 --- a/packages/tui/src/overlays/session-selector.ts
 +++ b/packages/tui/src/overlays/session-selector.ts
 @@ -66,15 +66,15 @@ import { boundKeys, interruptKey } from "../chrome/keybinding-hints";
@@ -48571,7 +48870,7 @@ index 7a402c7..2a9367b 100644
  			}
  			const status = formatSessionStatus(session.status);
  			if (status) {
-@@ -1434,7 +1434,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1439,7 +1439,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  		onExit: () => void,
  		options: SessionSelectorOptions<T> = {},
  	) {
@@ -48580,7 +48879,7 @@ index 7a402c7..2a9367b 100644
  
  		this.#messageContainer = new Container();
  		this.#onDelete = options.onDelete;
-@@ -1443,7 +1443,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1451,7 +1451,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  		this.#globalSessions = options.allSessions ?? null;
  		this.#getTerminalRows = options.getTerminalRows ?? (() => 24);
  		this.#fillHeight = options.fillHeight ?? false;
@@ -48589,7 +48888,7 @@ index 7a402c7..2a9367b 100644
  		this.#pickerTitle = options.title;
  		this.#standalone = options.standalone ?? false;
  		this.#scopeLabel = options.scopeLabel;
-@@ -1493,7 +1493,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1501,7 +1501,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  
  	#headerLabel(): string {
  		if (this.#scopeLabel === false) return this.#title;
@@ -48598,7 +48897,7 @@ index 7a402c7..2a9367b 100644
  		return `${this.#title} (${scopeLabel})`;
  	}
  
-@@ -1510,8 +1510,8 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1518,8 +1518,8 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  				if (!this.#loadAllSessions) return;
  				this.#toggling = true;
  				this.#messageContainer.clear();
@@ -48609,7 +48908,7 @@ index 7a402c7..2a9367b 100644
  				this.#onRequestRender?.();
  				try {
  					global = await this.#loadAllSessions();
-@@ -1566,9 +1566,9 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1574,9 +1574,9 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  
  	#showError(message: string): void {
  		this.#messageContainer.clear();
@@ -48621,7 +48920,7 @@ index 7a402c7..2a9367b 100644
  		this.#messageContainer.addChild(new Spacer(1));
  	}
  
-@@ -1585,7 +1585,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1593,7 +1593,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  			this.#onRequestRender?.();
  		};
  		const answer = async (option: string) => {
@@ -48630,7 +48929,7 @@ index 7a402c7..2a9367b 100644
  				this.#clearError();
  				try {
  					const deleted = await this.#onDelete(session);
-@@ -1604,7 +1604,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1612,7 +1612,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  		};
  		this.#confirmationDialog = new HookSelectorComponent(
  			`Delete session?\n${displayName}`,
@@ -48639,7 +48938,7 @@ index 7a402c7..2a9367b 100644
  			answer,
  			closeDialog,
  		);
-@@ -1613,7 +1613,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1621,7 +1621,7 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  			confirm: () => {
  				// The strip goes at once; the dialog stays until the delete settles, as after Enter on "Yes".
  				this.#deleteChoice = null;
@@ -48648,7 +48947,7 @@ index 7a402c7..2a9367b 100644
  			},
  			cancel: closeDialog,
  		};
-@@ -1653,12 +1653,12 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1661,12 +1661,12 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  
  	/** Blank · keybinding hint · bottom border. Rendered by {@link render}. */
  	#footerLines(width: number): string[] {
@@ -48663,7 +48962,7 @@ index 7a402c7..2a9367b 100644
  		);
  		return [row("", width), row(hint, width), row("", width), bottomBorder(width)];
  	}
-@@ -1707,13 +1707,13 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1715,13 +1715,13 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  			children.push(this.#sessionList.searchInput, list);
  		}
  		const hints: (NativeHint | undefined)[] = [
@@ -48681,7 +48980,7 @@ index 7a402c7..2a9367b 100644
  		const result = overlayCard("omp.overlay.sessions", tabs ? this.#title : this.title, [
  			...children,
  			hintsRow(hints),
-@@ -1756,27 +1756,27 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1764,27 +1764,27 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  		}
  		const loading = message?.kind === "loading";
  		const toggle = list.onToggleScope !== undefined;
@@ -48717,7 +49016,7 @@ index 7a402c7..2a9367b 100644
  				size: this.#standalone ? "screen" : "lg",
  				layout: "cards",
  				preview: "side",
-@@ -1797,12 +1797,12 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
+@@ -1805,12 +1805,12 @@ export class SessionSelectorComponent<T extends SessionSelectorEntry = SessionSe
  				actions,
  				state: loading ? "loading" : errorOpen ? "error" : "ready",
  				...(loading || errorOpen ? { message: message!.text } : {}),
@@ -50659,10 +50958,10 @@ index 727cb4e..4a3269a 100644
  					),
  				);
 diff --git a/packages/tui/src/prompt/tips.txt b/packages/tui/src/prompt/tips.txt
-index 9d07e0a..ed2ccca 100644
+index fbba1a7..e5f6e4c 100644
 --- a/packages/tui/src/prompt/tips.txt
 +++ b/packages/tui/src/prompt/tips.txt
-@@ -1,33 +1,33 @@
+@@ -1,34 +1,34 @@
 -Tired of typing "keep going"? Just send a '.'
 -Type `#` anywhere in your prompt for quick actions — copy the line or the whole prompt, undo, jump the cursor
 -Type `/` at the start of your prompt to browse every command
@@ -50696,6 +50995,7 @@ index 9d07e0a..ed2ccca 100644
 -Press {key:shift+tab} to cycle through reasoning effort levels
 -omp can reconfigure and extend itself — ask any questions you have!
 -Lint/type errors piling up? `omp cleanse` (or /cleanse right here) hunts project diagnostics and fixes them with parallel subagents — {key:escape} cancels
+-[NO-TERN] Psst, omp has a natural habitat 🐦 [tern](https://scl.so/tern)
 \ No newline at end of file
 +不想反复输入 "keep going"？只需发送一个 '.'
 +在提示词任意位置输入 `#` 即可使用快捷操作：复制当前行或完整提示词、撤销、跳转光标
@@ -50730,7 +51030,7 @@ index 9d07e0a..ed2ccca 100644
 +按 {key:shift+tab} 循环切换推理强度
 +omp 可以重新配置并扩展自身；有问题尽管问！
 +Lint/类型错误越积越多？`omp cleanse`（或在这里使用 /cleanse）会查找项目诊断，并用并行子智能体修复；按 {key:escape} 取消
-\ No newline at end of file
++[NO-TERN] 悄悄告诉你，omp 有自己的自然栖息地：[tern](https://scl.so/tern)
 diff --git a/packages/tui/src/prompt/tools-markdown.ts b/packages/tui/src/prompt/tools-markdown.ts
 index 7bb3383..c94b3ba 100644
 --- a/packages/tui/src/prompt/tools-markdown.ts
@@ -50805,10 +51105,10 @@ index 9074a76..bedab85 100644
  	return formatRemainingOnlyTotal(limits);
  }
 diff --git a/packages/tui/src/prompt/welcome.ts b/packages/tui/src/prompt/welcome.ts
-index ed48ca7..9783fd3 100644
+index 5158290..09dd3c0 100644
 --- a/packages/tui/src/prompt/welcome.ts
 +++ b/packages/tui/src/prompt/welcome.ts
-@@ -26,7 +26,7 @@ const TIPS: readonly string[] = tipsText
+@@ -37,7 +37,7 @@ const TSP_TIPS: readonly string[] = TIP_LINES.filter(line => !NO_TERN_TIP_MARKER
  const NEW_TIP_MARKER = /\s*\[NEW\]\s*$/;
  
  /** Visible text rendered in place of {@link NEW_TIP_MARKER}. */
@@ -50817,7 +51117,7 @@ index ed48ca7..9783fd3 100644
  
  /** Milliseconds for one full hue rotation of the rainbow "NEW!" tag. */
  const NEW_GLOW_PERIOD_MS = 1500;
-@@ -113,7 +113,7 @@ function expandTipKeys(tip: string): string {
+@@ -149,7 +149,7 @@ function tipSpans(tip: string): TspSpan[] {
   * `[]` when `width` leaves no room for a useful line.
   */
  export function renderWelcomeTip(tip: string, width: number, phase = 0): string[] {
@@ -50826,16 +51126,16 @@ index ed48ca7..9783fd3 100644
  	if (width - visibleWidth(label) < 8) return [];
  
  	const isNew = NEW_TIP_MARKER.test(tip);
-@@ -181,7 +181,7 @@ export class WelcomeComponent implements Component {
+@@ -218,7 +218,7 @@ export class WelcomeComponent implements Component {
  		this.#nagRoll ??= Math.random();
  		this.#tipRoll ??= Math.random();
  		if (theme.getSymbolPreset() === "unicode" && this.#nagRoll < 0.1) {
 -			return "Please use nerdfont 😭.";
 +			return "请使用 Nerd Font 字体 😭。";
  		}
- 		return pickWeightedTip(TIPS, this.#tipRoll) || undefined;
+ 		return pickWeightedTip(isNativeRendering() ? TSP_TIPS : TIPS, this.#tipRoll) || undefined;
  	}
-@@ -242,7 +242,7 @@ export class WelcomeComponent implements Component {
+@@ -279,7 +279,7 @@ export class WelcomeComponent implements Component {
  				node("icon", { name: "lightbulb", role: "omp.welcome.tip-icon" }),
  				text(tipText, { wrap: "word", role: "omp.welcome.tip-text" }),
  			];

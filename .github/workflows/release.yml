@@ -6,7 +6,7 @@ on:
     paths-ignore:
       - '**/*.md'
     tags:
-      - 'v18.8.5-zh.*'
+      - 'v18.8.6-zh.*'
   workflow_dispatch:
     inputs:
       mode:

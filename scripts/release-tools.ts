@@ -129,7 +129,7 @@ async function pack(repo: string, binary: string, output: string): Promise<void>
   const version = (await readFile(path.join(repo, "VERSION"), "utf8")).trim();
   const upstream = (await readFile(path.join(repo, "UPSTREAM_VERSION"), "utf8")).trim();
   const commit = (await readFile(path.join(repo, "UPSTREAM_COMMIT"), "utf8")).trim();
-  if (upstream !== "v18.8.5" || !/^v18\.8\.5-zh\.[1-9][0-9]*$/.test(version) || !/^[0-9a-f]{40}$/.test(commit)) throw new Error("Invalid release metadata");
+  if (upstream !== "v18.8.6" || !/^v18\.8\.6-zh\.[1-9][0-9]*$/.test(version) || !/^[0-9a-f]{40}$/.test(commit)) throw new Error("Invalid release metadata");
   const epoch = Number(process.env.SOURCE_DATE_EPOCH ?? "0");
   if (!Number.isSafeInteger(epoch) || epoch < 0) throw new Error("SOURCE_DATE_EPOCH must be nonnegative integer seconds");
   await mkdir(output, { recursive: true }); output = await realpath(output);

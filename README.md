@@ -52,7 +52,7 @@ Windows 正在使用的 `omp.exe` 可能被系统锁定；替换失败时保留�
 
 Apple Silicon 上即使终端通过 Rosetta 运行，也选择原生 ARM64 包。不提供 Linux ARM64 或 Alpine/musl 的预编译包；系统库及安全策略仍需兼容，安装器会先验证候选程序能否运行。macOS 程序使用上游要求的本机 ad-hoc 签名，不是 Apple 开发者公证发行；不会关闭 Gatekeeper 或移除全局安全策略。
 
-默认安装汉化发布版本 `v18.8.5-zh.4`，基于上游 `v18.8.5`。`omp --version` 显示的是上游版本，不是汉化包版本。
+默认安装汉化发布版本 `v18.8.6-zh.1`，基于上游 `v18.8.6`。`omp --version` 显示的是上游版本，不是汉化包版本。
 
 ### 先查看脚本再安装
 
@@ -68,13 +68,13 @@ sh install-omp-zh.sh
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/longzhou23/omp-zh-pack/main/install.sh |
-  OMP_ZH_VERSION=v18.8.5-zh.4 OMP_ZH_INSTALL_DIR="$HOME/.local/bin" sh
+  OMP_ZH_VERSION=v18.8.6-zh.1 OMP_ZH_INSTALL_DIR="$HOME/.local/bin" sh
 ```
 
 Windows 使用相同的环境变量：
 
 ```powershell
-$env:OMP_ZH_VERSION = 'v18.8.5-zh.4'
+$env:OMP_ZH_VERSION = 'v18.8.6-zh.1'
 $env:OMP_ZH_INSTALL_DIR = "$HOME\.local\bin"
 irm https://raw.githubusercontent.com/longzhou23/omp-zh-pack/main/install.ps1 | iex
 ```
@@ -97,10 +97,10 @@ irm https://raw.githubusercontent.com/longzhou23/omp-zh-pack/main/install.ps1 | 
 
 ## 从源码构建
 
-本仓库不是上游完整源码镜像。`patches/omp-v18.8.5-zh.patch` 包含汉化及相关行为测试调整，`UPSTREAM_COMMIT` 锁定其基线：
+本仓库不是上游完整源码镜像。`patches/omp-v18.8.6-zh.patch` 包含汉化及相关行为测试调整，`UPSTREAM_COMMIT` 锁定其基线：
 
 ```text
-4bf0d9d3e9f910ef4af25dec9733fbb4d6912d4c
+f068751e2f1dbdbc195977776d47a26db8697495
 ```
 
 需要 Git、Bun **1.3.14**、Bash 与网络；Windows 可使用 Git for Windows 自带的 Git Bash。脚本在临时目录拉取锁定提交、检查并应用补丁、安装锁定依赖，并从官方 npm 获取同版本的原生模块，校验 SHA-512 与上游版本印记。不运行安装钩子，也不调用会修改全局 `omp` 链接的上游 `bun setup`。
@@ -129,7 +129,7 @@ bash package.sh
 
 发布前应验证：补丁应用、受影响包类型检查、终端行为测试、实际 PTY 中的 `/settings`、`/models`、`/hotkeys`，以及独立程序的 `--smoke-test`。安装流程还应覆盖校验失败、重复安装、带空格的安装目录和已有程序备份。
 
-[跨平台发布工作流](.github/workflows/release.yml) 在 Linux、macOS Intel/Apple Silicon、Windows x64/ARM64 托管主机上分别构建和运行原生检查，全部成功后合并 SHA-256 并公开完整发行版，再从公开 GitHub URL 实测安装、重复备份和恢复。Windows 验证同时运行 PowerShell 5.1 与 PowerShell 7。推送与 `VERSION` 一致的 `v18.8.5-zh.*` 标签触发发布；手动选择 `build` 只构建，选择 `verify` 只验收已公开的 `VERSION`，均不会另行发布。
+[跨平台发布工作流](.github/workflows/release.yml) 在 Linux、macOS Intel/Apple Silicon、Windows x64/ARM64 托管主机上分别构建和运行原生检查，全部成功后合并 SHA-256 并公开完整发行版，再从公开 GitHub URL 实测安装、重复备份和恢复。Windows 验证同时运行 PowerShell 5.1 与 PowerShell 7。推送与 `VERSION` 一致的 `v18.8.6-zh.*` 标签触发发布；手动选择 `build` 只构建，选择 `verify` 只验收已公开的 `VERSION`，均不会另行发布。
 
 `v18.8.5-zh.4` 的五平台原生构建、公开发行、安装后 `--smoke-test`、备份与恢复已全部通过[完整发行验收](https://github.com/longzhou23/omp-zh-pack/actions/runs/37838518563)。Windows x64/ARM64 均覆盖 PowerShell 5.1/7、原样 `irm | iex`、带引号的路径、真实下载失败和文件占用时保留原程序。主分支源码变更自动验收当前已公开的版本；仅修改 Markdown 文档不会重复运行。
 
