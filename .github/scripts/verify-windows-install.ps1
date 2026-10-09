@@ -125,5 +125,17 @@ try {
     [Net.ServicePointManager]::SecurityProtocol = $oldTls
     [Environment]::SetEnvironmentVariable('OMP_ZH_VERSION', $previousVersion)
     [Environment]::SetEnvironmentVariable('OMP_ZH_INSTALL_DIR', $previousDir)
+    # A native smoke helper may outlive its parent. Reap only this fixture's
+    # exact executable path before deleting it; never touch a user's omp.
+    if ($exe) {
+        $owned = Get-CimInstance -ClassName Win32_Process | Where-Object {
+            [string]::Equals($_.ExecutablePath, $exe, [StringComparison]::OrdinalIgnoreCase)
+        }
+        foreach ($entry in $owned) {
+            try { $child = [Diagnostics.Process]::GetProcessById([int] $entry.ProcessId) }
+            catch [ArgumentException] { continue } # Already exited after the snapshot.
+            try { $child.Kill(); $child.WaitForExit() } finally { $child.Dispose() }
+        }
+    }
     if (Test-Path -LiteralPath $root) { Remove-Item -LiteralPath $root -Recurse -Force }
 }
